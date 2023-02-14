@@ -10,4 +10,18 @@
   .button-header {
     @apply h-8 rounded-[50px] border px-[20px] py-[5px] text-sm font-medium leading-5;
   }
+  
+  .text-overflow-multiline-ellipsis {
+    @apply text-overflow-multiline;
+  }
+
+
+  @layer utilities{
+    .text-overflow-multiline {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
 }

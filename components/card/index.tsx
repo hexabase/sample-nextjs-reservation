@@ -1,47 +1,101 @@
-import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import { TimeBooking, TJob } from 'components/types/common';
+import { Box, Grid } from '@mui/material';
+import { useState } from 'react';
+import { Modal } from '@material-ui/core';
+import ChildModel from '../modal';
 
-export default function MediaCard() {
+export interface ICardJob {
+  jobs: TJob[]
+}
+
+
+export default function MediaCard({ jobs }: ICardJob) {
+  const [open, setOpen] = useState(false);
+  const [jobDetail, setJobDetail] = useState<TJob>();
+  const handleOpen = (job: TJob) => {
+    setOpen(true);
+    setJobDetail(job);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+
+  };
+
   return (
     <>
-      <Card sx={{ maxWidth: 363, borderRadius: '20px' }}  >
-        <CardMedia
-          sx={{ height: 226, width: 363, borderRadius: '20px' }}
-          image="/working.jpg"
-          title="green iguana"
-          className='relative rounded-sm bg bg-black-rgba'
-        >
-          <div className='absolute top-3 left-3 text-xs font-bold text-[#fff] flex items-center gap-x-1'>
-            <EventAvailableIcon />
-            <p>1月10日(火)</p>
-          </div>
-          <div className='absolute left-3 bottom-3 flex flex-col text-[#fff] text-base font-bold'>
-            <p>山田 太郎</p>
-            <p className='text-xs'>CEO</p>
-          </div>
-          <div className='absolute top-3 right-3'>
-            <Button className='bg-[#3DE7AE] text-[#fff] rounded-[50px]'>
-              <p className='font-bold text-xs'>予約可</p>
-            </Button>
-          </div>
-        </ CardMedia>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            <p className='font-bold text-sm'>スタートアップのプロダクト開発に興味がある方、お話ししましょう！</p>
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
-        </CardContent>
+      <Grid container spacing={10}>
 
-      </Card>
+        {jobs.map((job) => {
+          return (
+            <Grid item xs={12} md={4} key={job.id}>
+              <Card onClick={() => handleOpen(job)} sx={{ maxWidth: 363, borderRadius: '20px', height: 394, cursor: 'pointer', boxShadow: '0 10px 15px rgba(0,0,0,0.04)' }}  >
+                <CardMedia
+                  sx={{ height: 226, width: 363, borderRadius: '20px' }}
+                  image="/working.jpg"
+                  title="green iguana"
+                  className='relative rounded-[20px] bg-black-rgba cu'
+                >
+                  <div className='absolute top-3 left-3 text-xs font-bold text-[#fff] flex items-center gap-x-1'>
+                    <EventAvailableIcon />
+                    <p>{job.day}</p>
+                  </div>
+                  <div className='absolute left-3 bottom-3 flex flex-col text-[#fff] text-base font-bold'>
+                    <p>{job.name}</p>
+                    <p className='text-xs'>{job.position}</p>
+                  </div>
+                  {job.isAvailable ? <div className='absolute top-3 right-3'>
+                    <Button sx={{ "&:hover": { backgroundColor: "#3DE7AE", } }} className='bg-[#3DE7AE] text-[#fff] rounded-[50px]'>
+                      <p className='font-bold text-xs'>予約可</p>
+                    </Button>
+                  </div> :
+                    <div className='absolute top-1/2 -translate-y-2/4 left-1/2 -translate-x-1/2 text-[#fff] '>
+                      <p className='font-bold text-xl'>FULL</p>
+                    </div>
+                  }
+
+                </ CardMedia>
+                <CardContent className='pl-5 pr-6'>
+                  <Typography gutterBottom variant="h5" component="div">
+                    <p className='font-bold text-sm text-overflow-multiline-ellipsis h-10 '>{job.title}</p>
+                  </Typography>
+                  <div className='flex gap-[10px] flex-wrap mt-4'>
+                    {job.time.map((t: TimeBooking, index) => (
+                      <Button key={index}
+                        className={`h-6 rounded-[50px] text-[#fff] font-bold ${t.isFull ? 'bg-[#BA00FF]' : 'bg-[#F4D8FF]'}`}
+                      >{t.time}
+                      </Button>
+                    ))}
+
+
+                    {/* <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>10:00</Button>
+            <Button className='bg-[#BA00FF] rounded-[12px] text-[#fff] font-bold'>11:00</Button>
+            <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>12:00</Button>
+            <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>13:00</Button>
+            <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>14:00</Button>
+            <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>15:00</Button>
+            <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>16:00</Button> */}
+
+                  </div>
+
+                </CardContent>
+
+              </Card>
+
+
+            </Grid>
+          )
+        })}
+
+        <ChildModel handleClose={handleClose} open={open} jobDetail={jobDetail} />
+      </Grid>
+
     </>
   );
 }
