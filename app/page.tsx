@@ -6,7 +6,8 @@ import { Button, TextField } from '@mui/material'
 import { SearchOutlined } from '@mui/icons-material'
 import MediaCard from 'components/components/card'
 import { TJob } from 'components/types/common'
-
+import { FooterMobile } from 'components/components/footerMobile'
+import CloseIcon from '@mui/icons-material/Close';
 const inter = Inter({ subsets: ['latin'] })
 
 
@@ -323,8 +324,17 @@ export default function Home() {
   return (
     <div className='container-responsive'>
       <div className='flex flex-col gap-y-8'>
+        <div className='sm:hidden'>
+          <Button className='bg-[#f2f2f2] text-[#808080] rounded-[50px] '>
+            <div className='flex items-center justify-between gap-x-4'>
 
-        <div className='mt-8 relative'>
+              <p className='text-xs'>1月10日(火)</p>
+              <CloseIcon className='h-4 w-4' />
+            </div>
+          </Button>
+        </div>
+
+        <div className='hidden sm:block sm:mt-8 sm:relative'>
 
           <Image alt='lunchpal' src='/lunchpalmain.png' width={1248} height={200} className='rounded-[20px] opacity-70' />
           <div className='border border-[#BA00FF] absolute top-1/2 -translate-y-2/4 left-1/2 -translate-x-1/2 bg-white flex h-[60px] pl-[18px] items-center rounded bg-[#fff]'>
@@ -349,7 +359,10 @@ export default function Home() {
           <MediaCard jobs={jobs} />
         </div>
       </div>
+      <div className='sm:hidden'>
+        <FooterMobile />
 
+      </div>
     </div>
   )
 }

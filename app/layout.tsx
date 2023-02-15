@@ -1,6 +1,8 @@
+'use client'
+
 import Image from 'next/image'
 import './globals.css'
-
+import DehazeIcon from '@mui/icons-material/Dehaze';
 export default function RootLayout({
   children,
 }: {
@@ -20,10 +22,14 @@ export default function RootLayout({
             <div className='flex items-center justify-between py-5'>
 
               <Image src='/logo.png' width={159} height={43.06} alt='logo' />
-              <div>
+              <div className='hidden sm:block'>
                 <button className='button-header'>
                   ログイン
                 </button>
+              </div>
+
+              <div className='sm:hidden'>
+                <DehazeIcon />
               </div>
             </div>
           </div>
@@ -33,7 +39,7 @@ export default function RootLayout({
 
             {children}
           </main>
-          <footer className=' bg-[#F2F2F2] flex flex-col items-center px-60 py-8 gap-y-[60px]'>
+          <footer className='hidden sm:bg-[#F2F2F2] sm:flex sm:flex-col sm:items-center sm:px-60 sm:py-8 sm:gap-y-[60px]'>
             <div>
               <Image alt='logo' src='/logoFooter.svg' width={93} height={91} />
             </div>
@@ -47,6 +53,7 @@ export default function RootLayout({
               <p>©️2022 Hexabase</p>
             </div>
           </footer>
+
         </>
       </body>
     </html>

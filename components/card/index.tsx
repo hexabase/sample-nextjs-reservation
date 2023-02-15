@@ -38,7 +38,7 @@ export default function MediaCard({ jobs }: ICardJob) {
               <Card onClick={() => handleOpen(job)} sx={{ maxWidth: 363, borderRadius: '20px', height: 394, cursor: 'pointer', boxShadow: '0 10px 15px rgba(0,0,0,0.04)' }}  >
                 <CardMedia
                   sx={{ height: 226, width: 363, borderRadius: '20px' }}
-                  image="/working.jpg"
+                  image="/work.png"
                   title="green iguana"
                   className='relative rounded-[20px] bg-black-rgba cu'
                 >
@@ -50,7 +50,7 @@ export default function MediaCard({ jobs }: ICardJob) {
                     <p>{job.name}</p>
                     <p className='text-xs'>{job.position}</p>
                   </div>
-                  {job.isAvailable ? <div className='absolute top-3 right-3'>
+                  {job.isAvailable ? <div className='absolute top-3 right-8 sm:right-3'>
                     <Button sx={{ "&:hover": { backgroundColor: "#3DE7AE", } }} className='bg-[#3DE7AE] text-[#fff] rounded-[50px]'>
                       <p className='font-bold text-xs'>予約可</p>
                     </Button>
