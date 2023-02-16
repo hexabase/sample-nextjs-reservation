@@ -6,9 +6,6 @@ export const FooterMobile = () => {
   return (
     <div className="container-responsive fixed bottom-0 left-0 z-20 h-24 bg-[#ba00ff]">
       <div className="flex items-center justify-around gap-3 px-3 pt-6 pb-14">
-        {/* <div className="w-11/12">
-          
-        </div> */}
         <div className='flex flex-col items-center text-[#fff] text-xs gap-y-2'>
           <HomeIcon />
           <p>ホーム</p>
@@ -22,8 +19,6 @@ export const FooterMobile = () => {
           <PersonIcon />
           <p>アカウント</p>
         </div>
-
-
       </div>
     </div>
   )

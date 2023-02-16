@@ -1,16 +1,10 @@
 'use client'
 
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import { Button, TextField } from '@mui/material'
-import { SearchOutlined } from '@mui/icons-material'
-import MediaCard from 'components/components/card'
-import { TJob } from 'components/types/common'
-import { FooterMobile } from 'components/components/footerMobile'
-import CloseIcon from '@mui/icons-material/Close';
-const inter = Inter({ subsets: ['latin'] })
+import { Button, Grid, Pagination } from "@mui/material"
+import TableData from "components/components/table"
+import { TJob } from "components/types/common"
 
-export default function Home() {
+const Administrator = () => {
   const jobs: TJob[] = [
     {
       id: '1',
@@ -320,53 +314,37 @@ export default function Home() {
     },
   ]
   return (
-    <div className='container-responsive'>
-      <div className='flex flex-col gap-y-2 sm:gap-y-8'>
-        <div className='sm:hidden'>
-          <Button className='bg-[#f2f2f2] text-[#808080] rounded-[50px]  mb-2 mt-2'>
-            <div className='flex items-center justify-between gap-x-4'>
-              <p className='text-xs'>1月10日(火)</p>
-              <CloseIcon className='h-4 w-4' />
-            </div>
-          </Button>
-        </div>
+    <>
+      <div className="pl-[327px]">
+        <p className="font-bold text-lg">ホスト一覧</p>
+      </div>
+      <Grid container spacing={0}>
+        <Grid item xs={4} style={{ maxWidth: '280px', background: '#F8F9FA', border: '1px solid #E1E1E1' }}>
+          <div className="px-4 w-full pt-20">
 
-        <div className='hidden sm:block sm:mt-8 sm:relative'>
-          <Image alt='lunchpal' src='/lunchpalmain.png' width={1248} height={200} className='rounded-[20px] opacity-70' />
-          <div className='border border-[#BA00FF] absolute top-1/2 -translate-y-2/4 left-1/2 -translate-x-1/2 bg-white flex h-[60px] pl-[18px] items-center rounded bg-[#fff]'>
-            <div >
-              <TextField id="outlined-basic" label="キーワードで探す" variant="standard" margin="normal" placeholder='人物・キーワード' InputProps={{
-                disableUnderline: true, style: {
-                  fontFamily: 'Noto Sans JP, sans-serif',
-                },
-              }} InputLabelProps={{ shrink: true, style: { fontWeight: 'bold', fontSize: '12px', color: '#000000', fontFamily: 'Noto Sans JP, sans-serif', } }} />
-              <TextField id="outlined-basic" label="日付を選択" variant="standard" margin='normal' placeholder='カレンダーから選ぶ' InputProps={{
-                disableUnderline: true, style: {
-                  fontFamily: 'Noto Sans JP, sans-serif',
-                },
-              }} InputLabelProps={{ shrink: true, style: { fontWeight: 'bold', fontSize: '12px', color: '#000000', fontFamily: 'Noto Sans JP, sans-serif', } }} />
-            </div>
+            <Button className="w-full bg-[#ba00ff] text-[#fff] rounded-[50px]">
+              <p className="font-sans">
 
-            <Button className='bg-[#ba00ff] h-[60px] '>
-              <SearchOutlined className='text-[#fff]' />
+                新規登録
+              </p>
             </Button>
           </div>
-        </div>
 
-
-        <div className='sm:mt-[18px] flex gap-x-4'>
-          <p className='font-bold text-sm'>検索結果</p>
-          <p className='font-bold text-sm'>9件</p>
-        </div>
-
-        <div className='mb-[52px]'>
-          <MediaCard jobs={jobs} />
-        </div>
-      </div>
-      <div className='sm:hidden'>
-        <FooterMobile />
-
-      </div>
-    </div>
+        </Grid>
+        <Grid item xs={8} style={{ maxWidth: '1448px', paddingTop: '35px', paddingLeft: '48px', borderTop: '1px solid #E1E1E1', borderBottom: '1px solid #E1E1E1' }}>
+          <div className="flex items-center justify-between mb-5">
+            <p>
+              1件〜10件 / 全120件
+            </p>
+            <div>
+              <Pagination count={10} />
+            </div>
+          </div>
+          <TableData jobs={jobs} />
+        </Grid>
+      </Grid>
+    </>
   )
 }
+
+export default Administrator

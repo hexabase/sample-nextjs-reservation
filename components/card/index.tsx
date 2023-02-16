@@ -40,7 +40,7 @@ export default function MediaCard({ jobs }: ICardJob) {
                   sx={{ height: 226, width: 363, borderRadius: '20px' }}
                   image="/work.png"
                   title="green iguana"
-                  className='relative rounded-[20px] bg-black-rgba cu'
+                  className='relative rounded-[20px] bg-black-rgba'
                 >
                   <div className='absolute top-3 left-3 text-xs font-bold text-[#fff] flex items-center gap-x-1'>
                     <EventAvailableIcon />
@@ -51,7 +51,7 @@ export default function MediaCard({ jobs }: ICardJob) {
                     <p className='text-xs'>{job.position}</p>
                   </div>
                   {job.isAvailable ? <div className='absolute top-3 right-8 sm:right-3'>
-                    <Button sx={{ "&:hover": { backgroundColor: "#3DE7AE", } }} className='bg-[#3DE7AE] text-[#fff] rounded-[50px]'>
+                    <Button sx={{ "&:hover": { backgroundColor: "#3DE7AE", }, fontFamily: 'Noto Sans JP, sans-serif' }} className='bg-[#3DE7AE] text-[#fff] rounded-[50px]'>
                       <p className='font-bold text-xs'>予約可</p>
                     </Button>
                   </div> :
@@ -62,33 +62,21 @@ export default function MediaCard({ jobs }: ICardJob) {
 
                 </ CardMedia>
                 <CardContent className='pl-5 pr-6'>
-                  <Typography gutterBottom variant="h5" component="div">
+                  <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
                     <p className='font-bold text-sm text-overflow-multiline-ellipsis h-10 '>{job.title}</p>
                   </Typography>
-                  <div className='flex gap-[10px] flex-wrap mt-4'>
+                  <div className='flex gap-[10px] flex-wrap mt-5 sm:mt-4'>
                     {job.time.map((t: TimeBooking, index) => (
-                      <Button key={index}
-                        className={`h-6 rounded-[50px] text-[#fff] font-bold ${t.isFull ? 'bg-[#BA00FF]' : 'bg-[#F4D8FF]'}`}
+                      <Button
+                        sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
+                        key={index}
+                        className={`h-6 rounded-[50px] text-[#fff] font-bold ${t.isFull ? 'bg-[#BA00FF] hover:bg-[#BA00FF]' : 'bg-[#F4D8FF] hover:bg-[#F4D8FF]'}`}
                       >{t.time}
                       </Button>
                     ))}
-
-
-                    {/* <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>10:00</Button>
-            <Button className='bg-[#BA00FF] rounded-[12px] text-[#fff] font-bold'>11:00</Button>
-            <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>12:00</Button>
-            <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>13:00</Button>
-            <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>14:00</Button>
-            <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>15:00</Button>
-            <Button className='bg-[#F4D8FF] rounded-[12px] text-[#fff] font-bold'>16:00</Button> */}
-
                   </div>
-
                 </CardContent>
-
               </Card>
-
-
             </Grid>
           )
         })}

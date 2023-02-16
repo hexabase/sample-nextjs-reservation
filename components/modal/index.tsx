@@ -54,17 +54,11 @@ const ChildModel = ({ open, handleClose, jobDetail }: IChildModel) => {
     }}>
       <>
         <div className="modal-body">
-          <Box sx={{ ...style, width: 1248, borderRadius: '20px', p: "60px" }}>
-            {/* <h2 id="child-modal-title">Text in a child modal</h2>
-            <p id="child-modal-description">
-              {
-                jobDetail?.name
-              }            </p> */}
+          <Box sx={{ ...style, width: 1248, borderRadius: '20px', }}>
+            <Grid container >
 
-            <Grid container spacing={10}>
-              <Grid item xs={7} >
+              <Grid item xs={7} className="py-[60px] pl-[60px] border-r border-[#808080]" >
                 <div className="flex flex-col gap-y-4">
-
                   <Image
                     alt="image"
                     width={609}
@@ -73,9 +67,9 @@ const ChildModel = ({ open, handleClose, jobDetail }: IChildModel) => {
                     className="rounded-[20px] h-[312px]"
                   />
                   <div className="font-bold px-8 pr-16">
-                    <p className="text-2xl mb-[26px]">{jobDetail?.title}</p>
-                    <p className="text-2xl mb-[16px]">{jobDetail?.name}</p>
-                    <p className="text-lg py-4 ">{jobDetail?.position}</p>
+                    <p className="text-2xl mb-4">{jobDetail?.title}</p>
+                    <p className="text-2xl">{jobDetail?.name}</p>
+                    <p className="text-lg py-3 ">{jobDetail?.position}</p>
 
                     <div>
                       <p className="text-sm font-normal border-t border-[#D8D8D8] pt-4">
@@ -98,32 +92,25 @@ const ChildModel = ({ open, handleClose, jobDetail }: IChildModel) => {
 
               </Grid>
               {/* <Divider orientation="vertical" flexItem /> */}
-              <Grid item xs={5} style={{ paddingRight: '80px' }}
-              // justifyContent='center' alignItems='center'
-              >
+              <Grid item xs={5} className='pl-[66px] pr-[80px] pt-[60px]'>
                 {bookingStep === 0 && (
                   <>
                     <p className="font-bold text-lg my-4">Reverse</p>
-
-
-
                     <div className="flex items-center font-bold py-8 border-t border-b border-[#D8D8D8]">
                       <EventAvailableIcon />
                       <p>{jobDetail?.day}</p>
                     </div>
 
-                    <div className="mt-[40px]">
+                    <div className="mt-[40px] ">
                       <p className="font-bold text-sm">予約したい時間帯をクリックしてください。</p>
-                      <div className="flex flex-col gap-[15px] mt-[26px]">
+                      <div className="flex flex-col gap-[15px] mt-5  items-center">
 
                         {jobDetail?.time.map((t, index) => (
                           <Button key={index} onClick={() => handleTimeSelection(t.time)}
                             disabled={!t.isFull}
-
-                            className={`h-10 w-96 rounded-[50px] text-[#fff] font-bold ${t.isFull ? 'bg-[#BA00FF]' : 'bg-[#F4D8FF]'}`}
+                            className={`h-10 w-96 rounded-[50px] text-[#fff] font-bold ${t.isFull ? 'bg-[#BA00FF] hover:bg-[#BA00FF]' : 'bg-[#F4D8FF] hover:bg-[#BA00FF]'}`}
                           >
                             <p className="text-lg font-bold">
-
                               {t.time}
                             </p>
                           </Button>
@@ -145,11 +132,12 @@ const ChildModel = ({ open, handleClose, jobDetail }: IChildModel) => {
                     <p>{jobDetail?.day}</p>
                   </div>
 
-                  <div className="mt-[40px]">
+                  <div className="mt-9">
                     <p className="font-bold text-sm">予約したい時間帯をクリックしてください。</p>
-                    <div className="flex flex-col gap-[15px] mt-[26px]">
+                    <div className="flex flex-col gap-[15px] mt-11">
 
                       <TextField
+                        sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
                         id="outlined-basic"
                         label="お名前"
 
@@ -162,13 +150,16 @@ const ChildModel = ({ open, handleClose, jobDetail }: IChildModel) => {
 
                         }} />
                       <TextField
+                        sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
                         id="outlined-basic"
                         label="メールアドレス"
 
                         InputLabelProps={{ shrink: true, style: { fontWeight: '400', fontSize: '12px', color: '#ba00ff', borderColor: '#ba00ff' } }} />
 
-                      <Button className="bg-[#ba00ff] text-[#fff] rounded-[50px]" onClick={() => setBookingStep(2)}>
-                        <p>予約する</p>
+                      <Button
+                        sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
+                        className="bg-[#ba00ff] text-[#fff] rounded-[50px] mt-5 py-3" onClick={() => setBookingStep(2)}>
+                        <p className='font-bold text-2xl font-noto-sans-jp'>予約する</p>
                       </Button>
                     </div>
                   </div>
