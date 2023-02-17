@@ -40,7 +40,7 @@ export default function MediaCard({ jobs }: ICardJob) {
                   sx={{ height: 226, width: 363, borderRadius: '20px' }}
                   image="/work.png"
                   title="green iguana"
-                  className='relative rounded-[20px] bg-black-rgba'
+                  className='relative rounded-[20px] bg-black-rgba bg-blend-darken	'
                 >
                   <div className='absolute top-3 left-3 text-xs font-bold text-[#fff] flex items-center gap-x-1'>
                     <EventAvailableIcon />
