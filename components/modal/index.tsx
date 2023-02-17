@@ -32,13 +32,13 @@ const useStyles = makeStyles({
 export interface IChildModel {
   open: boolean;
   handleClose: () => void;
-  jobDetail: TJob;
+  jobDetail?: TJob;
 
 }
 
 const ChildModel = ({ open, handleClose, jobDetail }: IChildModel) => {
 
-  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedTime, setSelectedTime] = useState<string>('');
   const [bookingStep, setBookingStep] = useState(0);
   const classes = useStyles();
 
