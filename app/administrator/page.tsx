@@ -5,7 +5,7 @@ import TableData from "components/components/table"
 import { TJob } from "components/types/common"
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import { makeStyles } from '@material-ui/core/styles';
-import { jobs } from "../utils/db";
+import { jobs } from "../../utils/db";
 const useStyles = makeStyles({
   selected: {
     backgroundColor: '#2196f3',
