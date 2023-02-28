@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import './globals.css'
 import DehazeIcon from '@mui/icons-material/Dehaze';
+import RegistrationButton from 'components/components/administratorRegistration/button';
 export default function RootLayout({
   children,
 }: {
@@ -20,14 +21,8 @@ export default function RootLayout({
         <header>
           <div className='container-responsive'>
             <div className='flex items-center justify-between py-5'>
-
               <Image src='/logo.png' width={159} height={43.06} alt='logo' />
-              <div className='hidden sm:block'>
-                <button className='button-header'>
-                  ログイン
-                </button>
-              </div>
-
+              <RegistrationButton />
               <div className='sm:hidden'>
                 <DehazeIcon />
               </div>

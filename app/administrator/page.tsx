@@ -6,6 +6,8 @@ import { TJob } from "components/types/common"
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import { makeStyles } from '@material-ui/core/styles';
 import { jobs } from "../../utils/db";
+import NoRegister from "components/components/reservationRegistration/noRegister";
+import AddNewForm from "components/components/administratorRegistration/addNewAgenda";
 const useStyles = makeStyles({
   selected: {
     backgroundColor: '#2196f3',
@@ -59,6 +61,9 @@ const Administrator = () => {
           <div className="flex justify-end mt-[18px] mb-[210px]">
             <Pagination count={10} />
           </div>
+
+          {/* <NoRegister />
+          <AddNewForm /> */}
         </Grid>
       </Grid>
     </>

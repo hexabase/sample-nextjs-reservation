@@ -9,6 +9,8 @@ import { TJob } from 'components/types/common'
 import { FooterMobile } from 'components/components/footerMobile'
 import CloseIcon from '@mui/icons-material/Close';
 import { jobs } from '../utils/db'
+import RegistrationModal from 'components/components/administratorRegistration/registrationModal'
+import { useState } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -61,6 +63,8 @@ export default function Home() {
         <FooterMobile />
 
       </div>
+
+
     </div>
   )
 }
