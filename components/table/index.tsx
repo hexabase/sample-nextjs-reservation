@@ -130,7 +130,7 @@ export default function TableData({ jobs }: ITableData) {
                       {job?.time.map((d, index) => (
                         <Button key={index}
                           disabled={!d.isFull}
-                          className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${d.isFull ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]' : ' text-[#fff] bg-gray hover:bg-gray '}`}
+                          className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${d.isFull ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]' : ' !text-[#fff] bg-gray hover:bg-gray '}`}
                         >
                           <p className=" font-bold font-sans text-sm">
                             {d.time}
