@@ -34,7 +34,8 @@ const LoginPage = () => {
 
           <button
             type='submit'
-            className='bg-[#BA00ff] rounded-[4px] py-2 px-8 text-[#fff]'>
+            className='bg-[#BA00ff] rounded-[4px] py-2 px-8 text-[#fff]
+            hover:bg-[#BA00ff]/[0.6]'>
             送信する
           </button>
         </form>

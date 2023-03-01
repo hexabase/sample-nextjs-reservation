@@ -48,7 +48,7 @@ const Administrator = () => {
 
         </Grid>
         <Grid item xs={12} style={{ maxWidth: '1448px', paddingTop: '24px', paddingLeft: '48px', borderTop: '1px solid #E1E1E1', borderBottom: '1px solid #E1E1E1' }}>
-          <div className="flex items-center justify-between">
+          {/* <div className="flex items-center justify-between">
             <p className="text-sm">
               1件〜10件 / 全120件
             </p>
@@ -60,10 +60,10 @@ const Administrator = () => {
 
           <div className="flex justify-end mt-[18px] mb-[210px]">
             <Pagination count={10} />
-          </div>
+          </div> */}
 
-          {/* <NoRegister />
-          <AddNewForm /> */}
+          <NoRegister />
+          {/* <AddNewForm /> */}
         </Grid>
       </Grid>
     </>
