@@ -1,29 +1,30 @@
 'use client'
 
 import { Grid, TextField } from "@mui/material"
+import { FooterMobile } from "components/components/footerMobile";
 import Image from 'next/image';
 
 const RegisterPage = () => {
   return (
     <div className="container-responsive">
 
-      <div className="py-[150px]">
+      <div className="py-[30px] md:py-[150px]">
         <Grid container >
-          <Grid item xs={6} className='flex flex-col justify-center items-center pt-[30px]'>
+          <Grid item xs={12} md={6} className='flex flex-col justify-center items-center pt-[30px]'>
             <div>
               <div className='text-center'>
 
                 <Image alt='logo' src='/logoAdministrator.png' width={233} height={76} className='inline-block' />
               </div>
               <div className='mt-[50px]'>
-                <p className='text-[#BA00FF] text-xl'>社内コミュニケーションを円滑に!</p>
+                <p className='text-[#BA00FF] text-xl mb-[40px]'>社内コミュニケーションを円滑に!</p>
               </div>
             </div>
           </Grid>
 
-          <Grid item xs={6}>
-            <div className='w-3/5 flex flex-col gap-[26px]'>
-              <p className='text-lg'>管理者登録</p>
+          <Grid item xs={12} md={6}>
+            <div className='w-4/6 flex flex-col gap-[26px] mx-auto my-0 md:m-0'>
+              <p className='text-lg font-bold text-center md:text-start md:font-normal'>管理者登録</p>
               <p className='font-bold text-sm'>必要事項を入力して「登録」ボタンをクリックしてください</p>
 
               <div>
@@ -62,6 +63,7 @@ const RegisterPage = () => {
           </Grid>
         </Grid>
       </div>
+      <FooterMobile />
     </div>
   )
 }
