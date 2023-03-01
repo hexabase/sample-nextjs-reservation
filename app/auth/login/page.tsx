@@ -1,7 +1,9 @@
 'use client'
 import { TextField } from '@mui/material';
 import { FooterMobile } from 'components/components/footerMobile';
+import { Formik } from 'formik';
 import Image from 'next/image';
+import { SchemaLogin } from '../Schema';
 
 const LoginPage = () => {
   return (
@@ -13,31 +15,65 @@ const LoginPage = () => {
 
         <p className='mb-5 md:mb-10'>ログイン</p>
         <div className='flex justify-center'>
-          <form className='w-full md:w-96 flex flex-col gap-8 md:gap-10 justify-center'>
-            <TextField
-              id="outlined-controlled"
-              placeholder='sample@hexabase.com'
-              label="メールアドレス*"
-              InputLabelProps={{ shrink: true }}
-              style={{ width: '100%' }}
-            />
+          <Formik
+            initialValues={{
+              email: '',
+              password: '',
+            }}
+            validationSchema={SchemaLogin}
+            onSubmit={(data) => {
+              alert('login success')
+            }}
+          >
+            {
+              ({ values,
+                errors,
+                touched,
+                isValid,
+                handleBlur,
+                handleChange,
+                handleSubmit, }) =>
+              (<form className='w-full md:w-96 flex flex-col gap-8 md:gap-10 justify-center'>
+                <TextField
+                  id="email"
+                  placeholder='sample@hexabase.com'
+                  value={values.email}
+                  label="メールアドレス*"
+                  InputLabelProps={{ shrink: true }}
+                  style={{ width: '100%' }}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
 
-            <TextField
-              id="outlined-controlled"
-              placeholder='••••••••'
-              label="パスワード*"
-              InputLabelProps={{ shrink: true }}
-              style={{ width: '100%' }}
-            />
+                <TextField
+                  id="password"
+                  placeholder='••••••••'
+                  label="パスワード*"
+                  value={values.password}
+                  InputLabelProps={{ shrink: true }}
+                  style={{ width: '100%' }}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`${touched.password && errors.password
+                    ? 'border-[#ba00ff]'
+                    : 'border-[#fff]'
+                    } input-field solid`}
+                  helperText={touched.password && errors.password}
+                  error={touched.password && Boolean(errors.password)}
+                />
 
 
-            <button
-              type='submit'
-              className='bg-[#BA00ff] rounded-[4px] py-2 px-8 text-[#fff]
+                <button
+                  type='submit'
+                  className='bg-[#BA00ff] rounded-[4px] py-2 px-8 text-[#fff]
                       hover:bg-[#BA00ff]/[0.6]'>
-              ログイン
-            </button>
-          </form>
+                  ログイン
+                </button>
+              </form>)
+            }
+
+          </Formik>
+
         </div>
         <FooterMobile />
       </div>

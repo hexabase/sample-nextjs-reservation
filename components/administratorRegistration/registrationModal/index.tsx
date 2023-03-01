@@ -4,6 +4,9 @@ import { Box, Button, Grid, Modal, TextField } from '@mui/material';
 import Image from 'next/image';
 import { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
+import { Formik } from 'formik';
+import { EmailRegistration } from 'components/app/auth/Schema';
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -25,7 +28,7 @@ export interface IRegistrationModal {
 const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal) => {
   const [inputValue, setInputValue] = useState('');
   const [bookingStep, setBookingStep] = useState(0);
-  const handleChange = (event: any) => {
+  const handleChangeInput = (event: any) => {
     setInputValue(event.target.value);
   };
   const handleSubmit = (event: any) => {
@@ -37,7 +40,6 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
   return (
     <Modal open={open} onClose={() => handleClose()}>
       <div className='modal-body'>
-
         {bookingStep === 0 &&
           <>
             <Box sx={{ ...style, width: 1248, borderRadius: '20px', padding: '160px 60px' }}>
@@ -45,7 +47,6 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
                 <Grid item xs={4} className='mr-[80px]'>
                   <div className='flex flex-col justify-center pt-[30px]'>
                     <div className='text-center'>
-
                       <Image alt='logo' src='/logoAdministrator.png' width={233} height={76} className='inline-block' />
                     </div>
                     <div className='mt-[50px]'>
@@ -61,21 +62,50 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
                     <p className='text-sm'>ご登録するメールアドレスをご入力後、送信ボタンをクリックしてください。
                       ご入力いただいたメールアドレス宛に届く会員登録フォームよりご登録をお願いいたします。</p>
                     <div className='flex'>
-                      <form onSubmit={() => handleSubmit(event)} className='flex w-full'>
-                        <TextField
-                          label="メールアドレス"
-                          variant="outlined"
-                          style={{ width: '80%', marginRight: '8px' }}
-                          value={inputValue}
-                          onChange={handleChange}
-                        />
+                      <Formik
+                        initialValues={{
+                          email: '',
+                        }}
+                        validationSchema={EmailRegistration}
+                        onSubmit={(data) => {
+                          alert('login success')
+                        }}
+                      >
+                        {({ values,
+                          errors,
+                          touched,
+                          isValid,
+                          handleBlur,
+                          handleChange,
+                          handleSubmit, }) =>
+                        (<form className='flex w-full'>
+                          <TextField
+                            id="email"
+                            placeholder='sample@hexabase.com'
+                            label="メールアドレス*"
+                            value={values.email}
+                            InputLabelProps={{ shrink: true }}
+                            style={{ width: '80%', marginRight: '8px' }}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            // className={`${touched.email && errors.email
+                            //   ? 'border-[#ba00ff]'
+                            //   : 'border-[#fff]'
+                            //   } input-field solid`}
+                            helperText={touched.email && errors.email}
+                            error={touched.email && Boolean(errors.email)}
+                          />
+                          <Button
+                            type='submit'
+                            className='bg-[#BA00ff] rounded-[4px] py-2 px-8 text-[#fff] hover:bg-[#ba00ff]/[0.6]'>
+                            送信する
+                          </Button>
+                        </form>)
 
-                        <Button
-                          type='submit'
-                          className='bg-[#BA00ff] rounded-[4px] py-2 px-8 text-[#fff]'>
-                          送信する
-                        </Button>
-                      </form>
+
+                        }
+                      </Formik>
+
                     </div>
                   </div>
                 </Grid>
@@ -87,12 +117,9 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
         {bookingStep === 1 &&
           <>
             <Box sx={{ ...style, width: 1248, borderRadius: '20px', padding: '120px', textAlign: 'center' }}>
-
               <Image alt='administration' src='/imageRegis.png' width={208} height={167} className='inline-block mb-[40px]' />
-
               <p className='font-bold text-2xl'>メールを送信しました</p>
               <p className='text-sm'>お届けしたメールに記載されている会員登録URLより会員登録フォームにおすすみください。</p>
-
               <div className='flex text-[#BA00FF] text-lg font-bold cursor-pointer justify-center mt-[26px]'>
                 <HomeIcon />
                 <p>ホーム</p>
@@ -100,7 +127,6 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
             </Box>
           </>
         }
-
       </div>
     </Modal>
   )
