@@ -35,7 +35,7 @@ export default function RootLayout({
           </div>
         </header>
         <>
-          <main>
+          <main id="__next">
 
             {children}
           </main>
