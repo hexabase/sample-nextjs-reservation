@@ -6,18 +6,23 @@ import { Formik } from 'formik';
 import Image from 'next/image';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { SchemaRegisterAdmin } from "../Schema";
+import { useRouter } from 'next/navigation';
 
 const RegisterPage = () => {
+  const router = useRouter();
+  const handleRouter = () => {
+    router.push('/auth/register-completed');
+  };
+  const handleFormSubmit = () => {
 
+  }
   return (
     <div className="container-responsive">
-
       <div className="py-[30px] md:py-[150px]">
         <Grid container >
           <Grid item xs={12} md={6} className='flex flex-col justify-center items-center pt-[30px]'>
             <div>
               <div className='text-center'>
-
                 <Image alt='logo' src='/logoAdministrator.png' width={233} height={76} className='inline-block' />
               </div>
               <div className='mt-[50px]'>
@@ -39,7 +44,8 @@ const RegisterPage = () => {
                     password: '',
                   }}
                   onSubmit={(data) => {
-                    alert('data')
+                    handleRouter()
+                    alert(data)
                   }}
                   validationSchema={SchemaRegisterAdmin}
                   validateOnBlur={true}
@@ -55,45 +61,48 @@ const RegisterPage = () => {
                       handleSubmit,
                       validateForm,
                       dirty }) => (
-                      <form className='w-full flex flex-col gap-10'>
-                        <div className="relative">
+                      <form
+                        onSubmit={handleSubmit}
+                        className='w-full flex flex-col gap-8 h-[478px]'>
+                        <div className="relative h-[86px]">
                           <TextField
-                            id="outlined-controlled"
+                            id="name"
+                            value={values.name}
                             placeholder='山田　太郎'
                             label="お名前*"
                             InputLabelProps={{ shrink: true }}
                             style={{ width: '100%' }}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            helperText={touched.name && errors.name}
                             error={touched.name && Boolean(errors.name)}
                           />
                           {touched.name && errors.name && (
                             <>
-                              <ReportProblemIcon className="absolute right-3 h-6 w-6 translate-y-1/2 text-red" />
-                              <p>役職は必須です</p>
+                              <ReportProblemIcon className="absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]" />
+                              <p className="text-[#E5242A] text-xs mt-2">役職は必須です</p>
                             </>
                           )}
                         </div>
-                        <div className="relative">
-
+                        <div className="relative h-[86px]">
                           <TextField
-                            id="outlined-controlled"
+                            id="position"
+                            value={values.position}
                             placeholder='代表取締役社長'
                             label="役職*"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
                             InputLabelProps={{ shrink: true }}
                             style={{ width: '100%' }}
-                            helperText={touched.position && errors.position}
                             error={touched.position && Boolean(errors.position)}
                           />
                           {touched.position && errors.position && (
                             <>
                               <ReportProblemIcon className="absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]" />
-                              <p>役職は必須です</p>
+                              <p className="text-[#E5242A] text-xs mt-2">役職は必須です</p>
                             </>
                           )}
                         </div>
-                        <div className="relative">
+                        <div className="relative h-[86px]">
                           <TextField
                             id="password"
                             placeholder='••••••••'
@@ -103,12 +112,12 @@ const RegisterPage = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             style={{ width: '100%' }}
-                            helperText={touched.password && errors.password}
                             error={touched.password && Boolean(errors.password)}
                           />
                           {touched.password && errors.password && (
                             <>
                               <ReportProblemIcon className="absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]" />
+                              <p className="text-[#E5242A] text-xs mt-2">パスワードは必須です</p>
                             </>
                           )}
                         </div>
@@ -121,12 +130,10 @@ const RegisterPage = () => {
                           ${!isValid ? 'bg-[#E1E1E1]' : 'bg-[#BA00ff] hover:bg-[#BA00ff]/[0.6]'}`} >
                           送信する
                         </button>
-
                       </form>
                     )
                   }
                 </Formik>
-
               </div>
             </div>
           </Grid>
