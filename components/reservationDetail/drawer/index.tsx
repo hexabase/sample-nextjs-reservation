@@ -30,12 +30,15 @@ export const DrawerReservation = ({ open, onClose, jobInfo }: IDrawerReservation
   }
   return (
     <>
-
       <Drawer anchor="right" open={open} onClose={onClose}
-        PaperProps={{ style: { width: 600 } }}
-
+        PaperProps={
+          {
+            style: { width: '100%', maxWidth: '600px' },
+            className: 'sm:w-auto"'
+          }
+        }
       >
-        <div className='py-3 border-t border-b border-[#E1E1E1] px-6 mt-14'>
+        <div className='py-3 border-t border-b border-[#E1E1E1] px-6 mt-14 text-right md:text-left'>
           <KeyboardTabIcon onClick={() => onClose()} className='cursor-pointer hover:opacity-40' />
         </div>
 
@@ -56,23 +59,23 @@ export const DrawerReservation = ({ open, onClose, jobInfo }: IDrawerReservation
 
         <div >
           <ul className='flex text-xl font-bold text-gray  
-          pt-[5px] px-[10px] transition-all
+          pt-[5px] px-[10px] transition-all w-full
           gap-[11px] border-b border-b-[#E1E1E1] mb-5'>
-            <li className={`text-mainColor w-1/2 flex justify-center 
+            <li className={` w-1/2 flex justify-center 
              cursor-pointer  
-              ${!tab ? 'border-b border-b-mainColor ' : ''}`}
+              ${!tab ? 'border-b border-b-mainColor text-mainColor ' : ''}`}
               onClick={() => handleChangeStatusTab()}
             >予約状況</li>
             <li className={`flex justify-center w-1/2 cursor-pointer
             transition duration-700
-             ${tab ? 'border-b border-b-mainColor' : ''}
+             ${tab ? 'border-b border-b-mainColor text-mainColor' : ''}
             `}
               onClick={() => handleChangeTab()}
             >予約概要</li>
           </ul>
         </div>
 
-        <div className='pt-5 pb-[57px] pl-10 pr-[57px]'>
+        <div className='pt-5 pb-[57px] pl-10 pr-[57px] w-full'>
           {tab ? <p className='text-sm'>
             スタートアップのプロダクト開発に興味がある方、お話ししましょう！スタートアップのプロダクト開発に興味がある方、
             お話ししましょう！スタートアップのプロダクト開発に興味がある方、

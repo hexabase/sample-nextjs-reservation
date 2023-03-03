@@ -6,6 +6,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
 
   ],
+  important: '#__next',
   theme: {
     container:{
       center:true
