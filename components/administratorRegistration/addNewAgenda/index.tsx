@@ -2,13 +2,19 @@
 
 import { Grid, TextField } from "@mui/material"
 import { Checkbox, FormGroup, FormControlLabel } from '@material-ui/core';
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 
 export interface IAddNewForm {
   setIsAddRegistration: any
 }
 const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
+  const fileInput = useRef<HTMLInputElement>(null);
+
+  function handleClick() {
+    event?.stopPropagation();
+    fileInput.current?.click();
+  }
   const [checked, setChecked] = useState({
     checkbox1: false,
     checkbox2: false,
@@ -59,10 +65,17 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
         </Grid>
 
         <Grid item xs={12} md={5}>
-          <div className="bg-[#F2F2F2] w-full h-[330px] flex flex-col items-center justify-center gap-[10px] mb-8">
-
-            <Image src='/camera.png' alt="camera" width={40} height={36} />
-            <button className="bg-[#fff] text-[#808080] px-[10px] py-[6px] 
+          <div
+            onClick={handleClick}
+            className="bg-[#F2F2F2] w-full h-[330px] flex flex-col items-center justify-center gap-[10px] mb-8">
+            <label htmlFor="file-input">
+              <Image src='/camera.png' alt="camera" width={40} height={36} />
+            </label>
+            <input id="file-input" type="file" ref={fileInput}
+              style={{ display: 'none' }}
+            />
+            <button
+              className="bg-[#fff] text-[#808080] px-[10px] py-[6px] 
             border border-solid border-[#808080] rounded-[4px] text-[10px] font-bold">
               <p>画像をアップロード</p>
             </button>
@@ -72,37 +85,57 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
             className='flex flex-wrap gap-x-[30px] md:gap-x-[45px]'
           >
             <FormControlLabel
-              control={<Checkbox checked={checked.checkbox1} onChange={handleChange} name="10.00" />}
+              control={<Checkbox
+                color="primary"
+                checked={checked.checkbox1} onChange={handleChange} name="checkbox1" />}
               label="10.00"
             />
             <FormControlLabel
-              control={<Checkbox checked={checked.checkbox2} onChange={handleChange} name="11.00" />}
+
+              control={<Checkbox
+                color="primary"
+                checked={checked.checkbox2} onChange={handleChange} name="checkbox2" />}
               label="11.00"
             />
             <FormControlLabel
-              control={<Checkbox checked={checked.checkbox3} onChange={handleChange} name="12.00" />}
+
+              control={<Checkbox
+                color="primary"
+                checked={checked.checkbox3} onChange={handleChange} name="checkbox3" />}
               label="12.00"
             />
             <FormControlLabel
-              control={<Checkbox checked={checked.checkbox4} onChange={handleChange} name="13.00" />}
+
+              control={<Checkbox
+                color="primary"
+                checked={checked.checkbox4} onChange={handleChange} name="checkbox4" />}
               label="13.00"
             />
             <FormControlLabel
-              control={<Checkbox checked={checked.checkbox5} onChange={handleChange} name="14.00" />}
+              control={<Checkbox
+                color="primary"
+                checked={checked.checkbox5} onChange={handleChange} name="checkbox5" />}
               label="14.00"
             />
             <FormControlLabel
-              control={<Checkbox checked={checked.checkbox6} onChange={handleChange} name="15.00" />}
+              control={<Checkbox
+                color="primary"
+                checked={checked.checkbox6} onChange={handleChange} name="checkbox6" />}
               label="15.00"
             />
             <FormControlLabel
-              control={<Checkbox checked={checked.checkbox7} onChange={handleChange} name="16.00" />}
+              control={<Checkbox
+                color="primary"
+                checked={checked.checkbox7} onChange={handleChange} name="checkbox7" />}
               label="16.00"
             />
             <FormControlLabel
-              control={<Checkbox checked={checked.checkbox8} onChange={handleChange} name="17.00" />}
+              control={<Checkbox
+                color="primary"
+                checked={checked.checkbox8} onChange={handleChange} name="checkbox8" />}
               label="17.00"
             />
+
           </div>
         </Grid>
       </Grid>

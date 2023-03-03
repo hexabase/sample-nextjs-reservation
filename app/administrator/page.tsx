@@ -49,10 +49,12 @@ const Administrator = () => {
                 setIsAddRegistration(true);
                 setIsListPage(false)
               }}
-              className="w-full bg-[#ba00ff] text-[#fff] rounded-[50px] flex justify-start gap-2 items-center hover:bg-[#BA00FF]">
+              className="w-full bg-[#ba00ff] text-[#fff] rounded-[50px] 
+              flex justify-start gap-2 items-center hover:bg-[#BA00FF]
+              py-[10px] pl-4">
               <PostAddIcon />
               <p className="font-sans">
-                新規登録
+                新規アジェンダ登録
               </p>
             </Button>
           </div>
