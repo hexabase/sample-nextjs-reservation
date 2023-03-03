@@ -22,3 +22,11 @@ export const EmailRegistration = Yup.object().shape({
     .email('メールアドレスの形式が正しくありません')
     .required('メールアドレスを入力してください')
 })
+
+export const ReservationRegistration = Yup.object().shape({
+  name: Yup.string()
+    .required('役職は必須です'),
+  email: Yup.string()
+    .email('メールアドレスの形式が正しくありません')
+    .required('メールアドレスを入力してください')
+})
