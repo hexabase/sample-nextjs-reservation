@@ -76,7 +76,7 @@ export default function TableData({ jobs }: ITableData) {
               >
                 <TableCell component="th" scope="row" align='left'  >
                   <div className='flex items-center gap-x-5 '>
-                    <Image src='/work.png' alt='image' width={100} height={62} />
+                    <Image src='/work.svg' alt='image' width={100} height={62} />
                     <p className='font-bold'>{job.title}</p>
                   </div>
                 </TableCell>

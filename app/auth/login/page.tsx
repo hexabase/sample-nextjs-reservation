@@ -10,7 +10,7 @@ const LoginPage = () => {
     <div className='container-responsive'>
       <div className='flex flex-col justify-center px-5 md:px-0 md:py-[100px] text-center gap-4 md:gap-10'>
         <div className='p-10'>
-          <Image alt='logo' src='/logoAdministrator.png' width={233} height={78} className='inline-block' />
+          <Image alt='logo' src='/logoAdministrator.svg' width={233} height={78} className='inline-block' />
         </div>
 
         <p className='mb-5 md:mb-10'>ログイン</p>
@@ -62,7 +62,6 @@ const LoginPage = () => {
                   error={touched.password && Boolean(errors.password)}
                 />
 
-
                 <button
                   type='submit'
                   className='bg-[#BA00ff] rounded-[4px] py-2 px-8 text-[#fff]
@@ -71,9 +70,7 @@ const LoginPage = () => {
                 </button>
               </form>)
             }
-
           </Formik>
-
         </div>
         <FooterMobile />
       </div>

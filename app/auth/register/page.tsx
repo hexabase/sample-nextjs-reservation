@@ -23,7 +23,7 @@ const RegisterPage = () => {
           <Grid item xs={12} md={6} className='flex flex-col justify-center items-center pt-[30px]'>
             <div>
               <div className='text-center'>
-                <Image alt='logo' src='/logoAdministrator.png' width={233} height={76} className='inline-block' />
+                <Image alt='logo' src='/logoAdministrator.svg' width={233} height={76} className='inline-block' />
               </div>
               <div className='mt-[50px]'>
                 <p className='text-[#BA00FF] text-xl mb-[40px]'>社内コミュニケーションを円滑に!</p>

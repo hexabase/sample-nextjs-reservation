@@ -35,7 +35,7 @@ const Administrator = () => {
   const [isListPage, setIsListPage] = useState(true)
   return (
     <>
-      <div className="hidden sm:block pl-[527px]">
+      <div className={`hidden sm:block pl-[527px] ${isAddRegistration ? 'sm:hidden' : ''}`}>
         <p className="font-bold text-lg ">ホスト一覧</p>
       </div>
       <Grid container spacing={0} className='relative flex justify-center'>
@@ -60,9 +60,9 @@ const Administrator = () => {
           </div>
 
         </Grid>
-        <Grid item xs={12} style={{
-          maxWidth: '1448px', paddingTop: '24px', borderTop: '1px solid #E1E1E1', borderBottom: '1px solid #E1E1E1'
-        }}>
+        <Grid item xs={12}
+          className='max-w-[1448px] pt-6 border-t border-b border-[#E1E1E1] border-solid md:pl-10'
+        >
           {isAddRegistration ? <>
             <AddNewForm setIsAddRegistration={setIsAddRegistration} />
           </>
@@ -89,7 +89,7 @@ const Administrator = () => {
             </>
           }
         </Grid>
-        <div className='absolute bg-[#ba00ff] rounded-full text-[#fff] p-5 right-[15px] bottom-[15px] sm:hidden'>
+        <div className={`absolute bg-[#ba00ff] rounded-full text-[#fff] p-5 right-[15px] bottom-[15px] sm:hidden ${isAddRegistration ? 'hidden' : 'block'}`}>
           <AddIcon />
         </div>
       </Grid>

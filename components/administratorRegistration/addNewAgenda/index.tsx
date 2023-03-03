@@ -30,10 +30,10 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
   };
   return (
     <div className="px-5 md:px-0 pt-[60px] md:pt-0 pb-12 md:pb-0">
-      <p className="font-bold text-lg sm:hidden text-center mb-4">新規アジェンダ登録</p>
+      <p className="font-bold text-lg text-center sm:text-left mb-4">新規アジェンダ登録</p>
       <Grid container className="flex-wrap md:flex-nowrap gap-10">
         <Grid item xs={12} md={7}>
-          <p className="mb-8 pl-3 text-sm md:text-base">必要事項を入力して「登録」ボタンをクリックしてください</p>
+          <p className="mb-8 pl-3 md:pl-0 text-sm md:text-base">必要事項を入力して「登録」ボタンをクリックしてください</p>
 
           <div className="flex flex-col gap-10">
 
@@ -69,7 +69,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
             onClick={handleClick}
             className="bg-[#F2F2F2] w-full h-[330px] flex flex-col items-center justify-center gap-[10px] mb-8">
             <label htmlFor="file-input">
-              <Image src='/camera.png' alt="camera" width={40} height={36} />
+              <Image src='/camera.svg' alt="camera" width={40} height={36} />
             </label>
             <input id="file-input" type="file" ref={fileInput}
               style={{ display: 'none' }}
@@ -140,7 +140,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
         </Grid>
       </Grid>
 
-      <div className="flex flex-col items-center mt-14">
+      <div className="flex flex-col items-center mt-14 sm:mb-10">
         <p>上記内容でよろしければ登録ボタンをクリックしてアジェンダを作成してください</p>
         <button
           onClick={() => setIsAddRegistration(false)}

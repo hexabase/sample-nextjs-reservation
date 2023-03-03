@@ -51,7 +51,7 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
                 <Grid item xs={12} md={4} className='mr-[80px]'>
                   <div className='flex flex-col-reverse items-center md:flex-col justify-center pt-[30px]'>
                     <div className='text-center'>
-                      <Image alt='logo' src='/logoAdministrator.png' width={233} height={76} className='inline-block' />
+                      <Image alt='logo' src='/logoAdministrator.svg' width={233} height={76} className='inline-block' />
                     </div>
                     <div className='mt-[50px]'>
                       <p className='text-[#BA00FF] text-base md:text-2xl'>社内コミュニケーションを円滑に!</p>
@@ -117,7 +117,7 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
         {bookingStep === 1 &&
           <>
             <Box sx={{ ...style, width: 1248, borderRadius: '20px', padding: '120px', textAlign: 'center' }}>
-              <Image alt='administration' src='/imageRegis.png' width={208} height={167} className='inline-block mb-[40px]' />
+              <Image alt='administration' src='/imageRegis.svg' width={208} height={167} className='inline-block mb-[40px]' />
               <p className='font-bold text-2xl'>メールを送信しました</p>
               <p className='text-sm'>お届けしたメールに記載されている会員登録URLより会員登録フォームにおすすみください。</p>
               <div
