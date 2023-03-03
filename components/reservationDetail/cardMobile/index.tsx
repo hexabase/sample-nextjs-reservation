@@ -48,7 +48,8 @@ const CardMobile = ({ jobs }: ICardMobile) => {
 
                   <div className="pt-5 flex flex-wrap gap-[8px]">
                     {job?.time.map((t) => (
-                      <div className={`rounded-[12.5px] py-[2px] px-4 gap-[10px] ${t.isFull ? 'bg-[#00FFB0] text-[#000000]' : 'bg-[#808080] text-[#fff]'}`}>
+                      <div className={`rounded-[12.5px] py-[2px] px-4 gap-[10px] ${t.isFull ? 'bg-[#00FFB0] text-[#000000]' :
+                        'bg-[#808080] text-[#fff]'}`}>
                         {t.time}
                       </div>
                     ))}

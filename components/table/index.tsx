@@ -110,7 +110,6 @@ export default function TableData({ jobs }: ITableData) {
                   <TableCell align='left' >
 
                     <p className='font-sans font-bold'>
-
                       {job?.name}
                     </p>
 

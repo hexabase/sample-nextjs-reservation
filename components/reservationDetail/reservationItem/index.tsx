@@ -69,7 +69,6 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
             <div className="mt-[40px] ">
               <p className="font-bold text-sm">予約したい時間帯をクリックしてください。</p>
               <div className="flex flex-col gap-[15px] mt-5  items-center">
-
                 {jobDetail?.time.map((t, index) => (
                   <Button key={index} onClick={() => handleTimeSelection(t.time)}
                     disabled={!t.isFull}
@@ -122,7 +121,6 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
                     handleSubmit, }) => (
                     <>
                       <div className="relative">
-
                         <TextField
                           sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
                           id="name"
@@ -143,7 +141,6 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
                       </div>
 
                       <div className="relative">
-
                         <TextField
                           sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
                           id="email"
