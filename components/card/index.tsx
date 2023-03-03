@@ -38,7 +38,7 @@ export default function MediaCard({ jobs }: ICardJob) {
               <Card onClick={() => handleOpen(job)} sx={{ maxWidth: 363, borderRadius: '20px', height: 394, cursor: 'pointer', boxShadow: '0 10px 15px rgba(0,0,0,0.04)' }}  >
                 <CardMedia
                   sx={{ height: 226, width: 363, borderRadius: '20px' }}
-                  image="/work.png"
+                  image="/work.svg"
                   title="green iguana"
                   className='relative rounded-[20px] bg-black-rgba bg-blend-darken	'
                 >
