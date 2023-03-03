@@ -21,7 +21,7 @@ export default function RootLayout({
       */}
       <head />
 
-      <body>
+      <body id='__next'>
         <header>
           <div className='container-responsive'>
             <div className='flex items-center justify-between py-5'>
