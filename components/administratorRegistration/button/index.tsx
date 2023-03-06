@@ -1,9 +1,14 @@
 import { useState } from "react";
 import RegistrationModal from "../registrationModal";
+import { useRouter } from "next/navigation";
 
 const RegistrationButton = () => {
 
   const [open, setOpen] = useState(false);
+  const router = useRouter()
+  const handleClick = () => {
+    router.push('auth/login')
+  }
   const handleOpen = () => {
     setOpen(true);
   };
@@ -20,7 +25,9 @@ const RegistrationButton = () => {
         >
           <p className='text-sm font-bold'>管理者登録</p>
         </div>
-        <button className='button-header'>
+        <button
+          onClick={() => handleClick()}
+          className='button-header'>
           ログイン
         </button>
       </div>

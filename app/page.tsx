@@ -5,12 +5,9 @@ import { Inter } from '@next/font/google'
 import { Button, TextField } from '@mui/material'
 import { SearchOutlined } from '@mui/icons-material'
 import MediaCard from 'components/components/card'
-import { TJob } from 'components/types/common'
 import { FooterMobile } from 'components/components/footerMobile'
 import CloseIcon from '@mui/icons-material/Close';
 import { jobs } from '../utils/db'
-import RegistrationModal from 'components/components/administratorRegistration/registrationModal'
-import { useState } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -49,7 +46,6 @@ export default function Home() {
           </div>
         </div>
 
-
         <div className='sm:mt-[18px] flex gap-x-4'>
           <p className='font-bold text-sm'>検索結果</p>
           <p className='font-bold text-sm'>9件</p>
@@ -61,10 +57,7 @@ export default function Home() {
       </div>
       <div className='sm:hidden'>
         <FooterMobile />
-
       </div>
-
-
     </div>
   )
 }

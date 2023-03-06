@@ -17,7 +17,6 @@ export interface ICardJob {
   jobs: TJob[]
 }
 
-
 export default function MediaCard({ jobs }: ICardJob) {
   const [open, setOpen] = useState(false);
   const [jobDetail, setJobDetail] = useState<TJob>();
@@ -25,7 +24,6 @@ export default function MediaCard({ jobs }: ICardJob) {
   const [showDrawer, setShowDrawer] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
 
   const handleOpen = (job: TJob) => {
     setOpen(true);
@@ -45,7 +43,6 @@ export default function MediaCard({ jobs }: ICardJob) {
   return (
     <>
       <Grid container spacing={10}>
-
         {jobs.map((job) => {
           return (
             <Grid item xs={12} md={4} key={job.id}>
