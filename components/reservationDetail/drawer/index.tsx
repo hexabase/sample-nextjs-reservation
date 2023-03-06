@@ -89,7 +89,9 @@ export const DrawerReservation = ({ open, onClose, jobInfo }: IDrawerReservation
           </p> :
             <div>
               {jobInfo?.time.map((t, index) => (
-                <div className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${t.isFull ? 'bg-secondMainColor' : 'bg-[#E1E1E1]'} `}>
+                <div
+                  key={index}
+                  className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${t.isFull ? 'bg-secondMainColor' : 'bg-[#E1E1E1]'} `}>
                   <div className='w-full flex justify-between'>
                     <div className='flex w-[80px] justify-between'>
                       <div className='w-[20px]'>{t.isFull ? <PersonIcon /> : ""}</div>

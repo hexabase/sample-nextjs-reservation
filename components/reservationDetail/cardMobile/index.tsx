@@ -32,6 +32,7 @@ const CardMobile = ({ jobs }: ICardMobile) => {
         <div className="pt-10 pb-24 px-5 bg-[#F2F2F2] gap-4 flex flex-col items-center">
           {jobs?.map((job) => (
             <div
+              key={job.id}
               onClick={() => handleCardClick(job)}
               className="p-5 gap-[10px] rounded-[4px] flex flex-col bg-[#ffffff]">
               <div className="flex flex-col justify-center gap-5">
@@ -47,9 +48,11 @@ const CardMobile = ({ jobs }: ICardMobile) => {
                   </div>
 
                   <div className="pt-5 flex flex-wrap gap-[8px]">
-                    {job?.time.map((t) => (
-                      <div className={`rounded-[12.5px] py-[2px] px-4 gap-[10px] ${t.isFull ? 'bg-[#00FFB0] text-[#000000]' :
-                        'bg-[#808080] text-[#fff]'}`}>
+                    {job?.time.map((t, index) => (
+                      <div
+                        key={index}
+                        className={`rounded-[12.5px] py-[2px] px-4 gap-[10px] ${t.isFull ? 'bg-[#00FFB0] text-[#000000]' :
+                          'bg-[#808080] text-[#fff]'}`}>
                         {t.time}
                       </div>
                     ))}
