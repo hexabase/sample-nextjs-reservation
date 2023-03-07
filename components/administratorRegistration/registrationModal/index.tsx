@@ -6,6 +6,9 @@ import { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import { Formik } from 'formik';
 import { EmailRegistration } from 'components/app/auth/Schema';
+import CloseIcon from '@mui/icons-material/Close';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -22,45 +25,63 @@ const style = {
   '@media (max-width: 600px)': {
     height: '100%',
     maxWidth: '100%',
-    padding: '100px 20px',
+    padding: '0px 20px',
+    top: '60%',
+    boxShadow: 0,
   },
 };
 
 export interface IRegistrationModal {
   handleClose: () => void,
-  handleOpen: () => void,
+  handleOpen?: () => void,
   open: boolean
 }
 const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal) => {
   const [inputValue, setInputValue] = useState('');
   const [bookingStep, setBookingStep] = useState(0);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const handleFormSubmit = (event: any) => {
     event.preventDefault();
     setBookingStep(1)
     console.log('Input value:', inputValue);
 
   };
+
   return (
-    <Modal open={open} onClose={() => handleClose()}>
-      <div className='modal-body'>
+    <Modal open={open}
+      hideBackdrop={isMobile ? true : false}
+      onClose={() => handleClose()}
+    >
+      <div className='modal-body '>
         {bookingStep === 0 &&
           <>
-            <Box sx={{ ...style, borderRadius: '20px', padding: '160px 60px' }}>
+            <Box sx={{ ...style, padding: '160px 60px' }}
+              className='md:rounded-[20px]'
+            >
+              <div
+                onClick={() => handleClose()}
+                className='w-full text-right py-[10px]'>
+                <CloseIcon className='md:hidden ' />
+              </div>
               <Grid container >
-                <Grid item xs={12} md={4} className='mr-[80px]'>
+                <Grid item xs={12} md={4} className='md:mr-[80px] mb-[72px] md:mb-0 '>
                   <div className='flex flex-col-reverse items-center md:flex-col justify-center pt-[30px]'>
                     <div className='text-center'>
-                      <Image alt='logo' src='/logoAdministrator.svg' width={233} height={76} className='inline-block' />
+                      <Image alt='logo' src='/logoAdministrator.svg' width={233} height={76}
+                        className='inline-block' />
                     </div>
-                    <div className='mt-[50px]'>
-                      <p className='text-[#BA00FF] text-base md:text-2xl'>社内コミュニケーションを円滑に!</p>
+                    <div className='md:mt-[50px]'>
+                      <p className='text-[#BA00FF] text-base md:text-2xl mb-10 md:mb-0'>
+                        社内コミュニケーションを円滑に!
+                      </p>
                     </div>
                   </div>
                 </Grid>
 
                 <Grid item xs={12} md={7}>
-                  <div className='flex flex-col gap-[26px]'>
+                  <div className='flex flex-col gap-[26px] text-center md:text-left'>
                     <p className='text-lg'>管理者登録</p>
                     <p className='font-bold text-base md:text-2xl'>メールアドレスを入力して送信してください</p>
                     <p className='text-xs md:text-sm'>ご登録するメールアドレスをご入力後、送信ボタンをクリックしてください。
@@ -82,23 +103,23 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
                           handleSubmit, }) =>
                         (<form
                           onSubmit={handleFormSubmit}
-                          className='relative flex w-full'>
+                          className='relative md:flex w-full'>
                           <TextField
                             id="email"
                             placeholder='sample@hexabase.com'
                             label="メールアドレス*"
                             value={values.email}
                             InputLabelProps={{ shrink: true }}
-                            style={{ width: '80%', marginRight: '8px' }}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             error={touched.email && Boolean(errors.email)}
+                            className='w-full md:w-[80%] md:mr-2 mb-6 md:mb-0'
                           />
                           {touched.email && errors.email && <p className='absolute text-[#FF0000] !top-full text-xs'>メールアドレスの形式が正しくありません</p>}
                           <Button
                             disabled={!isValid}
                             type='submit'
-                            className={` rounded-[4px] py-2 px-8  ${isValid ? 'bg-[#BA00ff] hover:bg-[#ba00ff]/[0.6]' : 'bg-[#E1E1E1]'}`}>
+                            className={`w-full md:w-auto rounded-[4px] py-2 px-8  ${isValid ? 'bg-[#BA00ff] hover:bg-[#ba00ff]/[0.6]' : 'bg-[#E1E1E1]'}`}>
                             <p className='text-[#fff]'>
                               送信する
                             </p>

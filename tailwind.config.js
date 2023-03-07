@@ -18,7 +18,13 @@ module.exports = {
     colors:{
       'black-rgba': 'rgba(0,0,0,0.4)'
     },
-    extend: {},
+    extend: {
+      colors: {
+        mainColor:'#BA00FF',
+        secondMainColor:'#00FFB0',
+        gray:'#808080'
+      }
+    },
   },
   plugins: [],
 }

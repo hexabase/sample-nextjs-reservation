@@ -11,6 +11,7 @@ import AddNewForm from "components/components/administratorRegistration/addNewAg
 import AddIcon from '@mui/icons-material/Add';
 import AdminMenus from "components/components/layout/adminMenus";
 import { useState } from "react";
+import CardMobile from "components/components/reservationDetail/cardMobile";
 const useStyles = makeStyles({
   selected: {
     backgroundColor: '#2196f3',
@@ -70,18 +71,25 @@ const Administrator = () => {
             <>
               {jobs ?
                 <>
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm">
-                      1件〜10件 / 全120件
-                    </p>
-                    <div>
+                  <div className="hidden md:block">
+
+                    <div className="flex items-center justify-between ">
+                      <p className="text-sm">
+                        1件〜10件 / 全120件
+                      </p>
+                      <div>
+                        <Pagination count={10} />
+                      </div>
+                    </div>
+                    <TableData jobs={jobs} />
+
+                    <div className="flex justify-end mt-[18px] mb-[210px]">
                       <Pagination count={10} />
                     </div>
                   </div>
-                  <TableData jobs={jobs} />
 
-                  <div className="flex justify-end mt-[18px] mb-[210px]">
-                    <Pagination count={10} />
+                  <div className="sm:hidden">
+                    <CardMobile jobs={jobs} />
                   </div>
                 </>
                 : <NoRegister />
@@ -89,7 +97,9 @@ const Administrator = () => {
             </>
           }
         </Grid>
-        <div className={`absolute bg-[#ba00ff] rounded-full text-[#fff] p-5 right-[15px] bottom-[15px] sm:hidden ${isAddRegistration ? 'hidden' : 'block'}`}>
+        <div
+          onClick={() => setIsAddRegistration(true)}
+          className={`absolute bg-[#ba00ff] rounded-full text-[#fff] p-5 right-[15px] bottom-[15px] sm:hidden ${isAddRegistration ? 'hidden' : 'block'}`}>
           <AddIcon />
         </div>
       </Grid>

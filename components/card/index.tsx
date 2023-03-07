@@ -9,29 +9,40 @@ import { Box, Grid } from '@mui/material';
 import { useState } from 'react';
 import { Modal } from '@material-ui/core';
 import ChildModel from '../modal';
+import ReservationDrawer from '../reservationDetail/reservationDrawer';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 
 export interface ICardJob {
   jobs: TJob[]
 }
 
-
 export default function MediaCard({ jobs }: ICardJob) {
   const [open, setOpen] = useState(false);
   const [jobDetail, setJobDetail] = useState<TJob>();
+  const [showModal, setShowModal] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const handleOpen = (job: TJob) => {
     setOpen(true);
     setJobDetail(job);
+    if (isMobile) {
+      setShowDrawer(true);
+    } else {
+      setShowModal(true);
+    }
   };
 
   const handleClose = () => {
-    setOpen(false);
-
+    setShowModal(false);
+    setShowDrawer(false);
   };
 
   return (
     <>
       <Grid container spacing={10}>
-
         {jobs.map((job) => {
           return (
             <Grid item xs={12} md={4} key={job.id}>
@@ -81,7 +92,17 @@ export default function MediaCard({ jobs }: ICardJob) {
           )
         })}
 
-        <ChildModel handleClose={handleClose} open={open} jobDetail={jobDetail} />
+        {showModal &&
+          <>
+            <ChildModel handleClose={handleClose} open={showModal} jobDetail={jobDetail} />
+          </>
+        }
+
+        {showDrawer &&
+          <div className='pt-16'>
+            <ReservationDrawer jobDetail={jobDetail} handleClose={handleClose} showDrawer={showDrawer} />
+          </div>
+        }
       </Grid>
 
     </>
