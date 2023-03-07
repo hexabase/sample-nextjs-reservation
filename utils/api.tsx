@@ -1,4 +1,4 @@
-import { TAddUser, TUserInvite } from 'components/types/common';
+import { TAddUser, TConfirmRegistration, TInputRegisterUser, TUserInvite } from 'components/types/common';
 import { getCookie } from 'cookies-next';
 import { ApiError, ApiResponse, createAxiosInstance } from './axios';
 
@@ -51,6 +51,78 @@ export const userInvite = async (email: string): Promise<ApiResponse<TUserInvite
     return {
       data: response.data,
       status: response.status
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknown error')
+  }
+}
+
+export const confirmRegistration = async (id: string): Promise<ApiResponse<TConfirmRegistration>> => {
+  try {
+
+    const res = await axiosInstance.get(
+      `https://api.hexabase.com/api/v0/users/registration/confirm?id=${id}`
+    )
+    return {
+      data: res.data,
+      status: res.status
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknown error')
+  }
+
+}
+
+export const registerUser = async ({
+  confirmation_id,
+  email,
+  username,
+  password,
+  workspace
+}: TInputRegisterUser) => {
+  try {
+    const res = await axiosInstance.post(
+      'https://api.hexabase.com/api/v0/users/registration/confirm',
+      {
+        confirmation_id,
+        email,
+        username: username,
+        password: password,
+        workspace
+      }
+    )
+    return {
+      data: res.data,
+      status: res.status
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknown error')
+  }
+}
+
+export const getUserInfo = async () => {
+  const token = getCookie('token')
+  try {
+    const res = await axiosInstance.get(
+      'https://api.hexabase.com/api/v0/userinfo',
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : ''
+        }
+      }
+    )
+    return {
+      data: res.data,
+      status: res.status
     }
   } catch (error) {
     if (error instanceof ApiError) {
