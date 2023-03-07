@@ -9,6 +9,9 @@ import { EmailRegistration } from 'components/app/auth/Schema';
 import CloseIcon from '@mui/icons-material/Close';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
+import { addUser, userInvite } from "components/utils/api";
+import { EMessageError, ETypeStatus, TJob, TNotification } from "components/types/common";
+import { useRouter } from 'next/navigation';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -36,19 +39,59 @@ export interface IRegistrationModal {
   handleOpen?: () => void,
   open: boolean
 }
+
+interface FormValues {
+  email: string,
+}
 const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal) => {
-  const [inputValue, setInputValue] = useState('');
   const [bookingStep, setBookingStep] = useState(0);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const handleFormSubmit = (event: any) => {
-    event.preventDefault();
-    setBookingStep(1)
-    console.log('Input value:', inputValue);
 
+  const [notification, setNotification] = useState<TNotification>({
+    open: false,
+  });
+
+  const router = useRouter()
+  const addUserHandler = async (data: FormValues) => {
+    try {
+      const res = await addUser(data.email)
+      if (res.status === 200 && !res.data.added) {
+        userInviteHandler(data)
+        setBookingStep(1)
+      } else {
+        setNotification({
+          open: true,
+          type: ETypeStatus.ERROR,
+          message: EMessageError.ERR_01,
+        });
+      }
+    } catch (error) {
+      setNotification({
+        open: true,
+        type: ETypeStatus.ERROR,
+        message: EMessageError.ERR_01,
+      });
+    }
+  }
+
+  const userInviteHandler = async (data: FormValues) => {
+    try {
+      const res = await userInvite(data.email);
+
+      if (res.status === 200) {
+        router.push('/auth/register-completed');
+      } else {
+        setNotification({
+          open: true,
+          type: ETypeStatus.ERROR,
+          message: EMessageError.ERR_01,
+        });
+      }
+    } catch (error) {
+    }
   };
-
   return (
     <Modal open={open}
       hideBackdrop={isMobile ? true : false}
@@ -92,7 +135,8 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
                           email: '',
                         }}
                         validationSchema={EmailRegistration}
-                        onSubmit={handleFormSubmit}
+                        onSubmit={(data: FormValues) => addUserHandler(data)
+                        }
                       >
                         {({ values,
                           errors,
@@ -102,7 +146,7 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
                           handleChange,
                           handleSubmit, }) =>
                         (<form
-                          onSubmit={handleFormSubmit}
+                          onSubmit={handleSubmit}
                           className='relative md:flex w-full'>
                           <TextField
                             id="email"
