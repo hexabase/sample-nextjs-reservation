@@ -1,3 +1,8 @@
+export type PageProps = {
+  params?: any;
+  children?: React.ReactNode;
+};
+
 export type TimeBooking = {
   time: string;
   isFull: boolean;
@@ -107,3 +112,12 @@ export type TGetUserInfo = {
   is_ws_admin: boolean;
   profile_pic: string;
 };
+export type TRegisterUser = {
+  token: string;
+};
+
+export type TInputCreateItem = {
+  user_id: string;
+  position: string;
+  name: string;
+}
