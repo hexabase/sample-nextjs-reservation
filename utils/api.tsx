@@ -1,4 +1,4 @@
-import { TAddUser, TConfirmRegistration, TGetUserInfo, TInputCreateItem, TInputRegisterUser, TRegisterUser, TUserInvite } from 'components/types/common';
+import { TAddUser, TConfirmRegistration, TGetUserInfo, TInputCreateItem, TInputLogin, TInputRegisterUser, TLogin, TRegisterUser, TUserInvite } from 'components/types/common';
 import { getCookie } from 'cookies-next';
 import { ApiError, ApiResponse, createAxiosInstance } from './axios';
 
@@ -149,6 +149,27 @@ export const createItem = async ({ user_id, position, name }: TInputCreateItem):
           // Authorization: 'Bearer eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjI2MjIxMTU1MTgsImlhdCI6MTY3NjAzNTUxOCwic3ViIjoiNjJkN2QzOTgwZmZjZTUzYTA5ZTJiYmU1IiwidW4iOiIifQ.fUbrmSWAJ1sny52L9TmlDM1nzjJuou9EmhiIxngdgdxFyaEg2u1BcaBLNpJM5R1XUq7WMyXMnJxrHmCPUNXv-i4SR26zQlPfY9lezFXrxEXX5MecF9SB2mW-MyVmkwPnWWBqRtVpnJ60vFDXELvrXZGBKY1UsMCC9Fnq5gRuRGnR5jDeU7bUPRnP6YNT4SpQj9x02Jg9XBNXyFHuZgdpUukDsnDsxuWhP1ZM6qPbyOe-rTeo11wlDjA4LSQKg6JipScWJf8NKwYJnQBP_A4q90zdTSqapAqNq3GU4T8QAixDBiiibmuXdTW8BUcF_jhH9btD0lsdIt2aynel0o7v_A'
           Authorization: token ? `Bearer ${token}` : ''
         }
+      }
+    )
+    return {
+      data: res.data,
+      status: res.status
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknown error')
+  }
+}
+
+export const login = async ({ email, password }: TInputLogin): Promise<ApiResponse<TLogin>> => {
+  try {
+    const res = await axiosInstance.post(
+      'https://api.hexabase.com/api/v0/login',
+      {
+        email,
+        password,
       }
     )
     return {

@@ -121,3 +121,12 @@ export type TInputCreateItem = {
   position: string;
   name: string;
 }
+export type TLogin = {
+  token: string;
+};
+
+export type TInputLogin = {
+  email: string;
+  password: string;
+};
+
