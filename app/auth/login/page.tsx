@@ -29,7 +29,7 @@ const LoginPage = () => {
 
       if (loginRes.data.token) {
         setCookie('token', loginRes.data.token);
-        router.push('/administrator');
+        router.push('/auth/login');
       }
     } catch (error) {
       setNotification({
@@ -65,7 +65,8 @@ const LoginPage = () => {
                 isValid,
                 handleBlur,
                 handleChange,
-                handleSubmit, }) =>
+                handleSubmit,
+                dirty, }) =>
               (<form
                 onSubmit={handleSubmit}
                 className='w-full md:w-96 flex flex-col gap-8 md:gap-10 justify-center'>
@@ -84,6 +85,7 @@ const LoginPage = () => {
                   id="password"
                   placeholder='••••••••'
                   label="パスワード*"
+                  type='password'
                   value={values.password}
                   InputLabelProps={{ shrink: true }}
                   style={{ width: '100%' }}
@@ -99,8 +101,8 @@ const LoginPage = () => {
 
                 <button
                   type='submit'
-                  className='bg-[#BA00ff] rounded-[4px] py-2 px-8 text-[#fff]
-                      hover:bg-[#BA00ff]/[0.6]'>
+                  className={`rounded-[4px] py-2 px-8 text-[#fff]
+                  ${!(isValid && dirty) ? 'bg-[#E1E1E1]' : 'bg-[#BA00ff] hover:bg-[#BA00ff]/[0.6]'}`}>
                   ログイン
                 </button>
               </form>)

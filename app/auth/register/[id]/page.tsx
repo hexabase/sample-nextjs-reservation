@@ -19,6 +19,7 @@ interface FormValuesProps {
 }
 const RegisterPage = ({ params: { id } }: PageProps) => {
   const [dataConfirm, setDataConfirm] = useState<TUserConfirm>();
+  const [formIsTouched, setFormIsTouched] = useState(false);
   const [notification, setNotification] = useState<TNotification>({
     open: false,
   });
@@ -38,7 +39,6 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
       })
     } catch (error) {
       console.log('error', error);
-      router.push('/auth/register-success');
     }
   }, [])
   const dataGetUserInfo = useCallback(async (formValues: FormValuesProps) => {
@@ -51,7 +51,6 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
         type: ETypeStatus.ERROR,
         message: EMessageError.ERR_01,
       });
-      console.log('error', error);
     }
   }, []);
   const dataRegisterUser = useCallback(
@@ -78,7 +77,6 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
           type: ETypeStatus.ERROR,
           message: EMessageError.ERR_01,
         });
-        console.log('error', error);
       }
     }, [dataConfirm, dataGetUserInfo]
   )
@@ -90,7 +88,6 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
         res.data.user && setDataConfirm(res.data.user)
       } catch (error) {
         console.log('error', error)
-        router.push('/auth/login')
       }
     })();
   }, [id])
@@ -124,7 +121,6 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
                   onSubmit={(data: FormValuesProps) => {
                     dataRegisterUser(data)
                     handleRouter()
-
                   }}
                   validationSchema={SchemaRegisterAdmin}
                   validateOnBlur={true}
@@ -139,7 +135,8 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
                       handleChange,
                       handleSubmit,
                       validateForm,
-                      dirty }) => (
+                      isSubmitting,
+                      dirty, }) => (
                       <form
                         onSubmit={handleSubmit}
                         className='w-full flex flex-col gap-8 h-[478px]'>
@@ -152,7 +149,11 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
                             InputLabelProps={{ shrink: true }}
                             style={{ width: '100%' }}
                             onChange={handleChange}
-                            onBlur={handleBlur}
+                            onBlur={(e) => {
+                              handleBlur(e);
+                              setFormIsTouched(true)
+                            }
+                            }
                             error={touched.username && Boolean(errors.username)}
                           />
                           {touched.username && errors.username && (
@@ -185,6 +186,7 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
                           <TextField
                             id="password"
                             placeholder='••••••••'
+                            type='password'
                             label="パスワード*"
                             value={values.password}
                             InputLabelProps={{ shrink: true }}
@@ -201,12 +203,12 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
                           )}
                         </div>
                         <button
-                          disabled={!isValid}
+                          disabled={!isValid && !dirty || isSubmitting}
                           onClick={() => validateForm()}
                           type='submit'
-                          className={` rounded-[4px] py-2 px-8 
+                          className={`rounded-[4px] py-2 px-8 
                           text-[#fff] 
-                          ${!isValid ? 'bg-[#E1E1E1]' : 'bg-[#BA00ff] hover:bg-[#BA00ff]/[0.6]'}`} >
+                          ${!(isValid && dirty) || isSubmitting ? 'bg-[#E1E1E1]' : 'bg-[#BA00ff] hover:bg-[#BA00ff]/[0.6]'}`} >
                           送信する
                         </button>
                       </form>
@@ -225,6 +227,4 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
 
 export default RegisterPage
 
-function useCallBack(arg0: (formValues: FormValuesProps) => any) {
-  throw new Error("Function not implemented.");
-}
+

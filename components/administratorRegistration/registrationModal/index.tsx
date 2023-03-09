@@ -52,7 +52,6 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
   const [notification, setNotification] = useState<TNotification>({
     open: false,
   });
-
   const router = useRouter()
   const addUserHandler = async (data: FormValues) => {
     try {

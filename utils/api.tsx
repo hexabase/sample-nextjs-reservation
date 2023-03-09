@@ -15,7 +15,7 @@ export const addUser = async (email: string): Promise<ApiResponse<TAddUser>> => 
       },
       {
         headers: {
-          Authorization: 'Bearer eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjI2MjIxMTU1MTgsImlhdCI6MTY3NjAzNTUxOCwic3ViIjoiNjJkN2QzOTgwZmZjZTUzYTA5ZTJiYmU1IiwidW4iOiIifQ.fUbrmSWAJ1sny52L9TmlDM1nzjJuou9EmhiIxngdgdxFyaEg2u1BcaBLNpJM5R1XUq7WMyXMnJxrHmCPUNXv-i4SR26zQlPfY9lezFXrxEXX5MecF9SB2mW-MyVmkwPnWWBqRtVpnJ60vFDXELvrXZGBKY1UsMCC9Fnq5gRuRGnR5jDeU7bUPRnP6YNT4SpQj9x02Jg9XBNXyFHuZgdpUukDsnDsxuWhP1ZM6qPbyOe-rTeo11wlDjA4LSQKg6JipScWJf8NKwYJnQBP_A4q90zdTSqapAqNq3GU4T8QAixDBiiibmuXdTW8BUcF_jhH9btD0lsdIt2aynel0o7v_A'
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
         }
       }
     )
@@ -43,7 +43,7 @@ export const userInvite = async (email: string): Promise<ApiResponse<TUserInvite
     },
       {
         headers: {
-          Authorization: 'Bearer eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjI2MjIxMTU1MTgsImlhdCI6MTY3NjAzNTUxOCwic3ViIjoiNjJkN2QzOTgwZmZjZTUzYTA5ZTJiYmU1IiwidW4iOiIifQ.fUbrmSWAJ1sny52L9TmlDM1nzjJuou9EmhiIxngdgdxFyaEg2u1BcaBLNpJM5R1XUq7WMyXMnJxrHmCPUNXv-i4SR26zQlPfY9lezFXrxEXX5MecF9SB2mW-MyVmkwPnWWBqRtVpnJ60vFDXELvrXZGBKY1UsMCC9Fnq5gRuRGnR5jDeU7bUPRnP6YNT4SpQj9x02Jg9XBNXyFHuZgdpUukDsnDsxuWhP1ZM6qPbyOe-rTeo11wlDjA4LSQKg6JipScWJf8NKwYJnQBP_A4q90zdTSqapAqNq3GU4T8QAixDBiiibmuXdTW8BUcF_jhH9btD0lsdIt2aynel0o7v_A'
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
         }
       }
     )
