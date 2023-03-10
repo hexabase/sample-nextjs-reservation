@@ -7,7 +7,7 @@ import { SearchOutlined } from '@mui/icons-material'
 import MediaCard from 'components/components/card'
 import { FooterMobile } from 'components/components/footerMobile'
 import CloseIcon from '@mui/icons-material/Close';
-import { jobs } from '../utils/db'
+import { jobs } from '../../utils/db'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {

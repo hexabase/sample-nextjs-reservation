@@ -14,12 +14,20 @@
   .text-overflow-multiline-ellipsis {
     @apply text-overflow-multiline;
   }
-
+  .text-overflow-threeline-ellipsis {
+    @apply text-overflow-threeline;
+  }
 
   @layer utilities{
     .text-overflow-multiline {
       display: -webkit-box;
       -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .text-overflow-threeline{
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import { Formik } from 'formik';
-import { EmailRegistration } from 'components/app/auth/Schema';
+import { EmailRegistration } from 'components/app/(public-user)/auth/Schema';
 import CloseIcon from '@mui/icons-material/Close';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";

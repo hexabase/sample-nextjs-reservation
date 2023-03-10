@@ -146,7 +146,6 @@ export const createItem = async ({ user_id, position, name }: TInputCreateItem):
       },
       {
         headers: {
-          // Authorization: 'Bearer eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjI2MjIxMTU1MTgsImlhdCI6MTY3NjAzNTUxOCwic3ViIjoiNjJkN2QzOTgwZmZjZTUzYTA5ZTJiYmU1IiwidW4iOiIifQ.fUbrmSWAJ1sny52L9TmlDM1nzjJuou9EmhiIxngdgdxFyaEg2u1BcaBLNpJM5R1XUq7WMyXMnJxrHmCPUNXv-i4SR26zQlPfY9lezFXrxEXX5MecF9SB2mW-MyVmkwPnWWBqRtVpnJ60vFDXELvrXZGBKY1UsMCC9Fnq5gRuRGnR5jDeU7bUPRnP6YNT4SpQj9x02Jg9XBNXyFHuZgdpUukDsnDsxuWhP1ZM6qPbyOe-rTeo11wlDjA4LSQKg6JipScWJf8NKwYJnQBP_A4q90zdTSqapAqNq3GU4T8QAixDBiiibmuXdTW8BUcF_jhH9btD0lsdIt2aynel0o7v_A'
           Authorization: token ? `Bearer ${token}` : ''
         }
       }
@@ -175,6 +174,136 @@ export const login = async ({ email, password }: TInputLogin): Promise<ApiRespon
     return {
       data: res.data,
       status: res.status
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknown error')
+  }
+}
+
+export const logout = async () => {
+  try {
+    const token = getCookie('token');
+    const res = await axiosInstance.post(
+      'https://api.hexabase.com/api/v0/users/logout',
+      {},
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : ''
+        }
+      }
+    )
+    return {
+      data: res.data,
+      status: res.status,
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknown error')
+  }
+}
+
+export const uploadFile = async (formData: FormData) => {
+  try {
+    const token = getCookie('token')
+    const res = await axiosInstance.post(
+      'https://api.hexabase.com/api/v0/files',
+      formData,
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : '',
+          "Content-Type": 'multipart/form-data'
+        }
+      }
+    )
+    return {
+      data: res.data,
+      status: res.status,
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      console.log(error.response)
+      throw error
+    }
+    throw new Error('Unknown error')
+  }
+}
+
+export const getRecruitersItems = async () => {
+  try {
+    const token = getCookie('token')
+    const res = await axiosInstance.post(
+      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/recruiters/items/search',
+      {
+        conditions: [
+          {
+            id: 'user_id',
+            search_value: ['1'],
+            exact_match: true
+          }
+        ],
+        page: 1,
+        per_page: 1,
+        use_display_id: true
+      },
+      {
+        headers: {
+          Authorization: `${process.env.NEXT_PUBLIC_TOKEN_API}`,
+        }
+      }
+    )
+
+    return {
+      data: res.data,
+      status: res.status,
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknow error')
+  }
+}
+
+export const createJobItems = async (data: any) => {
+  try {
+    const token = getCookie('token')
+    const d = new Date("2015-03-25");
+
+    const res = await axiosInstance.post(
+      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/new',
+      {
+        item: {
+          recruiter_id: '000000001',
+          title: data.title,
+          image: data.image,
+          reservation_detail: data.reservation_detail,
+          date: data.date,
+          time_10: data.time_10 === true ? 1 : 0,
+          time_11: data.time_11 === true ? 1 : 0,
+          time_12: data.time_12 === true ? 1 : 0,
+          time_13: data.time_13 === true ? 1 : 0,
+          time_14: data.time_14 === true ? 1 : 0,
+          time_15: data.time_15 === true ? 1 : 0,
+          time_16: data.time_16 === true ? 1 : 0,
+          time_17: data.time_17 === true ? 1 : 0,
+        },
+        is_force_update: true
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
+        }
+      }
+    )
+
+    return {
+      data: res.data,
+      status: res.status,
     }
   } catch (error) {
     if (error instanceof ApiError) {

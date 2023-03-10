@@ -129,4 +129,29 @@ export type TInputLogin = {
   email: string;
   password: string;
 };
+// export type TRecruitersItems = {
+//   name: string;
+//   created_at: string;
+//   created_by: string;
+//   d_id: string;
+//   i_id: string;
+//   id: string;
+//   p_id: string;
+//   rev_no: string;
+//   title: string;
+//   unread: string;
+// }
 
+// export type TGetRecruitersItems = {
+//   items: TRecruitersItems[];
+//   totalItems: number;
+// }
+
+// export type TInputCreateJobItem = {
+//   recruiter_id:string,
+//   title:string,
+//   reservation_detail:string,
+//   image:string[],
+//   date:string,
+
+// }

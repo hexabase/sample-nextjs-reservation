@@ -9,7 +9,7 @@ import { SchemaRegisterAdmin } from "../../Schema";
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from "react";
 import { confirmRegistration, createItem, getUserInfo, registerUser } from "components/utils/api";
-import { EMessageError, ETypeStatus, PageProps, TNotification, TUserConfirm } from '../../../../types/common'
+import { EMessageError, ETypeStatus, PageProps, TNotification, TUserConfirm } from '../../../../../types/common'
 import { setCookie } from "cookies-next";
 
 interface FormValuesProps {
@@ -25,7 +25,7 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
   });
   const router = useRouter();
   const handleRouter = () => {
-    router.push('/auth/register-completed');
+
   };
 
   const dataCreateItem = useCallback(async (formValues: FormValuesProps, user_id: string) => {
@@ -37,6 +37,7 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
         position,
         name
       })
+      res.data && router.push('/auth/register-completed');
     } catch (error) {
       console.log('error', error);
     }

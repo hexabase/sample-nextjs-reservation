@@ -2,49 +2,33 @@
 
 import { Button, Grid, Pagination } from "@mui/material"
 import TableData from "components/components/table"
-import { TJob } from "components/types/common"
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import { makeStyles } from '@material-ui/core/styles';
-import { jobs } from "../../utils/db";
+import { jobs } from "../../../utils/db";
 import NoRegister from "components/components/reservationRegistration/noRegister";
 import AddNewForm from "components/components/administratorRegistration/addNewAgenda";
 import AddIcon from '@mui/icons-material/Add';
 import AdminMenus from "components/components/layout/adminMenus";
 import { useState } from "react";
 import CardMobile from "components/components/reservationDetail/cardMobile";
-const useStyles = makeStyles({
-  selected: {
-    backgroundColor: '#2196f3',
-    color: '#fff',
-    '&:hover': {
-      backgroundColor: '#1976d2',
-    },
-  },
-  item: {
-    color: '#2196f3',
-    border: '1px solid #2196f3',
-    '&:hover': {
-      backgroundColor: '#2196f3',
-      color: '#fff',
-    },
-  },
-});
+import KeyboardTabIcon from '@mui/icons-material/KeyboardTab';
 
 const Administrator = () => {
-  const classes = useStyles();
   const [isAddRegistration, setIsAddRegistration] = useState(false)
   const [isListPage, setIsListPage] = useState(true)
   return (
     <>
-      <div className={`hidden sm:block pl-[527px] ${isAddRegistration ? 'sm:hidden' : ''}`}>
+      <div className={`hidden sm:block md:pl-[127px] sm:py-[15px] lg:pl-[327px] ${isAddRegistration ? 'sm:hidden' : ''}`}>
         <p className="font-bold text-lg ">ホスト一覧</p>
       </div>
       <Grid container spacing={0} className='relative flex justify-center'>
-        <Grid item xs={4}
-          className='hidden sm:block'
-          style={{ maxWidth: '280px', background: '#F8F9FA', border: '1px solid #E1E1E1' }}>
-          <div className="px-4 w-full pt-20">
-
+        <Grid item xs={2}
+          className='hidden sm:block w-2/12 bg-[#F8F9FA] border border-solid border-[#E1E1E1]'
+        >
+          <div className="flex flex-col items-center gap-[28px] px-4 w-full">
+            <div className="flex py-[13px] gap-[13px] w-full justify-end">
+              <KeyboardTabIcon />
+            </div>
             <Button
               onClick={() => {
                 setIsAddRegistration(true);
@@ -52,17 +36,17 @@ const Administrator = () => {
               }}
               className="w-full bg-[#ba00ff] text-[#fff] rounded-[50px] 
               flex justify-start gap-2 items-center hover:bg-[#BA00FF]
-              py-[10px] pl-4">
+              py-[10px] pl-4 pr-[4px] h-[37px]">
               <PostAddIcon />
-              <p className="font-sans">
+              <p className="font-sans hidden lg:block h-full">
                 新規アジェンダ登録
               </p>
             </Button>
           </div>
 
         </Grid>
-        <Grid item xs={12}
-          className='max-w-[1448px] pt-6 border-t border-b border-[#E1E1E1] border-solid md:pl-10'
+        <Grid item xs={12} md={10}
+          className='w-10/12 pt-6 border-t border-b border-[#E1E1E1] border-solid md:px-10'
         >
           {isAddRegistration ? <>
             <AddNewForm setIsAddRegistration={setIsAddRegistration} />
@@ -72,7 +56,6 @@ const Administrator = () => {
               {jobs ?
                 <>
                   <div className="hidden md:block">
-
                     <div className="flex items-center justify-between ">
                       <p className="text-sm">
                         1件〜10件 / 全120件
