@@ -120,7 +120,6 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
     [filesId]
   );
 
-
   return (
     <div className="px-5 md:px-0 pt-[60px] md:pt-0 pb-12 md:pb-0">
       <p className="font-bold text-lg text-center sm:text-left mb-4">新規アジェンダ登録</p>
@@ -160,14 +159,17 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
                   <p className="mb-8 pl-3 md:pl-0 text-sm md:text-base">必要事項を入力して「登録」ボタンをクリックしてください</p>
 
                   <div className="flex flex-col gap-10">
-                    <input type="date"
-                      id="date"
-                      value={values.date}
-                      onChange={handleChange}
-                      className="border border-solid border-[#000000]/[0.36] rounded-[4px] 
-                      p-4"
-                      placeholder="カレンダーから選択"
-                    />
+                    <div className="form__group">
+                      <input type='date'
+                        id="date"
+                        className="form__field"
+                        placeholder="Your Message"
+                        value={values.date}
+                        onChange={handleChange}
+                      >
+                      </input>
+                      <label htmlFor="message" className="form__label label__type">日程*</label>
+                    </div>
 
                     <TextField
                       id="title"
@@ -200,8 +202,11 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
                     className="bg-[#F2F2F2] w-full h-[330px] flex flex-col items-center justify-center gap-[10px] mb-8">
                     <label htmlFor="file-input">
                       <Image src='/camera.svg' alt="camera" width={40} height={36} />
+
                     </label>
-                    <input id="file-input" type="file" ref={fileInput}
+                    <input id="file-input" type="file"
+                      required
+                      ref={fileInput}
                       style={{ display: 'none' }}
                       onChange={(event) => {
                         uploadImageHandler(event.target.files);
@@ -209,12 +214,15 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
                     />
                     <button
                       className="bg-[#fff] text-[#808080] px-[10px] py-[6px] 
-            border border-solid border-[#808080] rounded-[4px] text-[10px] font-bold">
+                      border border-solid border-[#808080] rounded-[4px] text-[10px] font-bold">
                       <p>画像をアップロード</p>
                     </button>
-
+                    {files[0] && (
+                      <div className="flex">
+                        {files.map((file) => file.name).join(', ')}
+                      </div>
+                    )}
                   </div>
-
 
                   <p className="text-base mb-2">時間の設定</p>
                   <div
@@ -231,7 +239,6 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
                       label="10.00"
                     />
                     <FormControlLabel
-
                       control={<Checkbox
                         color="primary"
                         value={values.time_11}
@@ -239,7 +246,6 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
                       label="11.00"
                     />
                     <FormControlLabel
-
                       control={<Checkbox
                         color="primary"
                         value={values.time_12}
@@ -247,42 +253,45 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
                       label="12.00"
                     />
                     <FormControlLabel
-
-                      control={<Checkbox
-                        color="primary"
-                        value={values.time_13}
-                        checked={values.time_13} onChange={handleChange} name="time_13" />}
+                      control={
+                        <Checkbox
+                          color="primary"
+                          value={values.time_13}
+                          checked={values.time_13} onChange={handleChange} name="time_13" />}
                       label="13.00"
                     />
                     <FormControlLabel
-                      control={<Checkbox
-                        color="primary"
-                        value={values.time_14}
-                        checked={values.time_14} onChange={handleChange} name="time_14" />}
+                      control={
+                        <Checkbox
+                          color="primary"
+                          value={values.time_14}
+                          checked={values.time_14} onChange={handleChange} name="time_14" />}
                       label="14.00"
                     />
                     <FormControlLabel
-                      control={<Checkbox
-                        color="primary"
-                        value={values.time_15}
-                        checked={values.time_15} onChange={handleChange} name="time_15" />}
+                      control={
+                        <Checkbox
+                          color="primary"
+                          value={values.time_15}
+                          checked={values.time_15} onChange={handleChange} name="time_15" />}
                       label="15.00"
                     />
                     <FormControlLabel
-                      control={<Checkbox
-                        color="primary"
-                        value={values.time_16}
-                        checked={values.time_16} onChange={handleChange} name="time_16" />}
+                      control={
+                        <Checkbox
+                          color="primary"
+                          value={values.time_16}
+                          checked={values.time_16} onChange={handleChange} name="time_16" />}
                       label="16.00"
                     />
                     <FormControlLabel
-                      control={<Checkbox
-                        color="primary"
-                        value={values.time_17}
-                        checked={values.time_17} onChange={handleChange} name="time_17" />}
+                      control={
+                        <Checkbox
+                          color="primary"
+                          value={values.time_17}
+                          checked={values.time_17} onChange={handleChange} name="time_17" />}
                       label="17.00"
                     />
-
                   </div>
                 </Grid>
               </Grid>
