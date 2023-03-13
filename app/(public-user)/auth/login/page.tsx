@@ -1,11 +1,44 @@
 'use client'
 import { TextField } from '@mui/material';
 import { FooterMobile } from 'components/components/footerMobile';
+import { setCookie } from 'cookies-next';
 import { Formik } from 'formik';
 import Image from 'next/image';
 import { SchemaLogin } from '../Schema';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { EMessageError, ETypeStatus, TNotification } from 'components/types/common';
+import { login } from 'components/utils/api';
 
+interface FormValuesProps {
+  email: string,
+  password: string,
+}
 const LoginPage = () => {
+  const router = useRouter()
+  const [notification, setNotification] = useState<TNotification>({
+    open: false,
+  });
+  const loginHandler = async (formValues: FormValuesProps) => {
+    try {
+      const { email, password } = formValues;
+      const loginRes = await login({
+        email,
+        password,
+      });
+
+      if (loginRes.data.token) {
+        setCookie('token', loginRes.data.token);
+        router.push('/auth/login');
+      }
+    } catch (error) {
+      setNotification({
+        open: true,
+        type: ETypeStatus.ERROR,
+        message: EMessageError.ERR_01,
+      });
+    }
+  };
   return (
     <div className='container-responsive'>
       <div className='flex flex-col justify-center px-5 md:px-0 md:py-[100px] text-center gap-4 md:gap-10'>
@@ -21,8 +54,8 @@ const LoginPage = () => {
               password: '',
             }}
             validationSchema={SchemaLogin}
-            onSubmit={(data) => {
-              alert('login success')
+            onSubmit={(data: FormValuesProps) => {
+              loginHandler(data)
             }}
           >
             {
@@ -32,8 +65,11 @@ const LoginPage = () => {
                 isValid,
                 handleBlur,
                 handleChange,
-                handleSubmit, }) =>
-              (<form className='w-full md:w-96 flex flex-col gap-8 md:gap-10 justify-center'>
+                handleSubmit,
+                dirty, }) =>
+              (<form
+                onSubmit={handleSubmit}
+                className='w-full md:w-96 flex flex-col gap-8 md:gap-10 justify-center'>
                 <TextField
                   id="email"
                   placeholder='sample@hexabase.com'
@@ -49,6 +85,7 @@ const LoginPage = () => {
                   id="password"
                   placeholder='••••••••'
                   label="パスワード*"
+                  type='password'
                   value={values.password}
                   InputLabelProps={{ shrink: true }}
                   style={{ width: '100%' }}
@@ -64,8 +101,8 @@ const LoginPage = () => {
 
                 <button
                   type='submit'
-                  className='bg-[#BA00ff] rounded-[4px] py-2 px-8 text-[#fff]
-                      hover:bg-[#BA00ff]/[0.6]'>
+                  className={`rounded-[4px] py-2 px-8 text-[#fff]
+                  ${!(isValid && dirty) ? 'bg-[#E1E1E1]' : 'bg-[#BA00ff] hover:bg-[#BA00ff]/[0.6]'}`}>
                   ログイン
                 </button>
               </form>)

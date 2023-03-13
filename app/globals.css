@@ -14,7 +14,9 @@
   .text-overflow-multiline-ellipsis {
     @apply text-overflow-multiline;
   }
-
+  .text-overflow-threeline-ellipsis {
+    @apply text-overflow-threeline;
+  }
 
   @layer utilities{
     .text-overflow-multiline {
@@ -23,5 +25,56 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+    .text-overflow-threeline{
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
+}
+
+ .form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border: 1px solid #d2d2d2;
+  outline: 0;
+  font-size: 16px;
+  color: #212121;
+  padding: 16px;
+  background: transparent;
+  transition: border-color 0.2s;
+  border-radius: 5px;
+}
+.form__field::placeholder {
+  color: transparent;
+  
+}
+.label__type,
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 5px;
+  display: block;
+  transition: 0.2s;
+  font-size: 12px;
+  color: #9b9b9b;
+  background-color: white;
+  z-index: 999;
+  left: 12px;
+  width: 40px;
+  text-align: center;
+}
+
+.form__field:focus {
+  border: 1px solid #2196f3;
+}
+input[type=date]:required:invalid::-webkit-datetime-edit {
+  color: white;
 }

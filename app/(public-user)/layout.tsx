@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import './globals.css'
+import '../globals.css'
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import RegistrationButton from 'components/components/administratorRegistration/button';
 import { useState } from 'react';

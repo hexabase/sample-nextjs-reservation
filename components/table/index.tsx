@@ -3,18 +3,30 @@ import Paper from '@mui/material/Paper';
 import { TJob } from 'components/types/common';
 import { Button, Theme } from '@mui/material';
 import Image from 'next/image'
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Box } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, } from '@mui/material';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import { useState } from 'react';
 import { DrawerReservation } from '../reservationDetail/drawer';
+import { makeStyles } from '@material-ui/core/styles';
+
 export interface ITableData {
   jobs: TJob[]
 }
+
+const useStyles = makeStyles({
+  root: {
+    padding: 0,
+  },
+});
+
+
 export default function TableData({ jobs }: ITableData) {
 
   const [hoveredRowIndex, setHoveredRowIndex] = useState('');
   const [showDrawer, setShowDrawer] = useState(false)
   const [jobInfo, setJobInfor] = useState<TJob>()
+  const classes = useStyles();
+
   const handleRowOver = (rowIndex: string) => {
     setHoveredRowIndex(rowIndex);
   };
@@ -37,7 +49,7 @@ export default function TableData({ jobs }: ITableData) {
             <TableRow
               className='bg-[#E1E1E1]'
             >
-              <TableCell style={{ width: '30%' }} className='text-[#000000] font-sans' align='center'>
+              <TableCell style={{ width: '25%' }} className='text-[#000000] font-sans' align='center'>
                 <div className='flex items-center gap-1'>
                   <p>
                     タイトル
@@ -46,7 +58,7 @@ export default function TableData({ jobs }: ITableData) {
                 </div>
               </TableCell>
 
-              <TableCell style={{ width: '10%' }} className='text-[#000000] font-sans' align='center'>
+              <TableCell style={{ width: '12%' }} className='text-[#000000] font-sans' align='center'>
                 <div className='flex items-center gap-1'>
                   <p>
                     名前
@@ -54,7 +66,7 @@ export default function TableData({ jobs }: ITableData) {
                   <UnfoldLessIcon fontSize='small' />
                 </div>
               </TableCell>
-              <TableCell style={{ width: '20%' }} className='text-[#000000] font-sans' align="left">
+              <TableCell style={{ width: '12%' }} className='text-[#000000] font-sans' align="left">
                 <div className='flex items-center gap-1'>
                   <p>
                     肩書き
@@ -62,7 +74,7 @@ export default function TableData({ jobs }: ITableData) {
                   <UnfoldLessIcon fontSize='small' />
                 </div>
               </TableCell>
-              <TableCell style={{ width: '10%' }} className='text-[#000000] font-sans' align="left">
+              <TableCell style={{ width: '8%' }} className='text-[#000000] font-sans' align="left">
                 <div className='flex items-center gap-1'>
                   <p>
                     日程
@@ -70,7 +82,7 @@ export default function TableData({ jobs }: ITableData) {
                   <UnfoldLessIcon fontSize='small' />
                 </div>
               </TableCell>
-              <TableCell style={{ width: '40%' }} className='text-[#000000] font-sans' align="left">
+              <TableCell style={{ width: '22%' }} className='text-[#000000] font-sans' align="left">
                 <div className='flex items-center gap-1'>
                   <p>
                     時間
@@ -101,30 +113,30 @@ export default function TableData({ jobs }: ITableData) {
                     transition: 'background-color 0.3s ease',
                   }}
                 >
-                  <TableCell component="th" scope="row" align='left'  >
-                    <div className='flex items-center gap-x-5 '>
-                      <Image src='/work.svg' alt='image' width={100} height={62} />
-                      <p className='font-bold'>{job.title}</p>
+                  <TableCell component="th" scope="row" align='left' className="px-3" >
+                    <div className='flex items-center gap-x-4 '>
+                      <Image src='/work.svg' alt='image' width={100} height={62} className='md:w-[60px] md:h-[42px] lg:w-[100px] lg:h-[62px]' />
+                      <p className='font-bold text-overflow-threeline-ellipsis'>{job.title}</p>
                     </div>
                   </TableCell>
-                  <TableCell align='left' >
+                  <TableCell align='left' className="px-3" >
 
                     <p className='font-sans font-bold'>
                       {job?.name}
                     </p>
 
                   </TableCell>
-                  <TableCell align="left" style={{ flex: 1 }}  >
+                  <TableCell align="left" className="px-3"  >
                     <p className='font-sans font-bold'>{job?.position}</p>
 
                   </TableCell>
-                  <TableCell align="left"  >
+                  <TableCell align="left" className="px-3"  >
                     <p className='font-sans font-bold'>
                       {job?.day}
                     </p>
 
                   </TableCell>
-                  <TableCell align="left" sx={{ borderRight: "1px solid #ccc" }} >
+                  <TableCell align="left" sx={{ borderRight: "1px solid #ccc" }} className="px-3" >
                     <div className='flex flex-wrap gap-4'>
                       {job?.time.map((d, index) => (
                         <Button key={index}

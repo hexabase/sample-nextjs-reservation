@@ -2,11 +2,6 @@
 import { makeStyles } from '@material-ui/core';
 import { Box, Button, Divider, FormControl, Grid, InputLabel, Modal, OutlinedInput, TextField } from "@mui/material";
 import { TJob } from "components/types/common";
-import Image from "next/image";
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import CloseIcon from '@mui/icons-material/Close';
-import AvTimerIcon from '@mui/icons-material/AvTimer';
-import DoneIcon from '@mui/icons-material/Done';
 import { useState } from "react";
 import ReservationItem from '../reservationDetail/reservationItem';
 const style = {
@@ -34,7 +29,6 @@ export interface IChildModel {
   open: boolean;
   handleClose: () => void;
   jobDetail?: TJob;
-
 }
 
 const ChildModel = ({ open, handleClose, jobDetail }: IChildModel) => {
@@ -56,7 +50,6 @@ const ChildModel = ({ open, handleClose, jobDetail }: IChildModel) => {
       <>
         <div className="modal-body">
           <Box sx={{ ...style, width: 1248, borderRadius: '20px', }}>
-
             <ReservationItem jobDetail={jobDetail} handleClose={handleClose} />
           </Box>
 

@@ -5,17 +5,93 @@ import { FooterMobile } from "components/components/footerMobile";
 import { Formik } from 'formik';
 import Image from 'next/image';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import { SchemaRegisterAdmin } from "../Schema";
+import { SchemaRegisterAdmin } from "../../Schema";
 import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useState } from "react";
+import { confirmRegistration, createItem, getUserInfo, registerUser } from "components/utils/api";
+import { EMessageError, ETypeStatus, PageProps, TNotification, TUserConfirm } from '../../../../../types/common'
+import { setCookie } from "cookies-next";
 
-const RegisterPage = () => {
+interface FormValuesProps {
+  username: string,
+  position: string,
+  password: string
+}
+const RegisterPage = ({ params: { id } }: PageProps) => {
+  const [dataConfirm, setDataConfirm] = useState<TUserConfirm>();
+  const [formIsTouched, setFormIsTouched] = useState(false);
+  const [notification, setNotification] = useState<TNotification>({
+    open: false,
+  });
   const router = useRouter();
   const handleRouter = () => {
-    router.push('/auth/register-completed');
-  };
-  const handleFormSubmit = () => {
 
-  }
+  };
+
+  const dataCreateItem = useCallback(async (formValues: FormValuesProps, user_id: string) => {
+    try {
+      const { position } = formValues
+      const name = formValues.username
+      const res = await createItem({
+        user_id,
+        position,
+        name
+      })
+      res.data && router.push('/auth/register-completed');
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, [])
+  const dataGetUserInfo = useCallback(async (formValues: FormValuesProps) => {
+    try {
+      const res = await getUserInfo();
+      res.data.u_id && dataCreateItem(formValues, res.data.u_id);
+    } catch (error) {
+      setNotification({
+        open: true,
+        type: ETypeStatus.ERROR,
+        message: EMessageError.ERR_01,
+      });
+    }
+  }, []);
+  const dataRegisterUser = useCallback(
+    async (formValues: FormValuesProps) => {
+      const { password, username } = formValues;
+      const email = dataConfirm?.email || '';
+      const workspace = dataConfirm?.current_workspace_id || '';
+      const confirmation_id = dataConfirm?.confirmation_id || ''
+      try {
+        const res = await registerUser({
+          password,
+          username,
+          email,
+          workspace,
+          confirmation_id
+        })
+        if (res.data.token) {
+          setCookie('token', res.data.token);
+          dataGetUserInfo(formValues)
+        }
+      } catch (error) {
+        setNotification({
+          open: true,
+          type: ETypeStatus.ERROR,
+          message: EMessageError.ERR_01,
+        });
+      }
+    }, [dataConfirm, dataGetUserInfo]
+  )
+
+  useEffect(() => {
+    (async function dataConfirmRegistration() {
+      try {
+        const res = await confirmRegistration(id)
+        res.data.user && setDataConfirm(res.data.user)
+      } catch (error) {
+        console.log('error', error)
+      }
+    })();
+  }, [id])
   return (
     <div className="container-responsive">
       <div className="py-[30px] md:py-[150px]">
@@ -39,13 +115,13 @@ const RegisterPage = () => {
               <div>
                 <Formik
                   initialValues={{
-                    name: '',
+                    username: '',
                     position: '',
                     password: '',
                   }}
-                  onSubmit={(data) => {
+                  onSubmit={(data: FormValuesProps) => {
+                    dataRegisterUser(data)
                     handleRouter()
-                    alert(data)
                   }}
                   validationSchema={SchemaRegisterAdmin}
                   validateOnBlur={true}
@@ -60,23 +136,28 @@ const RegisterPage = () => {
                       handleChange,
                       handleSubmit,
                       validateForm,
-                      dirty }) => (
+                      isSubmitting,
+                      dirty, }) => (
                       <form
                         onSubmit={handleSubmit}
                         className='w-full flex flex-col gap-8 h-[478px]'>
                         <div className="relative h-[86px]">
                           <TextField
-                            id="name"
-                            value={values.name}
+                            id="username"
+                            value={values.username}
                             placeholder='山田　太郎'
                             label="お名前*"
                             InputLabelProps={{ shrink: true }}
                             style={{ width: '100%' }}
                             onChange={handleChange}
-                            onBlur={handleBlur}
-                            error={touched.name && Boolean(errors.name)}
+                            onBlur={(e) => {
+                              handleBlur(e);
+                              setFormIsTouched(true)
+                            }
+                            }
+                            error={touched.username && Boolean(errors.username)}
                           />
-                          {touched.name && errors.name && (
+                          {touched.username && errors.username && (
                             <>
                               <ReportProblemIcon className="absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]" />
                               <p className="text-[#E5242A] text-xs mt-2">役職は必須です</p>
@@ -106,6 +187,7 @@ const RegisterPage = () => {
                           <TextField
                             id="password"
                             placeholder='••••••••'
+                            type='password'
                             label="パスワード*"
                             value={values.password}
                             InputLabelProps={{ shrink: true }}
@@ -122,12 +204,12 @@ const RegisterPage = () => {
                           )}
                         </div>
                         <button
-                          disabled={!isValid}
+                          disabled={!isValid && !dirty || isSubmitting}
                           onClick={() => validateForm()}
                           type='submit'
-                          className={` rounded-[4px] py-2 px-8 
+                          className={`rounded-[4px] py-2 px-8 
                           text-[#fff] 
-                          ${!isValid ? 'bg-[#E1E1E1]' : 'bg-[#BA00ff] hover:bg-[#BA00ff]/[0.6]'}`} >
+                          ${!(isValid && dirty) || isSubmitting ? 'bg-[#E1E1E1]' : 'bg-[#BA00ff] hover:bg-[#BA00ff]/[0.6]'}`} >
                           送信する
                         </button>
                       </form>
@@ -145,3 +227,5 @@ const RegisterPage = () => {
 }
 
 export default RegisterPage
+
+

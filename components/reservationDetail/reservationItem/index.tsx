@@ -8,7 +8,7 @@ import { Button, Grid, TextField } from "@mui/material";
 import { useState } from "react";
 import { TJob } from "components/types/common";
 import { Formik } from 'formik';
-import { ReservationRegistration } from "components/app/auth/Schema";
+import { ReservationRegistration } from "components/app/(public-user)/auth/Schema";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 
 export interface IReservationItem {
