@@ -7,7 +7,7 @@ import Image from "next/image";
 import { Formik } from "formik";
 import { SchemaRecuiterRegister } from "components/app/(admin)/administrator/Schema";
 import { EMessageError, ETypeStatus, TNotification } from "components/types/common";
-import { createJobItems, getRecruitersItems, uploadFile } from "components/utils/api";
+import { createJobItems, uploadFile } from "components/utils/api";
 
 export interface IAddNewForm {
   setIsAddRegistration: any
@@ -50,25 +50,14 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
     setChecked({ ...checked, [event.target.name]: event.target.checked });
   };
 
-  const getDataRecruitersItems = async () => {
-    try {
-      const res = await getRecruitersItems()
-    } catch (error) {
-      console.log('error', error)
-    }
-  }
 
-  useEffect(() => {
-    getDataRecruitersItems()
-  }, [])
   const uploadImage = async (data: File) => {
     try {
       const formData = new FormData()
       formData.append('file', data)
       formData.append('name', data.name)
       const res = await uploadFile(formData)
-
-      res.data && setFilesId((prevFilesId) => [...prevFilesId, res.data.file_id]);
+      res.data && setFilesId((prevFilesId) => [...prevFilesId, res.data?.file_id]);
     } catch (error) {
       setNotification({
         open: true,
@@ -94,11 +83,12 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
   const createDataJobItems = useCallback(
     async (data: FormValues) => {
       try {
-        const res = await createJobItems({
-          ...data,
-          image: filesId,
-        });
-
+        const image = filesId
+        const res = await createJobItems(
+          data,
+          image,
+        );
+        console.log(res)
         if (res.data) {
           setNotification({
             open: true,

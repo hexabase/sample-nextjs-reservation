@@ -8,6 +8,7 @@ import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import { useState } from 'react';
 import { DrawerReservation } from '../reservationDetail/drawer';
 import { makeStyles } from '@material-ui/core/styles';
+import { getItemDetails } from 'components/utils/api';
 
 export interface ITableData {
   jobs: TJob[]
@@ -37,7 +38,9 @@ export default function TableData({ jobs }: ITableData) {
     setHoveredRowIndex('');
   };
 
-  const handleRowClick = (job: TJob) => {
+  const handleRowClick = async (job: TJob) => {
+    const res = await getItemDetails(job?.id)
+    console.log('res', res)
     setJobInfor(job)
     setShowDrawer(true)
   }
