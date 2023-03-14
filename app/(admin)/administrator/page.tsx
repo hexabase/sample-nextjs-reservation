@@ -9,13 +9,44 @@ import NoRegister from "components/components/reservationRegistration/noRegister
 import AddNewForm from "components/components/administratorRegistration/addNewAgenda";
 import AddIcon from '@mui/icons-material/Add';
 import AdminMenus from "components/components/layout/adminMenus";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CardMobile from "components/components/reservationDetail/cardMobile";
 import KeyboardTabIcon from '@mui/icons-material/KeyboardTab';
+import { getUserInfo, getRecruitersItems, getReservationsItems, } from "components/utils/api";
 
 const Administrator = () => {
   const [isAddRegistration, setIsAddRegistration] = useState(false)
   const [isListPage, setIsListPage] = useState(true)
+
+  const getDataReservationItems = useCallback(
+    async (id: string) => {
+      try {
+        const res = await getReservationsItems(id)
+        console.log('data', res.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }, []
+  )
+  const getDataRecruitersItems = useCallback(
+    async (id: string) => {
+      try {
+        const res = await getRecruitersItems(id)
+        getDataReservationItems(res.data?.items[0]?.recruiter_id)
+      } catch (error) {
+        console.log('error', error)
+      }
+    }, [getDataReservationItems])
+
+  useEffect(() => {
+    async function getDataUserInfo() {
+      const res = await getUserInfo()
+      getDataRecruitersItems(res.data.u_id)
+    }
+    getDataUserInfo()
+
+  }, [])
+  useEffect
   return (
     <>
       <div className={`hidden sm:block md:pl-[127px] sm:py-[15px] lg:pl-[327px] ${isAddRegistration ? 'sm:hidden' : ''}`}>

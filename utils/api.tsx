@@ -25,7 +25,6 @@ export const addUser = async (email: string): Promise<ApiResponse<TAddUser>> => 
     }
   } catch (error) {
     if (error instanceof ApiError) {
-      console.log(error.response)
       throw error
     }
     throw new Error('Unknown error')
@@ -226,14 +225,13 @@ export const uploadFile = async (formData: FormData) => {
     }
   } catch (error) {
     if (error instanceof ApiError) {
-      console.log(error.response)
       throw error
     }
     throw new Error('Unknown error')
   }
 }
 
-export const getRecruitersItems = async () => {
+export const getRecruitersItems = async (user_id: string) => {
   try {
     const token = getCookie('token')
     const res = await axiosInstance.post(
@@ -242,7 +240,7 @@ export const getRecruitersItems = async () => {
         conditions: [
           {
             id: 'user_id',
-            search_value: ['1'],
+            search_value: [user_id],
             exact_match: true
           }
         ],
@@ -269,18 +267,19 @@ export const getRecruitersItems = async () => {
   }
 }
 
-export const createJobItems = async (data: any) => {
+export const createJobItems = async (data: any, image: string[]) => {
   try {
     const token = getCookie('token')
     const d = new Date("2015-03-25");
-
+    console.log(data)
+    console.log(image)
     const res = await axiosInstance.post(
       'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/new',
       {
         item: {
-          recruiter_id: '000000001',
+          recruiter_id: '000000006',
           title: data.title,
-          image: data.image,
+          image: image,
           reservation_detail: data.reservation_detail,
           date: data.date,
           time_10: data.time_10 === true ? 1 : 0,
@@ -304,6 +303,84 @@ export const createJobItems = async (data: any) => {
     return {
       data: res.data,
       status: res.status,
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknown error')
+  }
+}
+
+export const getReservationsItems = async (recruiter_id: string) => {
+  const token = getCookie('token')
+  try {
+    const res = await axiosInstance.post(
+      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/search',
+      {
+        conditions: [{
+          id: 'recruiter_id',
+          search_value: [recruiter_id],
+          exact_match: true,
+
+        }],
+        include_links: true,
+        page: 1,
+        per_page: 10,
+        use_display_id: true
+      },
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : ''
+        }
+      }
+    )
+    return {
+      data: res.data,
+      status: res.status
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknown error')
+  }
+}
+
+const getFile = async (file_id: string) => {
+  const token = getCookie('token')
+  try {
+    const res = await axiosInstance.get(
+      `https://api.hexabase.com/api/v0/files/${file_id}`,
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : ''
+        }
+      }
+    )
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknow error')
+  }
+}
+
+export const getItemDetails = async (item_id: string) => {
+  const item_id1 = '640ae16d7fbbe73e1e6e114e'
+  const token = getCookie('token')
+  try {
+    const res = await axiosInstance.get(
+      `https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/details/${item_id1}?include_linked_items=true&use_display_id=true`,
+      {
+        headers: {
+          Authorization: token ? `Bearer ${token}` : ''
+        }
+      }
+    )
+    return {
+      data: res.data,
+      status: res.status
     }
   } catch (error) {
     if (error instanceof ApiError) {
