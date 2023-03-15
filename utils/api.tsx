@@ -1,4 +1,4 @@
-import { TAddUser, TConfirmRegistration, TGetUserInfo, TInputCreateItem, TInputLogin, TInputRegisterUser, TLogin, TRegisterUser, TUserInvite } from 'components/types/common';
+import { TAddUser, TConfirmRegistration, TGetUserInfo, TInputCreateItem, TInputLogin, TInputRegisterUser, TListFieldValues, TLogin, TRegisterUser, TReservationSearchLoad, TUploadFileRespond, TUserInvite } from 'components/types/common';
 import { getCookie } from 'cookies-next';
 import { ApiError, ApiResponse, createAxiosInstance } from './axios';
 
@@ -206,7 +206,7 @@ export const logout = async () => {
   }
 }
 
-export const uploadFile = async (formData: FormData) => {
+export const uploadFile = async (formData: FormData): Promise<ApiResponse<TUploadFileRespond>> => {
   try {
     const token = getCookie('token')
     const res = await axiosInstance.post(
@@ -240,7 +240,7 @@ export const getRecruitersItems = async (user_id: string) => {
         conditions: [
           {
             id: 'user_id',
-            search_value: [user_id],
+            search_value: ['64095aeafe74f30f7885f4df'],
             exact_match: true
           }
         ],
@@ -270,7 +270,6 @@ export const getRecruitersItems = async (user_id: string) => {
 export const createJobItems = async (data: any, image: string[]) => {
   try {
     const token = getCookie('token')
-    const d = new Date("2015-03-25");
     console.log(data)
     console.log(image)
     const res = await axiosInstance.post(
@@ -347,7 +346,7 @@ export const getReservationsItems = async (recruiter_id: string) => {
   }
 }
 
-const getFile = async (file_id: string) => {
+export const getFile = async (file_id: string) => {
   const token = getCookie('token')
   try {
     const res = await axiosInstance.get(
@@ -358,6 +357,10 @@ const getFile = async (file_id: string) => {
         }
       }
     )
+    return {
+      data: res.data,
+      status: res.status,
+    }
   } catch (error) {
     if (error instanceof ApiError) {
       throw error
@@ -366,12 +369,12 @@ const getFile = async (file_id: string) => {
   }
 }
 
-export const getItemDetails = async (item_id: string) => {
-  const item_id1 = '640ae16d7fbbe73e1e6e114e'
+export const getItemDetails = async (item_id: string): Promise<ApiResponse<TListFieldValues>> => {
+  // const item_id = '640864b5700fb2440a6e9b80'
   const token = getCookie('token')
   try {
     const res = await axiosInstance.get(
-      `https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/details/${item_id1}?include_linked_items=true&use_display_id=true`,
+      `https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/details/${item_id}?include_linked_items=true&use_display_id=true`,
       {
         headers: {
           Authorization: token ? `Bearer ${token}` : ''
@@ -382,6 +385,43 @@ export const getItemDetails = async (item_id: string) => {
       data: res.data,
       status: res.status
     }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error('Unknown error')
+  }
+}
+
+export const searchReservation = async ({
+  conditions,
+  sort_field_id,
+  sort_order,
+  page,
+  per_page,
+  use_display_id
+}: TReservationSearchLoad) => {
+  try {
+    const res = await axiosInstance.post(
+      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/search',
+      {
+        conditions,
+        sort_field_id,
+        sort_order,
+        page,
+        per_page,
+        use_display_id
+      },
+      {
+        headers: {
+          Authorization: `${process.env.NEXT_PUBLIC_TOKEN_API}`,
+        },
+      }
+    )
+    return {
+      data: res.data,
+      status: res.status,
+    };
   } catch (error) {
     if (error instanceof ApiError) {
       throw error

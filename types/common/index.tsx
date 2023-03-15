@@ -129,6 +129,10 @@ export type TInputLogin = {
   email: string;
   password: string;
 };
+
+export type TUploadFileRespond = {
+  file_id: string,
+}
 // export type TRecruitersItems = {
 //   name: string;
 //   created_at: string;
@@ -155,3 +159,61 @@ export type TInputLogin = {
 //   date:string,
 
 // }
+export type TReservationSearchPayloadOption = {
+  conditions: TReservationSearchCondition[];
+  sort_field_id?: string;
+  sort_order?: string;
+  use_or_condition?: boolean;
+};
+export type TReservationSearchCondition = {
+  id?: string;
+  search_value: string[];
+}
+export type TReservationSearchLoad = {
+  conditions: TReservationSearchCondition[];
+  sort_field_id?: string;
+  sort_order?: string;
+  use_or_condition?: boolean;
+  page: number;
+  per_page: number;
+  use_display_id?: boolean;
+}
+
+export type TReservationRespond = {
+  a_id: string,
+  created_at: string,
+  created_by: string,
+  d_id: string,
+  date: string,
+  i_id: string,
+  image: string,
+  p_id: string,
+  recruiter_id: string,
+  reservation_detail: string,
+  reservation_id: string,
+  rev_no: string,
+  status_id: string,
+  time_10: string,
+  time_11: string,
+  time_12: string,
+  time_13: string,
+  time_14: string,
+  time_15: string,
+  time_16: string,
+  time_17: string,
+  title: string,
+  updated_at: string,
+  updated_by: string,
+}
+export type TFieldValue = {
+  field_id: string;
+  dataType: string;
+  value: any;
+};
+export type TListFieldValues = {
+  field_values: TFieldValue[];
+};
+
+export type TFieldValueConvert = {
+  [key: string]: any;
+};

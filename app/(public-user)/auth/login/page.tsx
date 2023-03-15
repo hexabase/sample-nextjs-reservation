@@ -29,7 +29,7 @@ const LoginPage = () => {
 
       if (loginRes.data.token) {
         setCookie('token', loginRes.data.token);
-        router.push('/auth/login');
+        router.push('/administrator');
       }
     } catch (error) {
       setNotification({
