@@ -8,19 +8,80 @@ import MediaCard from 'components/components/card'
 import { FooterMobile } from 'components/components/footerMobile'
 import CloseIcon from '@mui/icons-material/Close';
 import { jobs } from '../../utils/db'
-import { TReservationSearchCondition, TReservationSearchPayloadOption } from 'components/types/common'
-import { useMemo, useState } from 'react'
+import { TReservationRespond, TReservationSearchCondition, TReservationSearchPayloadOption } from 'components/types/common'
+import { useEffect, useMemo, useState } from 'react'
 import { Formik } from 'formik'
+import { searchReservation } from 'components/utils/api'
 const inter = Inter({ subsets: ['latin'] })
 
+// export interface ISearchRequest {
+//   title: string,
+//   reservation_detail: string,
+//   [key: string]: string;
+// }
 export default function Home() {
-  // const [tagsSearch, setTagsSearch] = useState<string[]>([]);
-  // const payloadReservation: TReservationSearchPayloadOption = useMemo(() => {
-  //   const conditions: TReservationSearchCondition[] = [];
-  //   return {
-  //     conditions,
-  //   }
-  // }, [])
+  const [searchRequest, setSearchRequest] = useState<string>();
+  const [reservationList, setReservationList] = useState<TReservationRespond[]>([])
+  const payloadReservation: TReservationSearchPayloadOption = useMemo(() => {
+    const conditions: TReservationSearchCondition[] = [];
+    let sort_field_id: string | undefined;
+    let sort_order: 'asc' | 'desc' | undefined;
+    let use_or_condition = false;
+
+    // if (searchRequest && Object.keys(searchRequest).length > 0) {
+    //   for (const key in searchRequest) {
+    //     conditions.push({
+    //       id: String(key),
+    //       search_value: searchRequest[key]
+    //     })
+    //   }
+    //   use_or_condition = true
+    // }
+    if (searchRequest) {
+      conditions.push({
+        id: 'title',
+        search_value: [searchRequest]
+      }, {
+        id: 'reservation_detail',
+        search_value: [searchRequest]
+      })
+      use_or_condition = true
+    }
+    if (conditions.length === 0) {
+      sort_field_id = 'date',
+        sort_order = 'desc'
+    }
+    console.log(conditions.length)
+    console.log('conditions', conditions)
+    return {
+      conditions,
+      sort_field_id,
+      sort_order,
+      use_or_condition,
+    }
+  }, [searchRequest])
+
+  console.log('searchRequest', searchRequest)
+  useEffect(() => {
+    const getReservationData = async () => {
+      console.log('payloadReservation', payloadReservation);
+
+      try {
+        const res = await searchReservation({
+          ...payloadReservation,
+          page: 1,
+          per_page: 9,
+          use_display_id: true,
+
+        })
+        console.log('res', res.data.items)
+        setReservationList(res.data.items)
+      } catch (error) {
+        throw error
+      }
+    }
+    getReservationData()
+  }, [payloadReservation, searchRequest])
 
   return (
     <div className='container-responsive'>
@@ -40,29 +101,40 @@ export default function Home() {
           <Formik
             initialValues={{
               title: '',
-              data: ''
+              reservation_detail: ''
             }}
-            onSubmit={(data) => console.log('data', data)}
+            onSubmit={(data) => {
+              setSearchRequest(data.title)
+              console.log('data', data)
+            }}
           >
             {({ values, handleBlur, handleChange, handleSubmit }) => (
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className='border border-[#BA00FF] absolute top-1/2 -translate-y-2/4 left-1/2 -translate-x-1/2 bg-white flex h-[60px] pl-[18px] items-center rounded bg-[#fff]'>
                   <div >
                     <TextField id="title" label="キーワードで探す"
                       variant="standard" margin="normal"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
                       placeholder='人物・キーワード' InputProps={{
                         disableUnderline: true, style: {
                           fontFamily: 'Noto Sans JP, sans-serif',
                         },
                       }} InputLabelProps={{ shrink: true, style: { fontWeight: 'bold', fontSize: '12px', color: '#000000', fontFamily: 'Noto Sans JP, sans-serif', } }} />
-                    <TextField id="date" label="日付を選択" variant="standard" margin='normal' placeholder='カレンダーから選ぶ' InputProps={{
-                      disableUnderline: true, style: {
-                        fontFamily: 'Noto Sans JP, sans-serif',
-                      },
-                    }} InputLabelProps={{ shrink: true, style: { fontWeight: 'bold', fontSize: '12px', color: '#000000', fontFamily: 'Noto Sans JP, sans-serif', } }} />
+                    <TextField id="reservation_detail" label="日付を選択"
+                      variant="standard"
+                      margin='normal'
+                      placeholder='カレンダーから選ぶ'
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      InputProps={{
+                        disableUnderline: true, style: {
+                          fontFamily: 'Noto Sans JP, sans-serif',
+                        },
+                      }} InputLabelProps={{ shrink: true, style: { fontWeight: 'bold', fontSize: '12px', color: '#000000', fontFamily: 'Noto Sans JP, sans-serif', } }} />
                   </div>
 
-                  <Button className='bg-[#ba00ff] h-[60px] '>
+                  <Button type='submit' className='bg-[#ba00ff] h-[60px] '>
                     <SearchOutlined className='text-[#fff]' />
                   </Button>
                 </div>
@@ -79,7 +151,7 @@ export default function Home() {
         </div>
 
         <div className='mb-[52px]'>
-          <MediaCard jobs={jobs} />
+          <MediaCard reservationList={reservationList} />
         </div>
       </div>
       <div className='sm:hidden'>

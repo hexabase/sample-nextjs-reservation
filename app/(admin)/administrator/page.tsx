@@ -61,7 +61,7 @@ const Administrator = () => {
       </div>
       <Grid container spacing={0} className='relative flex justify-center'>
         <Grid item xs={2}
-          className='hidden sm:block w-2/12 bg-[#F8F9FA] border border-solid border-[#E1E1E1]'
+          className='hidden sm:block w-2/12 bg-[#F8F9FA] border border-solid border-[#E1E1E1] h-screen'
         >
           <div className="flex flex-col items-center gap-[28px] px-4 w-full">
             <div className="flex py-[13px] gap-[13px] w-full justify-end">

@@ -80,29 +80,7 @@ export const DrawerReservation = ({ open, onClose, reservationInfo }: IDrawerRes
             {reservationInfo?.reservation_detail}
           </p> :
             <div>
-              {/* {reservationInfo?.time.map((t, index) => (
-                <div
-                  key={index}
-                  className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${t.isFull ? 'bg-secondMainColor' : 'bg-[#E1E1E1]'} `}>
-                  <div className='w-full flex justify-between'>
-                    <div className='flex w-[80px] justify-between'>
-                      <div className='w-[20px]'>{t.isFull ? <PersonIcon /> : ""}</div>
-                      <div><p className='font-bold text-lg'>{t?.time}</p></div>
-                    </div>
-                    {t.isFull && <KeyboardArrowDownIcon className='cursor-pointer' onClick={() => handleExpandedInfo(String(index))} />}
-                  </div>
-                  <div className='mt-[30px] bg-[#fff] p-4 mb-2' style={{
-                    display: String(index) === expandedIndex ?
-                      'block' : 'none'
-                  }}>
-                    <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
-                    <div className='flex'>
-                      <EmailIcon />
-                      <p>sample@gmail.com</p>
-                    </div>
-                  </div>
-                </div>
-              ))} */}
+
               {reservationInfo?.time_10 == '1' ?
                 <div
                   className={`w-full px-5 py-[10px] text-[#000000] mb-4 bg-secondMainColor`}>

@@ -250,7 +250,7 @@ export const getRecruitersItems = async (user_id: string) => {
       },
       {
         headers: {
-          Authorization: `${process.env.NEXT_PUBLIC_TOKEN_API}`,
+          Authorization: token ? `Bearer ${token}` : '',
         }
       }
     )
@@ -370,7 +370,6 @@ export const getFile = async (file_id: string) => {
 }
 
 export const getItemDetails = async (item_id: string): Promise<ApiResponse<TListFieldValues>> => {
-  // const item_id = '640864b5700fb2440a6e9b80'
   const token = getCookie('token')
   try {
     const res = await axiosInstance.get(
@@ -395,6 +394,7 @@ export const getItemDetails = async (item_id: string): Promise<ApiResponse<TList
 
 export const searchReservation = async ({
   conditions,
+  use_or_condition,
   sort_field_id,
   sort_order,
   page,
@@ -406,6 +406,7 @@ export const searchReservation = async ({
       'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/search',
       {
         conditions,
+        use_or_condition,
         sort_field_id,
         sort_order,
         page,
