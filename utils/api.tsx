@@ -270,8 +270,6 @@ export const getRecruitersItems = async (user_id: string) => {
 export const createJobItems = async (data: any, image: string[]) => {
   try {
     const token = getCookie('token')
-    console.log(data)
-    console.log(image)
     const res = await axiosInstance.post(
       'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/new',
       {
@@ -399,9 +397,11 @@ export const searchReservation = async ({
   sort_order,
   page,
   per_page,
-  use_display_id
+  use_display_id,
+  include_lookups,
 }: TReservationSearchLoad) => {
   try {
+    const token = getCookie('token')
     const res = await axiosInstance.post(
       'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/search',
       {
@@ -411,11 +411,12 @@ export const searchReservation = async ({
         sort_order,
         page,
         per_page,
-        use_display_id
+        use_display_id,
+        include_lookups,
       },
       {
         headers: {
-          Authorization: `${process.env.NEXT_PUBLIC_TOKEN_API}`,
+          Authorization: token ? `Bearer ${token}` : ''
         },
       }
     )

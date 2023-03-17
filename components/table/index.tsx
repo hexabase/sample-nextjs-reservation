@@ -1,18 +1,16 @@
 
 import Paper from '@mui/material/Paper';
 import { TFieldValueConvert, TJob, TReservationRespond } from 'components/types/common';
-import { Button, Theme } from '@mui/material';
-import Image from 'next/image'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, } from '@mui/material';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DrawerReservation } from '../reservationDetail/drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import { getFile, getItemDetails } from 'components/utils/api';
 import ReservationRow from '../reservationDetail/reservationRow';
 
 export interface ITableData {
-  jobs: TReservationRespond[]
+  reservationList: TReservationRespond[]
 }
 
 const useStyles = makeStyles({
@@ -22,13 +20,13 @@ const useStyles = makeStyles({
 });
 
 
-export default function TableData({ jobs }: ITableData) {
+export default function TableData({ reservationList }: ITableData) {
 
   const [hoveredRowIndex, setHoveredRowIndex] = useState('');
   const [showDrawer, setShowDrawer] = useState(false)
   const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>()
   const classes = useStyles();
-  console.log('hob', jobs)
+
   const handleRowOver = (rowIndex: string) => {
     setHoveredRowIndex(rowIndex);
   };
@@ -40,10 +38,7 @@ export default function TableData({ jobs }: ITableData) {
   };
 
   const handleRowClick = async (id: string) => {
-    console.log('id', id)
     const res = await getItemDetails(id)
-    console.log('respond', res)
-    console.log('res', res?.data.field_values)
     if (res.data && res.data.field_values) {
       const dataConvert: TFieldValueConvert = {};
       for (let item in res.data.field_values) {
@@ -106,10 +101,10 @@ export default function TableData({ jobs }: ITableData) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {jobs && jobs.map((job) => (
+            {reservationList && reservationList.map((reservation) => (
               <>
                 <ReservationRow
-                  job={job}
+                  reservation={reservation}
                   handleRowLeave={handleRowLeave}
                   handleRowOver={handleRowOver}
                   handleRowClick={handleRowClick}

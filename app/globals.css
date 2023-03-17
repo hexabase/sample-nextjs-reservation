@@ -78,3 +78,7 @@
 input[type=date]:required:invalid::-webkit-datetime-edit {
   color: white;
 }
+
+input[type=datetime-local]:required:invalid::-webkit-datetime-edit {
+  color: white;
+}

@@ -3,8 +3,6 @@
 import { Button, Grid, Pagination } from "@mui/material"
 import TableData from "components/components/table"
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import { makeStyles } from '@material-ui/core/styles';
-import { jobs } from "../../../utils/db";
 import NoRegister from "components/components/reservationRegistration/noRegister";
 import AddNewForm from "components/components/administratorRegistration/addNewAgenda";
 import AddIcon from '@mui/icons-material/Add';
@@ -18,17 +16,14 @@ import { TReservationRespond } from "components/types/common";
 const Administrator = () => {
   const [isAddRegistration, setIsAddRegistration] = useState(false)
   const [isListPage, setIsListPage] = useState(true)
-  const [recuiterList, setRecruiterList] = useState<TReservationRespond[]>([])
+  const [reservationList, setReservationList] = useState<TReservationRespond[]>([])
 
   const getDataReservationItems = useCallback(
     async (id: string) => {
       try {
-        console.log('id', id)
         const res = await getReservationsItems(id)
-        console.log('data', res.data.items)
-        setRecruiterList(res.data.items)
+        setReservationList(res.data.items)
       } catch (error) {
-        console.log(error)
       }
     }, []
   )
@@ -36,18 +31,14 @@ const Administrator = () => {
     async (id: string) => {
       try {
         const res = await getRecruitersItems(id)
-        console.log('resp', res)
-        console.log('idid', res.data?.items[0]?.recruiter_id)
         getDataReservationItems(res.data?.items[0]?.recruiter_id)
       } catch (error) {
-        console.log('error', error)
       }
     }, [getDataReservationItems])
 
   useEffect(() => {
     async function getDataUserInfo() {
       const res = await getUserInfo()
-      console.log('userInfo', res)
       getDataRecruitersItems(res.data.u_id)
     }
     getDataUserInfo()
@@ -91,7 +82,7 @@ const Administrator = () => {
           </>
             :
             <>
-              {recuiterList ?
+              {reservationList ?
                 <>
                   <div className="hidden md:block">
                     <div className="flex items-center justify-between ">
@@ -102,7 +93,7 @@ const Administrator = () => {
                         <Pagination count={10} />
                       </div>
                     </div>
-                    <TableData jobs={recuiterList} />
+                    <TableData reservationList={reservationList} />
 
                     <div className="flex justify-end mt-[18px] mb-[210px]">
                       <Pagination count={10} />
@@ -110,7 +101,7 @@ const Administrator = () => {
                   </div>
 
                   <div className="sm:hidden">
-                    <CardMobile jobs={jobs} />
+                    <CardMobile reservationList={reservationList} />
                   </div>
                 </>
                 : <NoRegister />

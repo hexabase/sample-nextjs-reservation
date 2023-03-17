@@ -2,42 +2,28 @@
 
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import { Button, TextField } from '@mui/material'
+import { Button, Grid, TextField } from '@mui/material'
 import { SearchOutlined } from '@mui/icons-material'
 import MediaCard from 'components/components/card'
 import { FooterMobile } from 'components/components/footerMobile'
 import CloseIcon from '@mui/icons-material/Close';
-import { jobs } from '../../utils/db'
 import { TReservationRespond, TReservationSearchCondition, TReservationSearchPayloadOption } from 'components/types/common'
 import { useEffect, useMemo, useState } from 'react'
 import { Formik } from 'formik'
 import { searchReservation } from 'components/utils/api'
 const inter = Inter({ subsets: ['latin'] })
 
-// export interface ISearchRequest {
-//   title: string,
-//   reservation_detail: string,
-//   [key: string]: string;
-// }
 export default function Home() {
   const [searchRequest, setSearchRequest] = useState<string>();
+  const [dateRequest, setDateRequest] = useState();
   const [reservationList, setReservationList] = useState<TReservationRespond[]>([])
   const payloadReservation: TReservationSearchPayloadOption = useMemo(() => {
-    const conditions: TReservationSearchCondition[] = [];
+    const conditions: TReservationSearchCondition[] | any = [];
     let sort_field_id: string | undefined;
     let sort_order: 'asc' | 'desc' | undefined;
     let use_or_condition = false;
 
-    // if (searchRequest && Object.keys(searchRequest).length > 0) {
-    //   for (const key in searchRequest) {
-    //     conditions.push({
-    //       id: String(key),
-    //       search_value: searchRequest[key]
-    //     })
-    //   }
-    //   use_or_condition = true
-    // }
-    if (searchRequest) {
+    if (searchRequest && !dateRequest) {
       conditions.push({
         id: 'title',
         search_value: [searchRequest]
@@ -47,41 +33,72 @@ export default function Home() {
       })
       use_or_condition = true
     }
+    if (dateRequest && !searchRequest) {
+      const dateObj = new Date(dateRequest);
+      const outputDateString = dateObj.toISOString().split('T')[0] + 'T00:00:00Z'
+      conditions.push({
+        id: 'date',
+        search_value: [outputDateString]
+      })
+      use_or_condition = true
+    }
+
+    if (searchRequest && dateRequest) {
+      const dateObj = new Date(dateRequest);
+      const outputDateString = dateObj.toISOString().split('T')[0] + 'T00:00:00Z'
+      conditions.push(
+        {
+          conditions: [{
+            id: 'title',
+            search_value: [searchRequest]
+          },
+          {
+            id: 'reservation_detail',
+            search_value: [searchRequest]
+          }
+          ],
+          use_or_condition: true,
+        },
+        {
+          conditions: [
+            {
+              id: 'date',
+              search_value: [outputDateString]
+            }
+          ]
+        }
+      )
+    }
     if (conditions.length === 0) {
       sort_field_id = 'date',
         sort_order = 'desc'
     }
-    console.log(conditions.length)
-    console.log('conditions', conditions)
     return {
       conditions,
       sort_field_id,
       sort_order,
       use_or_condition,
     }
-  }, [searchRequest])
+  }, [searchRequest, dateRequest])
 
-  console.log('searchRequest', searchRequest)
+
   useEffect(() => {
     const getReservationData = async () => {
-      console.log('payloadReservation', payloadReservation);
-
       try {
         const res = await searchReservation({
           ...payloadReservation,
           page: 1,
           per_page: 9,
           use_display_id: true,
-
+          include_lookups: true,
         })
-        console.log('res', res.data.items)
         setReservationList(res.data.items)
       } catch (error) {
         throw error
       }
     }
     getReservationData()
-  }, [payloadReservation, searchRequest])
+  }, [payloadReservation, searchRequest, dateRequest])
 
   return (
     <div className='container-responsive'>
@@ -101,19 +118,22 @@ export default function Home() {
           <Formik
             initialValues={{
               title: '',
-              reservation_detail: ''
+              date: undefined,
             }}
             onSubmit={(data) => {
               setSearchRequest(data.title)
-              console.log('data', data)
+              setDateRequest(data.date)
             }}
           >
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <div className='border border-[#BA00FF] absolute top-1/2 -translate-y-2/4 left-1/2 -translate-x-1/2 bg-white flex h-[60px] pl-[18px] items-center rounded bg-[#fff]'>
                   <div >
-                    <TextField id="title" label="キーワードで探す"
-                      variant="standard" margin="normal"
+                    <TextField id="title"
+                      label="キーワードで探す"
+                      value={values.title}
+                      variant="standard"
+                      margin="normal"
                       onChange={handleChange}
                       onBlur={handleBlur}
                       placeholder='人物・キーワード' InputProps={{
@@ -121,9 +141,14 @@ export default function Home() {
                           fontFamily: 'Noto Sans JP, sans-serif',
                         },
                       }} InputLabelProps={{ shrink: true, style: { fontWeight: 'bold', fontSize: '12px', color: '#000000', fontFamily: 'Noto Sans JP, sans-serif', } }} />
-                    <TextField id="reservation_detail" label="日付を選択"
+                    <TextField id="date"
+                      value={values.date}
+                      label="日付を選択"
                       variant="standard"
                       margin='normal'
+                      type='datetime-local'
+                      required
+                      defaultValue=""
                       placeholder='カレンダーから選ぶ'
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -151,7 +176,11 @@ export default function Home() {
         </div>
 
         <div className='mb-[52px]'>
-          <MediaCard reservationList={reservationList} />
+          <Grid container spacing={10}>
+            {reservationList.map((reservation) => (
+              <MediaCard reservation={reservation} />
+            ))}
+          </Grid>
         </div>
       </div>
       <div className='sm:hidden'>

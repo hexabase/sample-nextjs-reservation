@@ -177,6 +177,7 @@ export type TReservationSearchLoad = {
   page: number;
   per_page: number;
   use_display_id?: boolean;
+  include_lookups: boolean
 }
 
 export type TReservationRespond = {
@@ -204,6 +205,7 @@ export type TReservationRespond = {
   title: string,
   updated_at: string,
   updated_by: string,
+  lookup_items: any
 }
 export type TFieldValue = {
   field_id: string;
@@ -217,3 +219,7 @@ export type TListFieldValues = {
 export type TFieldValueConvert = {
   [key: string]: any;
 };
+
+export type TReserSearchCondition = {
+  conditions: TReservationSearchCondition[]
+}

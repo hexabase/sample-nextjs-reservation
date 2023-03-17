@@ -1,12 +1,13 @@
 import { useState } from 'react';
-import { Drawer, Button } from '@mui/material';
-import { TFieldValueConvert, TJob, TReservationRespond } from 'components/types/common';
+import { Drawer, } from '@mui/material';
+import { TFieldValueConvert, } from 'components/types/common';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import KeyboardTabIcon from '@mui/icons-material/KeyboardTab';
 import PersonIcon from '@mui/icons-material/Person';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import EmailIcon from '@mui/icons-material/Email';
 import Image from 'next/image';
+import { getYearMonthDayJP } from 'components/utils/getDay';
 export interface IDrawerReservation {
   open: boolean,
   onClose: () => void,
@@ -16,7 +17,7 @@ export const DrawerReservation = ({ open, onClose, reservationInfo }: IDrawerRes
   const [tab, setTab] = useState(false)
   const [expandedInfo, setExpandedInfo] = useState(false)
   const [expandedIndex, setExpandedIndex] = useState('');
-  console.log('reser', reservationInfo?.time_10)
+
   const handleChangeStatusTab = () => {
     setTab(false)
   }
@@ -44,7 +45,7 @@ export const DrawerReservation = ({ open, onClose, reservationInfo }: IDrawerRes
 
         <div className='text-2xl font-bold leading-[34px] py-6 border-b border-[#E1E1E1] px-10'>
           <EventAvailableIcon />
-          {reservationInfo?.date}
+          {getYearMonthDayJP(reservationInfo?.date)}
         </div>
 
         <div className='pt-4'>
@@ -80,214 +81,171 @@ export const DrawerReservation = ({ open, onClose, reservationInfo }: IDrawerRes
             {reservationInfo?.reservation_detail}
           </p> :
             <div>
+              <div
+                className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${reservationInfo?.time_10 == '1' ? 'bg-secondMainColor' : 'bg-[#E1E1E1] text-[#000000]'} `}>
+                <div className='w-full flex justify-between'>
+                  <div className='flex w-[80px] justify-between'>
+                    <div className='w-[20px]'> <PersonIcon className={`${reservationInfo?.time_10 == '1' ? 'block' : 'hidden'}`} /></div>
+                    <div><p className='font-bold text-lg'>10.00</p></div>
+                  </div>
+                  <KeyboardArrowDownIcon className='cursor-pointer'
+                  //  onClick={() => handleExpandedInfo(String(index))} 
+                  />
+                </div>
+                <div className='mt-[30px] bg-[#fff] p-4 mb-2 hidden'
+                // style={{
+                //   display: String(index) === expandedIndex ?
+                //     'block' : 'none'
+                // }}
+                >
+                  <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
+                  <div className='flex'>
+                    <EmailIcon />
+                    <p>sample@gmail.com</p>
+                  </div>
+                </div>
+              </div>
 
-              {reservationInfo?.time_10 == '1' ?
-                <div
-                  className={`w-full px-5 py-[10px] text-[#000000] mb-4 bg-secondMainColor`}>
-                  <div className='w-full flex justify-between'>
-                    <div className='flex w-[80px] justify-between'>
-                      <div className='w-[20px]'> <PersonIcon /></div>
-                      <div><p className='font-bold text-lg'>10.00</p></div>
-                    </div>
-                    <KeyboardArrowDownIcon className='cursor-pointer'
-                    //  onClick={() => handleExpandedInfo(String(index))} 
-                    />
+              <div
+                className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${reservationInfo?.time_11 == '1' ? 'bg-secondMainColor' : 'bg-[#E1E1E1] text-[#000000]'} `}>
+                <div className='w-full flex justify-between'>
+                  <div className='flex w-[80px] justify-between'>
+                    <div className='w-[20px]'> <PersonIcon className={`${reservationInfo?.time_11 == '1' ? 'block' : 'hidden'}`} /></div>
+                    <div><p className='font-bold text-lg'>11.00</p></div>
                   </div>
-                  <div className='mt-[30px] bg-[#fff] p-4 mb-2'
-                  // style={{
-                  //   display: String(index) === expandedIndex ?
-                  //     'block' : 'none'
-                  // }}
-                  >
-                    <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
-                    <div className='flex'>
-                      <EmailIcon />
-                      <p>sample@gmail.com</p>
-                    </div>
-                  </div>
-                </div> : null}
+                  <KeyboardArrowDownIcon className='cursor-pointer'
 
-              {reservationInfo?.time_11 == '1' ?
-                <div
-                  className={`w-full px-5 py-[10px] text-[#000000] mb-4 bg-secondMainColor`}>
-                  <div className='w-full flex justify-between'>
-                    <div className='flex w-[80px] justify-between'>
-                      <div className='w-[20px]'> <PersonIcon /></div>
-                      <div><p className='font-bold text-lg'>11.00</p></div>
-                    </div>
-                    <KeyboardArrowDownIcon className='cursor-pointer'
-                    //  onClick={() => handleExpandedInfo(String(index))} 
-                    />
+                  />
+                </div>
+                <div className='mt-[30px] bg-[#fff] p-4 mb-2 hidden'
+                >
+                  <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
+                  <div className='flex'>
+                    <EmailIcon />
+                    <p>sample@gmail.com</p>
                   </div>
-                  <div className='mt-[30px] bg-[#fff] p-4 mb-2'
-                  // style={{
-                  //   display: String(index) === expandedIndex ?
-                  //     'block' : 'none'
-                  // }}
-                  >
-                    <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
-                    <div className='flex'>
-                      <EmailIcon />
-                      <p>sample@gmail.com</p>
-                    </div>
-                  </div>
-                </div> : null}
+                </div>
+              </div>
 
-              {reservationInfo?.time_12 == '1' ?
-                <div
-                  className={`w-full px-5 py-[10px] text-[#000000] mb-4 bg-secondMainColor`}>
-                  <div className='w-full flex justify-between'>
-                    <div className='flex w-[80px] justify-between'>
-                      <div className='w-[20px]'> <PersonIcon /></div>
-                      <div><p className='font-bold text-lg'>12.00</p></div>
-                    </div>
-                    <KeyboardArrowDownIcon className='cursor-pointer'
-                    //  onClick={() => handleExpandedInfo(String(index))} 
-                    />
+              <div
+                className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${reservationInfo?.time_12 == '1' ? 'bg-secondMainColor' : 'bg-[#E1E1E1] text-[#000000]'} `}>
+                <div className='w-full flex justify-between'>
+                  <div className='flex w-[80px] justify-between'>
+                    <div className='w-[20px]'> <PersonIcon className={`${reservationInfo?.time_12 == '1' ? 'block' : 'hidden'}`} /></div>
+                    <div><p className='font-bold text-lg'>12.00</p></div>
                   </div>
-                  <div className='mt-[30px] bg-[#fff] p-4 mb-2'
-                  // style={{
-                  //   display: String(index) === expandedIndex ?
-                  //     'block' : 'none'
-                  // }}
-                  >
-                    <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
-                    <div className='flex'>
-                      <EmailIcon />
-                      <p>sample@gmail.com</p>
-                    </div>
+                  <KeyboardArrowDownIcon className='cursor-pointer'
+                  />
+                </div>
+                <div className='mt-[30px] bg-[#fff] p-4 mb-2 hidden'
+                >
+                  <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
+                  <div className='flex'>
+                    <EmailIcon />
+                    <p>sample@gmail.com</p>
                   </div>
-                </div> : null}
+                </div>
+              </div>
 
-              {reservationInfo?.time_13 == '1' ?
-                <div
-                  className={`w-full px-5 py-[10px] text-[#000000] mb-4 bg-secondMainColor`}>
-                  <div className='w-full flex justify-between'>
-                    <div className='flex w-[80px] justify-between'>
-                      <div className='w-[20px]'> <PersonIcon /></div>
-                      <div><p className='font-bold text-lg'>13.00</p></div>
-                    </div>
-                    <KeyboardArrowDownIcon className='cursor-pointer'
-                    //  onClick={() => handleExpandedInfo(String(index))} 
-                    />
+              <div
+                className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${reservationInfo?.time_13 == '1' ? 'bg-secondMainColor' : 'bg-[#E1E1E1] text-[#000000]'} `}>
+                <div className='w-full flex justify-between'>
+                  <div className='flex w-[80px] justify-between'>
+                    <div className='w-[20px]'> <PersonIcon className={`${reservationInfo?.time_13 == '1' ? 'block' : 'hidden'}`} /></div>
+                    <div><p className='font-bold text-lg'>13.00</p></div>
                   </div>
-                  <div className='mt-[30px] bg-[#fff] p-4 mb-2'
-                  // style={{
-                  //   display: String(index) === expandedIndex ?
-                  //     'block' : 'none'
-                  // }}
-                  >
-                    <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
-                    <div className='flex'>
-                      <EmailIcon />
-                      <p>sample@gmail.com</p>
-                    </div>
+                  <KeyboardArrowDownIcon className='cursor-pointer'
+                  />
+                </div>
+                <div className='mt-[30px] bg-[#fff] p-4 mb-2 hidden'
+                >
+                  <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
+                  <div className='flex'>
+                    <EmailIcon />
+                    <p>sample@gmail.com</p>
                   </div>
-                </div> : null}
+                </div>
+              </div>
 
-              {reservationInfo?.time_14 == '1' ?
-                <div
-                  className={`w-full px-5 py-[10px] text-[#000000] mb-4 bg-secondMainColor`}>
-                  <div className='w-full flex justify-between'>
-                    <div className='flex w-[80px] justify-between'>
-                      <div className='w-[20px]'> <PersonIcon /></div>
-                      <div><p className='font-bold text-lg'>14.00</p></div>
-                    </div>
-                    <KeyboardArrowDownIcon className='cursor-pointer'
-                    //  onClick={() => handleExpandedInfo(String(index))} 
-                    />
+              <div
+                className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${reservationInfo?.time_14 == '1' ? 'bg-secondMainColor' : 'bg-[#E1E1E1] text-[#000000]'} `}>
+                <div className='w-full flex justify-between'>
+                  <div className='flex w-[80px] justify-between'>
+                    <div className='w-[20px]'> <PersonIcon className={`${reservationInfo?.time_14 == '1' ? 'block' : 'hidden'}`} /></div>
+                    <div><p className='font-bold text-lg'>14.00</p></div>
                   </div>
-                  <div className='mt-[30px] bg-[#fff] p-4 mb-2'
-                  // style={{
-                  //   display: String(index) === expandedIndex ?
-                  //     'block' : 'none'
-                  // }}
-                  >
-                    <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
-                    <div className='flex'>
-                      <EmailIcon />
-                      <p>sample@gmail.com</p>
-                    </div>
+                  <KeyboardArrowDownIcon className='cursor-pointer'
+                  />
+                </div>
+                <div className='mt-[30px] bg-[#fff] p-4 mb-2 hidden'
+                >
+                  <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
+                  <div className='flex'>
+                    <EmailIcon />
+                    <p>sample@gmail.com</p>
                   </div>
-                </div> : null}
+                </div>
+              </div>
 
-              {reservationInfo?.time_15 == '1' ?
-                <div
-                  className={`w-full px-5 py-[10px] text-[#000000] mb-4 bg-secondMainColor`}>
-                  <div className='w-full flex justify-between'>
-                    <div className='flex w-[80px] justify-between'>
-                      <div className='w-[20px]'> <PersonIcon /></div>
-                      <div><p className='font-bold text-lg'>15.00</p></div>
-                    </div>
-                    <KeyboardArrowDownIcon className='cursor-pointer'
-                    //  onClick={() => handleExpandedInfo(String(index))} 
-                    />
+              <div
+                className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${reservationInfo?.time_15 == '1' ? 'bg-secondMainColor' : 'bg-[#E1E1E1] text-[#000000]'} `}>
+                <div className='w-full flex justify-between'>
+                  <div className='flex w-[80px] justify-between'>
+                    <div className='w-[20px]'> <PersonIcon className={`${reservationInfo?.time_15 == '1' ? 'block' : 'hidden'}`} /></div>
+                    <div><p className='font-bold text-lg'>15.00</p></div>
                   </div>
-                  <div className='mt-[30px] bg-[#fff] p-4 mb-2'
-                  // style={{
-                  //   display: String(index) === expandedIndex ?
-                  //     'block' : 'none'
-                  // }}
-                  >
-                    <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
-                    <div className='flex'>
-                      <EmailIcon />
-                      <p>sample@gmail.com</p>
-                    </div>
+                  <KeyboardArrowDownIcon className='cursor-pointer'
+                  />
+                </div>
+                <div className='mt-[30px] bg-[#fff] p-4 mb-2 hidden'
+                >
+                  <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
+                  <div className='flex'>
+                    <EmailIcon />
+                    <p>sample@gmail.com</p>
                   </div>
-                </div> : null}
+                </div>
+              </div>
 
-              {reservationInfo?.time_16 == '1' ?
-                <div
-                  className={`w-full px-5 py-[10px] text-[#000000] mb-4 bg-secondMainColor`}>
-                  <div className='w-full flex justify-between'>
-                    <div className='flex w-[80px] justify-between'>
-                      <div className='w-[20px]'> <PersonIcon /></div>
-                      <div><p className='font-bold text-lg'>16.00</p></div>
-                    </div>
-                    <KeyboardArrowDownIcon className='cursor-pointer'
-                    //  onClick={() => handleExpandedInfo(String(index))} 
-                    />
+              <div
+                className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${reservationInfo?.time_16 == '1' ? 'bg-secondMainColor' : 'bg-[#E1E1E1] text-[#000000]'} `}>
+                <div className='w-full flex justify-between'>
+                  <div className='flex w-[80px] justify-between'>
+                    <div className='w-[20px]'> <PersonIcon className={`${reservationInfo?.time_16 == '1' ? 'block' : 'hidden'}`} /></div>
+                    <div><p className='font-bold text-lg'>16.00</p></div>
                   </div>
-                  <div className='mt-[30px] bg-[#fff] p-4 mb-2'
-                  // style={{
-                  //   display: String(index) === expandedIndex ?
-                  //     'block' : 'none'
-                  // }}
-                  >
-                    <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
-                    <div className='flex'>
-                      <EmailIcon />
-                      <p>sample@gmail.com</p>
-                    </div>
+                  <KeyboardArrowDownIcon className='cursor-pointer'
+                  />
+                </div>
+                <div className='mt-[30px] bg-[#fff] p-4 mb-2 hidden'
+                >
+                  <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
+                  <div className='flex'>
+                    <EmailIcon />
+                    <p>sample@gmail.com</p>
                   </div>
-                </div> : null}
+                </div>
+              </div>
 
-              {reservationInfo?.time_17 == '1' ?
-                <div
-                  className={`w-full px-5 py-[10px] text-[#000000] mb-4 bg-secondMainColor`}>
-                  <div className='w-full flex justify-between'>
-                    <div className='flex w-[80px] justify-between'>
-                      <div className='w-[20px]'> <PersonIcon /></div>
-                      <div><p className='font-bold text-lg'>17.00</p></div>
-                    </div>
-                    <KeyboardArrowDownIcon className='cursor-pointer'
-                    //  onClick={() => handleExpandedInfo(String(index))} 
-                    />
+              <div
+                className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${reservationInfo?.time_17 == '1' ? 'bg-secondMainColor' : 'bg-[#E1E1E1] text-[#000000]'} `}>
+                <div className='w-full flex justify-between'>
+                  <div className='flex w-[80px] justify-between'>
+                    <div className='w-[20px]'> <PersonIcon className={`${reservationInfo?.time_17 == '1' ? 'block' : 'hidden'}`} /></div>
+                    <div><p className='font-bold text-lg'>17.00</p></div>
                   </div>
-                  <div className='mt-[30px] bg-[#fff] p-4 mb-2'
-                  // style={{
-                  //   display: String(index) === expandedIndex ?
-                  //     'block' : 'none'
-                  // }}
-                  >
-                    <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
-                    <div className='flex'>
-                      <EmailIcon />
-                      <p>sample@gmail.com</p>
-                    </div>
+                  <KeyboardArrowDownIcon className='cursor-pointer'
+                  />
+                </div>
+                <div className='mt-[30px] bg-[#fff] p-4 mb-2 hidden'
+                >
+                  <p>予約者 <span className='font-bold text-base'>藤岡 修一</span></p>
+                  <div className='flex'>
+                    <EmailIcon />
+                    <p>sample@gmail.com</p>
                   </div>
-                </div> : null}
+                </div>
+              </div>
             </div>
           }
         </div>
