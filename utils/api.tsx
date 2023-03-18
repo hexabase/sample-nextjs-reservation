@@ -36,9 +36,9 @@ export const userInvite = async (email: string): Promise<ApiResponse<TUserInvite
     const response = await axiosInstance.post<TUserInvite[]>(
       'https://api.hexabase.com/api/v0/userinvite', {
       users: [{ email }],
-      domain: 'lunchpal.hexabase.app',
-      sender_address: 'noreply@hexabase.com',
-      invation_path: '/auth/register-completed'
+      domain: `${process.env.NEXT_PUBLIC_DOMAIN}`,
+      sender_address: `${process.env.NEXT_PUBLIC_SENDER_ADDRESS}`,
+      invitation_path: `${process.env.NEXT_PUBLIC_INVITATION_PATH}`,
     },
       {
         headers: {
@@ -401,7 +401,6 @@ export const searchReservation = async ({
   include_lookups,
 }: TReservationSearchLoad) => {
   try {
-    const token = getCookie('token')
     const res = await axiosInstance.post(
       'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/search',
       {
@@ -416,7 +415,7 @@ export const searchReservation = async ({
       },
       {
         headers: {
-          Authorization: token ? `Bearer ${token}` : ''
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
         },
       }
     )

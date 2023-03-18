@@ -1,7 +1,8 @@
 'use client'
 
-import Image from 'next/image'
-import '../globals.css'
+import Link from 'next/link';
+import Image from 'next/image';
+import '../globals.css';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import RegistrationButton from 'components/components/administratorRegistration/button';
 import { useState } from 'react';
@@ -27,7 +28,7 @@ export default function RootLayout({
         <header>
           <div className='container-responsive'>
             <div className='flex items-center justify-between py-5'>
-              <Image src='/logo.png' width={159} height={43.06} alt='logo' />
+              <Link href="/"><img src='/logo.svg' width={159} height={43.06} alt='logo' /></Link>
               <RegistrationButton />
               <div
                 onClick={() => setShowMenu(!showMenu)}
