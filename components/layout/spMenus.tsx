@@ -45,7 +45,7 @@ export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) =>
 
         <div className=' bg-[#F5F5F5] sm:hidden'>
           <div className='flex justify-between items-center p-5 '>
-            <Image alt='logo' src='/logo.svg' width={120} height={24} />
+            <img alt='logo' src='/logo.svg' width={120} height={24} />
             <CloseIcon
               onClick={() => handleClose()}
               className='w-6 h-5' />

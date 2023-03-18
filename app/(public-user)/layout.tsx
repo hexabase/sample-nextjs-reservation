@@ -27,7 +27,8 @@ export default function RootLayout({
         <header>
           <div className='container-responsive'>
             <div className='flex items-center justify-between py-5'>
-              <Image src='/logo.png' width={159} height={43.06} alt='logo' />
+              <img src='/logo.svg' width={159} height={43.06} alt='logo' />
+              
               <RegistrationButton />
               <div
                 onClick={() => setShowMenu(!showMenu)}
