@@ -401,7 +401,6 @@ export const searchReservation = async ({
   include_lookups,
 }: TReservationSearchLoad) => {
   try {
-    const token = getCookie('token')
     const res = await axiosInstance.post(
       'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/search',
       {
@@ -416,7 +415,7 @@ export const searchReservation = async ({
       },
       {
         headers: {
-          Authorization: token ? `Bearer ${token}` : ''
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
         },
       }
     )
