@@ -1,17 +1,16 @@
 
 import Paper from '@mui/material/Paper';
-import { TJob } from 'components/types/common';
-import { Button, Theme } from '@mui/material';
-import Image from 'next/image'
+import { TFieldValueConvert, TJob, TReservationRespond } from 'components/types/common';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, } from '@mui/material';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import { useState } from 'react';
 import { DrawerReservation } from '../reservationDetail/drawer';
 import { makeStyles } from '@material-ui/core/styles';
-import { getItemDetails } from 'components/utils/api';
+import { getFile, getItemDetails } from 'components/utils/api';
+import ReservationRow from '../reservationDetail/reservationRow';
 
 export interface ITableData {
-  jobs: TJob[]
+  reservationList: TReservationRespond[]
 }
 
 const useStyles = makeStyles({
@@ -21,11 +20,11 @@ const useStyles = makeStyles({
 });
 
 
-export default function TableData({ jobs }: ITableData) {
+export default function TableData({ reservationList }: ITableData) {
 
   const [hoveredRowIndex, setHoveredRowIndex] = useState('');
   const [showDrawer, setShowDrawer] = useState(false)
-  const [jobInfo, setJobInfor] = useState<TJob>()
+  const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>()
   const classes = useStyles();
 
   const handleRowOver = (rowIndex: string) => {
@@ -38,12 +37,18 @@ export default function TableData({ jobs }: ITableData) {
     setHoveredRowIndex('');
   };
 
-  const handleRowClick = async (job: TJob) => {
-    const res = await getItemDetails(job?.id)
-    console.log('res', res)
-    setJobInfor(job)
+  const handleRowClick = async (id: string) => {
+    const res = await getItemDetails(id)
+    if (res.data && res.data.field_values) {
+      const dataConvert: TFieldValueConvert = {};
+      for (let item in res.data.field_values) {
+        dataConvert[res.data.field_values[item].field_id] = res.data.field_values[item].value
+      }
+      setReservationInfor(dataConvert)
+    }
     setShowDrawer(true)
   }
+
   return (
     <>
       <TableContainer component={Paper} sx={{ boxShadow: 'unset' }}>
@@ -96,71 +101,22 @@ export default function TableData({ jobs }: ITableData) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {jobs && jobs.map((job) => (
+            {reservationList && reservationList.map((reservation) => (
               <>
-                <TableRow
-                  onMouseEnter={() => handleRowOver(job?.id)}
-                  onMouseLeave={() => handleRowLeave()}
-                  className="bg-gray-100 mb-4"
-                  onClick={() => handleRowClick(job)}
-                  key={job?.id}
-                  sx={{
-                    '& td, & th': {
-                      borderTop: "1px solid #ccc",
-                      borderBottom: "1px solid #ccc"
-                    },
-                    'th': { borderLeft: "1px solid #ccc" },
-                    ' &:not(:last-child)': { marginBottom: '4px' },
-                    backgroundColor: job?.id === hoveredRowIndex ? '#00FFB0' : 'transparent',
-                    cursor: hoveredRowIndex ? 'pointer' : null,
-                    transition: 'background-color 0.3s ease',
-                  }}
-                >
-                  <TableCell component="th" scope="row" align='left' className="px-3" >
-                    <div className='flex items-center gap-x-4 '>
-                      <Image src='/work.svg' alt='image' width={100} height={62} className='md:w-[60px] md:h-[42px] lg:w-[100px] lg:h-[62px]' />
-                      <p className='font-bold text-overflow-threeline-ellipsis'>{job.title}</p>
-                    </div>
-                  </TableCell>
-                  <TableCell align='left' className="px-3" >
-
-                    <p className='font-sans font-bold'>
-                      {job?.name}
-                    </p>
-
-                  </TableCell>
-                  <TableCell align="left" className="px-3"  >
-                    <p className='font-sans font-bold'>{job?.position}</p>
-
-                  </TableCell>
-                  <TableCell align="left" className="px-3"  >
-                    <p className='font-sans font-bold'>
-                      {job?.day}
-                    </p>
-
-                  </TableCell>
-                  <TableCell align="left" sx={{ borderRight: "1px solid #ccc" }} className="px-3" >
-                    <div className='flex flex-wrap gap-4'>
-                      {job?.time.map((d, index) => (
-                        <Button key={index}
-                          disabled={!d.isFull}
-                          className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${d.isFull ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]' : ' !text-[#fff] bg-gray hover:bg-gray '}`}
-                        >
-                          <p className=" font-bold font-sans text-sm">
-                            {d.time}
-                          </p>
-                        </Button>
-                      ))}
-                    </div>
-                  </TableCell>
-                </TableRow>
+                <ReservationRow
+                  reservation={reservation}
+                  handleRowLeave={handleRowLeave}
+                  handleRowOver={handleRowOver}
+                  handleRowClick={handleRowClick}
+                  hoveredRowIndex={hoveredRowIndex}
+                />
               </>
             ))}
           </TableBody>
         </Table>
       </TableContainer >
 
-      <DrawerReservation open={showDrawer} onClose={toggleDrawer} jobInfo={jobInfo} />
+      <DrawerReservation open={showDrawer} onClose={toggleDrawer} reservationInfo={reservationInfo} />
     </>
   );
 }

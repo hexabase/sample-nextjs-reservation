@@ -1,6 +1,6 @@
 'use client'
 import { makeStyles } from '@material-ui/core';
-import { Box, Button, Divider, FormControl, Grid, InputLabel, Modal, OutlinedInput, TextField } from "@mui/material";
+import { Box, Modal, } from "@mui/material";
 import { TJob } from "components/types/common";
 import { useState } from "react";
 import ReservationItem from '../reservationDetail/reservationItem';
@@ -32,15 +32,7 @@ export interface IChildModel {
 }
 
 const ChildModel = ({ open, handleClose, jobDetail }: IChildModel) => {
-
-  const [selectedTime, setSelectedTime] = useState<string>('');
   const [bookingStep, setBookingStep] = useState(0);
-  const classes = useStyles();
-
-  const handleTimeSelection = (time: string) => {
-    setSelectedTime(time);
-    setBookingStep(1);
-  };
 
   return (
     <Modal open={open} onClose={() => {
@@ -52,7 +44,6 @@ const ChildModel = ({ open, handleClose, jobDetail }: IChildModel) => {
           <Box sx={{ ...style, width: 1248, borderRadius: '20px', }}>
             <ReservationItem jobDetail={jobDetail} handleClose={handleClose} />
           </Box>
-
         </div></>
     </Modal>
   )

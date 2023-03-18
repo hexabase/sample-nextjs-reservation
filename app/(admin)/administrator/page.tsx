@@ -3,8 +3,6 @@
 import { Button, Grid, Pagination } from "@mui/material"
 import TableData from "components/components/table"
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import { makeStyles } from '@material-ui/core/styles';
-import { jobs } from "../../../utils/db";
 import NoRegister from "components/components/reservationRegistration/noRegister";
 import AddNewForm from "components/components/administratorRegistration/addNewAgenda";
 import AddIcon from '@mui/icons-material/Add';
@@ -13,18 +11,19 @@ import { useCallback, useEffect, useState } from "react";
 import CardMobile from "components/components/reservationDetail/cardMobile";
 import KeyboardTabIcon from '@mui/icons-material/KeyboardTab';
 import { getUserInfo, getRecruitersItems, getReservationsItems, } from "components/utils/api";
+import { TReservationRespond } from "components/types/common";
 
 const Administrator = () => {
   const [isAddRegistration, setIsAddRegistration] = useState(false)
   const [isListPage, setIsListPage] = useState(true)
+  const [reservationList, setReservationList] = useState<TReservationRespond[]>([])
 
   const getDataReservationItems = useCallback(
     async (id: string) => {
       try {
         const res = await getReservationsItems(id)
-        console.log('data', res.data)
+        setReservationList(res.data.items)
       } catch (error) {
-        console.log(error)
       }
     }, []
   )
@@ -34,7 +33,6 @@ const Administrator = () => {
         const res = await getRecruitersItems(id)
         getDataReservationItems(res.data?.items[0]?.recruiter_id)
       } catch (error) {
-        console.log('error', error)
       }
     }, [getDataReservationItems])
 
@@ -46,7 +44,7 @@ const Administrator = () => {
     getDataUserInfo()
 
   }, [])
-  useEffect
+
   return (
     <>
       <div className={`hidden sm:block md:pl-[127px] sm:py-[15px] lg:pl-[327px] ${isAddRegistration ? 'sm:hidden' : ''}`}>
@@ -54,7 +52,7 @@ const Administrator = () => {
       </div>
       <Grid container spacing={0} className='relative flex justify-center'>
         <Grid item xs={2}
-          className='hidden sm:block w-2/12 bg-[#F8F9FA] border border-solid border-[#E1E1E1]'
+          className='hidden sm:block w-2/12 bg-[#F8F9FA] border border-solid border-[#E1E1E1] h-screen'
         >
           <div className="flex flex-col items-center gap-[28px] px-4 w-full">
             <div className="flex py-[13px] gap-[13px] w-full justify-end">
@@ -84,7 +82,7 @@ const Administrator = () => {
           </>
             :
             <>
-              {jobs ?
+              {reservationList ?
                 <>
                   <div className="hidden md:block">
                     <div className="flex items-center justify-between ">
@@ -95,7 +93,7 @@ const Administrator = () => {
                         <Pagination count={10} />
                       </div>
                     </div>
-                    <TableData jobs={jobs} />
+                    <TableData reservationList={reservationList} />
 
                     <div className="flex justify-end mt-[18px] mb-[210px]">
                       <Pagination count={10} />
@@ -103,7 +101,7 @@ const Administrator = () => {
                   </div>
 
                   <div className="sm:hidden">
-                    <CardMobile jobs={jobs} />
+                    <CardMobile reservationList={reservationList} />
                   </div>
                 </>
                 : <NoRegister />

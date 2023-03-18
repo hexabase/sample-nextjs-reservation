@@ -43,7 +43,7 @@ export default function RootLayout({
               <Image src='/logoForAdministrator.svg'
                 width={297} height={43.06}
                 alt='logo'
-                className='w-[197px] h-[28px] md:w-[297px] h-[43px]'
+                className='w-[197px] h-[28px] md:w-[297px] md:h-[43px]'
               />
               <div className='flex gap-[15px] leading-[23px]'>
                 <p className='hidden md:block'>ログアウト</p>

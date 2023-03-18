@@ -69,7 +69,6 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
 
   const uploadImageHandler = (images: FileList | null) => {
     if (images && images[0]) {
-      console.log('images', images)
       for (let i = 0; i < images.length; i++) {
         uploadImage(images[i]);
       }
@@ -88,7 +87,6 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
           data,
           image,
         );
-        console.log(res)
         if (res.data) {
           setNotification({
             open: true,
