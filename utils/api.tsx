@@ -36,9 +36,9 @@ export const userInvite = async (email: string): Promise<ApiResponse<TUserInvite
     const response = await axiosInstance.post<TUserInvite[]>(
       'https://api.hexabase.com/api/v0/userinvite', {
       users: [{ email }],
-      domain: 'lunchpal.hexabase.app',
-      sender_address: 'noreply@hexabase.com',
-      invation_path: '/auth/register-completed'
+      domain: `${process.env.NEXT_PUBLIC_DOMAIN}`,
+      sender_address: `${process.env.NEXT_PUBLIC_SENDER_ADDRESS}`,
+      invitation_path: `${process.env.NEXT_PUBLIC_INVITATION_PATH}`,
     },
       {
         headers: {
