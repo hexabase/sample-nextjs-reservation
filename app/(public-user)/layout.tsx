@@ -1,44 +1,50 @@
 'use client'
 
-import Image from 'next/image'
-import './globals.css'
+import Link from 'next/link';
+import Image from 'next/image';
+import '../globals.css';
 import DehazeIcon from '@mui/icons-material/Dehaze';
+import RegistrationButton from 'components/components/administratorRegistration/button';
+import { useState } from 'react';
+import { SPMenus } from 'components/components/layout/spMenus';
+import RegistrationModal from 'components/components/administratorRegistration/registrationModal';
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const [showRegister, setShowRegister] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const handleCloseRegister = () => {
+    setShowRegister(false)
+  }
+  const handleCloseDrawer = () => {
+    setShowMenu(false)
+  }
   return (
     <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
       <head />
-
-      <body>
+      <body id='__next'>
         <header>
           <div className='container-responsive'>
             <div className='flex items-center justify-between py-5'>
-
-              <Image src='/logo.png' width={159} height={43.06} alt='logo' />
-              <div className='hidden sm:block'>
-                <button className='button-header'>
-                  ログイン
-                </button>
-              </div>
-
-              <div className='sm:hidden'>
+              <Link href="/"><img src='/logo.svg' width={159} height={43.06} alt='logo' /></Link>
+              <RegistrationButton />
+              <div
+                onClick={() => setShowMenu(!showMenu)}
+                className='sm:hidden'>
                 <DehazeIcon />
               </div>
             </div>
           </div>
+          <SPMenus showMenu={showMenu} handleClose={handleCloseDrawer} setShowRegister={setShowRegister} />
         </header>
+
         <>
           <main>
-
             {children}
           </main>
+          <RegistrationModal open={showRegister} handleClose={handleCloseRegister} />
           <footer className='hidden sm:bg-[#F2F2F2] sm:flex sm:flex-col sm:items-center sm:px-60 sm:py-8 sm:gap-y-[60px]'>
             <div>
               <Image alt='logo' src='/logoFooter.svg' width={93} height={91} />
@@ -53,7 +59,6 @@ export default function RootLayout({
               <p>©️2022 Hexabase</p>
             </div>
           </footer>
-
         </>
       </body>
     </html>
