@@ -49,12 +49,14 @@ export default function MediaCard({ reservation }: ICardJob) {
         const blob = new Blob([imageBytes.buffer], { type: 'image' });
         const imageUrl = URL.createObjectURL(blob);
         setImageUrl(imageUrl);
+        console.log('imageUrl', imageUrl)
       } catch (error) {
         throw error
       }
     }
     getImage()
   }, [reservation.i_id])
+
   return (
     <>
       <Grid item xs={12} md={4} key={reservation.i_id}>
@@ -62,6 +64,7 @@ export default function MediaCard({ reservation }: ICardJob) {
           <CardMedia
             sx={{ height: 226, width: 363, borderRadius: '20px' }}
             image={`${imageUrl ? { imageUrl } : '/work.svg'}`}
+            // src={`${imageUrl ? { imageUrl } : '/work.svg'}`}
             className='relative rounded-[20px] bg-black-rgba bg-blend-darken'
           >
             <div className='absolute top-3 left-3 text-xs font-bold text-[#fff] flex items-center gap-x-1'>
@@ -139,7 +142,7 @@ export default function MediaCard({ reservation }: ICardJob) {
 
         {showModal &&
           <>
-            <ChildModel handleClose={handleClose} open={showModal} jobDetail={jobDetail} />
+            <ChildModel handleClose={handleClose} open={showModal} reservationDetail={reservation} />
           </>
         }
 

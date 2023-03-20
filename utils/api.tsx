@@ -352,7 +352,8 @@ export const getFile = async (file_id: string) => {
       {
         headers: {
           Authorization: token ? `Bearer ${token}` : ''
-        }
+        },
+        responseType: 'arraybuffer',
       }
     )
     return {
@@ -367,7 +368,7 @@ export const getFile = async (file_id: string) => {
   }
 }
 
-export const getItemDetails = async (item_id: string): Promise<ApiResponse<TListFieldValues>> => {
+export const getItemDetails = async (item_id?: string): Promise<ApiResponse<TListFieldValues>> => {
   const token = getCookie('token')
   try {
     const res = await axiosInstance.get(
