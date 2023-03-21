@@ -1,4 +1,4 @@
-import { TAddUser, TConfirmRegistration, TGetUserInfo, TInputCreateItem, TInputLogin, TInputRegisterUser, TListFieldValues, TLogin, TRegisterUser, TReservationSearchLoad, TUploadFileRespond, TUserInvite } from 'components/types/common';
+import { TAddUser, TConfirmRegistration, TCreateSubscriber, TGetUserInfo, TInputCreateItem, TInputLogin, TInputRegisterUser, TListFieldValues, TLogin, TRegisterUser, TReservationSearchLoad, TUploadFileRespond, TUserInvite } from 'components/types/common';
 import { getCookie } from 'cookies-next';
 import { ApiError, ApiResponse, createAxiosInstance } from './axios';
 
@@ -429,5 +429,40 @@ export const searchReservation = async ({
       throw error
     }
     throw new Error('Unknown error')
+  }
+}
+
+export const createSubscriber = async (
+  reservation_id: any,
+  time: any,
+  name: any,
+  email: any,
+) => {
+  try {
+    const res = await axiosInstance.post(
+      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/subscribers/items/new',
+      {
+        item: {
+          reservation_id: reservation_id,
+          time: time,
+          name: name,
+          email: email,
+        }
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
+        }
+      }
+    )
+    return {
+      data: res.data,
+      status: res.status,
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new Error
   }
 }

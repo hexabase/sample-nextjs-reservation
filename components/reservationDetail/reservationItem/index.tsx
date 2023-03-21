@@ -5,25 +5,40 @@ import CloseIcon from '@mui/icons-material/Close';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
 import DoneIcon from '@mui/icons-material/Done';
 import { Button, Grid, TextField } from "@mui/material";
-import { useState } from "react";
-import { TJob, TReservationRespond } from "components/types/common";
+import { useCallback, useState } from "react";
 import { Formik } from 'formik';
 import { ReservationRegistration } from "components/app/(public-user)/auth/Schema";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { converTime, getTimeJP } from "components/utils/getDay";
+import { createSubscriber } from "components/utils/api";
 
 export interface IReservationItem {
   reservationDetail?: any,
-  handleClose: () => void
+  handleClose: () => void,
+  imageUrl?: string
 }
-const ReservationItem = ({ reservationDetail, handleClose }: IReservationItem) => {
+const ReservationItem = ({ reservationDetail, handleClose, imageUrl }: IReservationItem) => {
+
+  const [selectedTime, setSelectedTime] = useState<string>('');
+  const [bookingStep, setBookingStep] = useState(0);
+
   const handleTimeSelection = (time: string) => {
     setSelectedTime(time);
     setBookingStep(1);
   };
-  const [selectedTime, setSelectedTime] = useState<string>('');
-  const [bookingStep, setBookingStep] = useState(0);
-  console.log('reservationDetail', reservationDetail)
+  const createNewSubscriber = useCallback(
+    async (name: any, email: any) => {
+      try {
+        let str = selectedTime;
+        let strParts = str.split("_");
+        let result = strParts[1];
+        let num = parseInt(result);
+        const res = await createSubscriber(reservationDetail.reservation_id, num, name, email)
+        setBookingStep(2)
+      } catch (error) {
+        throw error
+      }
+    }, [selectedTime, reservationDetail.reservation_id])
   return (
     <Grid container >
       <Grid item xs={12} md={7}
@@ -33,7 +48,7 @@ const ReservationItem = ({ reservationDetail, handleClose }: IReservationItem) =
             alt="image"
             width={609}
             height={0}
-            src='/work.png'
+            src={imageUrl ?? ''}
             className="rounded-[20px] h-[312px]"
           />
           <div className="font-bold px-8 pr-16">
@@ -88,7 +103,7 @@ const ReservationItem = ({ reservationDetail, handleClose }: IReservationItem) =
           </div>
           <div className="flex items-center font-bold py-8 border-t border-b border-[#D8D8D8]">
             <EventAvailableIcon />
-            <p>{getTimeJP(reservationDetail?.date)}</p>
+            <p>{getTimeJP(reservationDetail?.date)} <span className="ml-[10px]">{converTime(selectedTime)}</span></p>
           </div>
 
           <div className="mt-9">
@@ -102,7 +117,7 @@ const ReservationItem = ({ reservationDetail, handleClose }: IReservationItem) =
 
                 validationSchema={ReservationRegistration}
                 onSubmit={(data) => {
-                  alert('login success')
+                  createNewSubscriber(data.name, data.email)
                 }}
               >
                 {
@@ -113,8 +128,8 @@ const ReservationItem = ({ reservationDetail, handleClose }: IReservationItem) =
                     handleBlur,
                     handleChange,
                     handleSubmit, }) => (
-                    <>
-                      <div className="relative">
+                    <form onSubmit={handleSubmit}>
+                      <div className="relative mb-8">
                         <TextField
                           sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
                           id="name"
@@ -134,7 +149,7 @@ const ReservationItem = ({ reservationDetail, handleClose }: IReservationItem) =
                         )}
                       </div>
 
-                      <div className="relative">
+                      <div className="relative mb-8">
                         <TextField
                           sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
                           id="email"
@@ -153,13 +168,14 @@ const ReservationItem = ({ reservationDetail, handleClose }: IReservationItem) =
                       </div>
 
                       <Button
+                        type="submit"
                         sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
-                        className={` text-[#fff] rounded-[50px] 
+                        className={` text-[#fff] rounded-[50px] w-full
                         mt-5 py-3 ${!isValid ? 'bg-[#E1E1E1]' : 'bg-[#BA00ff] hover:bg-[#BA00ff]/[0.6]'}`}
-                        onClick={() => setBookingStep(2)}>
+                      >
                         <p className='font-bold text-2xl font-noto-sans-jp'>予約する</p>
                       </Button>
-                    </>
+                    </form>
                   )
                 }
               </Formik>

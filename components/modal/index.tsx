@@ -1,5 +1,4 @@
 'use client'
-import { makeStyles } from '@material-ui/core';
 import { Box, Modal, } from "@mui/material";
 import { TFieldValueConvert, TReservationRespond } from "components/types/common";
 import { getItemDetails } from 'components/utils/api';
@@ -18,21 +17,14 @@ const style = {
   },
 };
 
-const useStyles = makeStyles({
-  root: {
-    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#ba00ff',
-    },
-  },
-});
-
 export interface IChildModel {
   open: boolean;
   handleClose: () => void;
   reservationDetail?: TReservationRespond;
+  imageUrl?: string
 }
 
-const ChildModel = ({ open, handleClose, reservationDetail }: IChildModel) => {
+const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildModel) => {
   const [bookingStep, setBookingStep] = useState(0);
   const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>()
   useEffect(() => {
@@ -58,10 +50,7 @@ const ChildModel = ({ open, handleClose, reservationDetail }: IChildModel) => {
       }
     }
     getItemData()
-  }, [])
-
-  console.log('dataconvert: ', reservationInfo);
-
+  }, [reservationDetail?.i_id])
 
   return (
     <Modal open={open} onClose={() => {
@@ -71,7 +60,7 @@ const ChildModel = ({ open, handleClose, reservationDetail }: IChildModel) => {
       <>
         <div className="modal-body">
           <Box sx={{ ...style, width: 1248, borderRadius: '20px', }}>
-            <ReservationItem reservationDetail={reservationInfo} handleClose={handleClose} />
+            <ReservationItem reservationDetail={reservationInfo} handleClose={handleClose} imageUrl={imageUrl} />
           </Box>
         </div></>
     </Modal>

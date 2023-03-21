@@ -223,3 +223,10 @@ export type TFieldValueConvert = {
 export type TReserSearchCondition = {
   conditions: TReservationSearchCondition[]
 }
+
+export type TCreateSubscriber = {
+  reservation_id: string,
+  time: string,
+  name: string,
+  email: string,
+}
