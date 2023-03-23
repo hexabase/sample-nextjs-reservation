@@ -19,6 +19,8 @@ const LoginPage = () => {
   const [notification, setNotification] = useState<TNotification>({
     open: false,
   });
+  const [errorMessage, setErrorMessage] = useState('');
+
   const loginHandler = async (formValues: FormValuesProps) => {
     try {
       const { email, password } = formValues;
@@ -32,6 +34,7 @@ const LoginPage = () => {
         router.push('/administrator');
       }
     } catch (error) {
+      setErrorMessage("Invalid email or password")
       setNotification({
         open: true,
         type: ETypeStatus.ERROR,
@@ -95,8 +98,8 @@ const LoginPage = () => {
                     ? 'border-[#ba00ff]'
                     : 'border-[#fff]'
                     } input-field solid`}
-                  helperText={touched.password && errors.password}
-                  error={touched.password && Boolean(errors.password)}
+                  helperText={touched.password && errors.password ? errors.password : errorMessage}
+                  error={Boolean(touched.password && (errors.password || errorMessage))}
                 />
 
                 <button

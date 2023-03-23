@@ -101,7 +101,20 @@ const Administrator = () => {
                   </div>
 
                   <div className="sm:hidden">
-                    <CardMobile reservationList={reservationList} />
+                    <div className="px-5 py-[10px] gap-[7px] border-b border-b-[#E1E1E1]">
+                      <p className="text-sm font-bold ">アジェンダ一覧</p>
+                    </div>
+
+                    <div className="px-5 py-[10px] gap-[7px] border-b-[#E1E1E1] flex justify-end">
+                      <p> 全120件</p>
+                    </div>
+
+                    <div className="pt-10 pb-24 px-5 bg-[#F2F2F2] gap-4 flex flex-col items-center">
+                      {reservationList.map((reservation) => (
+                        <CardMobile reservation={reservation} />
+                      ))}
+                    </div>
+
                   </div>
                 </>
                 : <NoRegister />

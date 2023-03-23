@@ -3,17 +3,19 @@ import { TReservationRespond } from "components/types/common"
 import { getFile } from "components/utils/api"
 import { getYearMonthDay } from "components/utils/getDay"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 export interface IReservationRow {
   reservation: TReservationRespond,
   handleRowOver: (rowIndex: string) => void,
   handleRowLeave: () => void,
   handleRowClick: (id: string) => Promise<void>,
   hoveredRowIndex: string,
+  imageUrl?: string,
+  setImageUrl: Dispatch<SetStateAction<string | undefined>>,
 }
 
-const ReservationRow = ({ reservation, handleRowOver, handleRowLeave, handleRowClick, hoveredRowIndex }: IReservationRow) => {
-  const [imageUrl, setImageUrl] = useState<string>();
+const ReservationRow = ({ reservation, handleRowOver, handleRowLeave, handleRowClick, hoveredRowIndex, imageUrl, setImageUrl }: IReservationRow) => {
+
   useEffect(() => {
     const getImage = async () => {
       try {

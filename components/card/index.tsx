@@ -19,7 +19,6 @@ export interface ICardJob {
 
 export default function MediaCard({ reservation }: ICardJob) {
   const [open, setOpen] = useState(false);
-  const [jobDetail, setJobDetail] = useState<TJob>();
   const [showModal, setShowModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const theme = useTheme();
@@ -44,7 +43,8 @@ export default function MediaCard({ reservation }: ICardJob) {
   useEffect(() => {
     const getImage = async () => {
       try {
-        const res = await getFile(reservation.image)
+        const res = await getFile(reservation.image);
+        console.log(res.data);
         const imageBytes = new Uint8Array(res.data);
         const blob = new Blob([imageBytes.buffer], { type: 'image' });
         const imageUrl = URL.createObjectURL(blob);
@@ -54,14 +54,15 @@ export default function MediaCard({ reservation }: ICardJob) {
       }
     }
     getImage()
-  }, [reservation.i_id])
+  }, [reservation.i_id, reservation.image])
+
   return (
     <>
       <Grid item xs={12} md={4} key={reservation.i_id}>
         <Card onClick={() => handleOpen(reservation)} sx={{ maxWidth: 363, borderRadius: '20px', height: 394, cursor: 'pointer', boxShadow: '0 10px 15px rgba(0,0,0,0.04)' }}  >
           <CardMedia
             sx={{ height: 226, width: 363, borderRadius: '20px' }}
-            image={`${imageUrl ? { imageUrl } : '/work.svg'}`}
+            image={`${imageUrl ? imageUrl : '/work.svg'}`}
             className='relative rounded-[20px] bg-black-rgba bg-blend-darken'
           >
             <div className='absolute top-3 left-3 text-xs font-bold text-[#fff] flex items-center gap-x-1'>
@@ -139,13 +140,13 @@ export default function MediaCard({ reservation }: ICardJob) {
 
         {showModal &&
           <>
-            <ChildModel handleClose={handleClose} open={showModal} jobDetail={jobDetail} />
+            <ChildModel handleClose={handleClose} open={showModal} reservationDetail={reservation} imageUrl={imageUrl} />
           </>
         }
 
         {showDrawer &&
           <div className='pt-16'>
-            <ReservationDrawer jobDetail={jobDetail} handleClose={handleClose} showDrawer={showDrawer} />
+            <ReservationDrawer reservationDetail={reservation} handleClose={handleClose} showDrawer={showDrawer} imageUrl={imageUrl} />
           </div>
         }
       </Grid>
