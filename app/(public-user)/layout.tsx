@@ -50,10 +50,9 @@ export default function RootLayout({
               <Image alt='logo' src='/logoFooter.svg' width={93} height={91} />
             </div>
             <div className='flex items-center justify-between gap-x-9'>
-              <p>ホーム</p>
-              <p>ログイン</p>
-              <p>会員登録</p>
-              <p>プライバシーポリシー</p>
+              <Link href="/"><p>ホーム</p></Link>
+              <Link href="/auth/login"><p>ログイン</p></Link>
+              <a href="https://www.hexabase.com/privacy-policy/" target="_blank" rel="noreferrer"><p>プライバシーポリシー</p></a>
             </div>
             <div>
               <p>©️2022 Hexabase</p>
