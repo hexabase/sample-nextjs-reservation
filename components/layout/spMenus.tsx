@@ -75,9 +75,9 @@ export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) =>
                 ))}
               </div>
               <div className="p-[10px] text-sm font-medium border-t border-t-[#E1E1E1] flex flex-col gap-4">
-                <p>運営会社</p>
-                <p>プライバシーポリシー</p>
-                <p>お問い合わせ</p>
+                <a href="https://www.hexabase.com/" target="_blank" rel="noreferrer"><p>運営会社</p></a>
+                <a href="https://www.hexabase.com/privacy-policy/" target="_blank" rel="noreferrer"><p>プライバシーポリシー</p></a>
+                <a href="https://www.hexabase.com/contact-us/" target="_blank" rel="noreferrer"><p>お問い合わせ</p></a>
               </div>
             </div>
           </div>

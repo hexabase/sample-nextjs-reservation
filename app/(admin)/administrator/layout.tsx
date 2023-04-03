@@ -46,11 +46,10 @@ export default function RootLayout({
                 className='w-[197px] h-[28px] md:w-[297px] md:h-[43px]'
               />
               <div className='flex gap-[15px] leading-[23px]'>
-                <p className='hidden md:block'>ログアウト</p>
+                <p className='cursor-pointer' onClick={logoutHandler}>ログアウト
+                </p>
                 <div className='hidden md:block border border-solid border-[#000000] bg-[#000000] w-[1px] h-[23px]'></div>
-                <div
-                  className='cursor-pointer'
-                  onClick={logoutHandler}>
+                <div className='hidden md:block'>
                   <p>山田 太郎 様</p>
                 </div>
               </div>
@@ -66,7 +65,7 @@ export default function RootLayout({
               <div className='bg-[#F8F9FA] border border-solid border-[#E1E1E1] w-2/12	 h-full'>
               </div>
               <div className='w-10/12	 bg-[#fff] border border-solid border-[#E1E1E1] h-full flex items-center'>
-                <p className='text-xs pl-8'>@2022 Hexabase</p>
+                <p className='text-xs pl-8'>&copy; Hexabase</p>
               </div>
             </div>
           </footer>

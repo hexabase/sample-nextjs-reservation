@@ -149,7 +149,7 @@ const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal
                           className='relative md:flex w-full'>
                           <TextField
                             id="email"
-                            placeholder='sample@hexabase.com'
+                            placeholder='yourhost@hexabase.com'
                             label="メールアドレス*"
                             value={values.email}
                             InputLabelProps={{ shrink: true }}

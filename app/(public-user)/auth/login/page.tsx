@@ -34,7 +34,7 @@ const LoginPage = () => {
         router.push('/administrator');
       }
     } catch (error) {
-      setErrorMessage("Invalid email or password")
+      setErrorMessage("パスワードが不正です")
       setNotification({
         open: true,
         type: ETypeStatus.ERROR,
@@ -75,7 +75,7 @@ const LoginPage = () => {
                 className='w-full md:w-96 flex flex-col gap-8 md:gap-10 justify-center'>
                 <TextField
                   id="email"
-                  placeholder='sample@hexabase.com'
+                  placeholder='yourhost@hexabase.com'
                   value={values.email}
                   label="メールアドレス*"
                   InputLabelProps={{ shrink: true }}
