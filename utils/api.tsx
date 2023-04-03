@@ -7,7 +7,7 @@ const axiosInstance = createAxiosInstance();
 export const addUser = async (email: string): Promise<ApiResponse<TAddUser>> => {
   try {
     const response = await axiosInstance.post<TAddUser>(
-      'https://api.hexabase.com/api/v0/users',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/users`,
       {
         email: email,
         g_id: "64056d51a3ac0b5a0bc70137",
@@ -15,7 +15,7 @@ export const addUser = async (email: string): Promise<ApiResponse<TAddUser>> => 
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
+          Authorization: process.env.NEXT_PUBLIC_TOKEN_API
         }
       }
     )
@@ -34,7 +34,7 @@ export const addUser = async (email: string): Promise<ApiResponse<TAddUser>> => 
 export const userInvite = async (email: string): Promise<ApiResponse<TUserInvite[]>> => {
   try {
     const response = await axiosInstance.post<TUserInvite[]>(
-      'https://api.hexabase.com/api/v0/userinvite', {
+      `${process.env.NEXT_PUBLIC_LINKER_API}/userinvite`, {
       users: [{ email }],
       domain: `${process.env.NEXT_PUBLIC_DOMAIN}`,
       sender_address: `${process.env.NEXT_PUBLIC_SENDER_ADDRESS}`,
@@ -42,7 +42,7 @@ export const userInvite = async (email: string): Promise<ApiResponse<TUserInvite
     },
       {
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
+          Authorization: process.env.NEXT_PUBLIC_TOKEN_API
         }
       }
     )
@@ -63,7 +63,7 @@ export const confirmRegistration = async (id: string): Promise<ApiResponse<TConf
   try {
 
     const res = await axiosInstance.get(
-      `https://api.hexabase.com/api/v0/users/registration/confirm?id=${id}`
+      `${process.env.NEXT_PUBLIC_LINKER_API}/registration/confirm?id=${id}`
     )
     return {
       data: res.data,
@@ -87,7 +87,7 @@ export const registerUser = async ({
 }: TInputRegisterUser): Promise<ApiResponse<TRegisterUser>> => {
   try {
     const res = await axiosInstance.post(
-      'https://api.hexabase.com/api/v0/users/registration/confirm',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/users/registration/confirm`,
       {
         confirmation_id,
         email,
@@ -112,7 +112,7 @@ export const getUserInfo = async (): Promise<ApiResponse<TGetUserInfo>> => {
   const token = getCookie('token')
   try {
     const res = await axiosInstance.get(
-      'https://api.hexabase.com/api/v0/userinfo',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/userinfo`,
       {
         headers: {
           Authorization: token ? `Bearer ${token}` : ''
@@ -135,7 +135,7 @@ export const createItem = async ({ user_id, position, name }: TInputCreateItem):
   try {
     const token = getCookie('token');
     const res = await axiosInstance.post(
-      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/recruiters/items/new',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunch-pal/datastores/recruiters/items/new`,
       {
         item: {
           user_id,
@@ -164,7 +164,7 @@ export const createItem = async ({ user_id, position, name }: TInputCreateItem):
 export const login = async ({ email, password }: TInputLogin): Promise<ApiResponse<TLogin>> => {
   try {
     const res = await axiosInstance.post(
-      'https://api.hexabase.com/api/v0/login',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/login`,
       {
         email,
         password,
@@ -186,11 +186,11 @@ export const logout = async () => {
   try {
     const token = getCookie('token');
     const res = await axiosInstance.post(
-      'https://api.hexabase.com/api/v0/users/logout',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/users/logout`,
       {},
       {
         headers: {
-          Authorization: token ? `Bearer ${token}` : ''
+          Authorization: token ? `Bearer ${token}` : process.env.NEXT_PUBLIC_TOKEN_API
         }
       }
     )
@@ -210,11 +210,11 @@ export const uploadFile = async (formData: FormData): Promise<ApiResponse<TUploa
   try {
     const token = getCookie('token')
     const res = await axiosInstance.post(
-      'https://api.hexabase.com/api/v0/files',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/files`,
       formData,
       {
         headers: {
-          Authorization: token ? `Bearer ${token}` : '',
+          Authorization: token ? `Bearer ${token}` : process.env.NEXT_PUBLIC_TOKEN_API,
           "Content-Type": 'multipart/form-data'
         }
       }
@@ -235,7 +235,7 @@ export const getRecruitersItems = async (user_id: string) => {
   try {
     const token = getCookie('token')
     const res = await axiosInstance.post(
-      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/recruiters/items/search',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/lunch-pal/datastores/recruiters/items/search`,
       {
         conditions: [
           {
@@ -250,7 +250,7 @@ export const getRecruitersItems = async (user_id: string) => {
       },
       {
         headers: {
-          Authorization: token ? `Bearer ${token}` : '',
+          Authorization: token ? `Bearer ${token}` : process.env.NEXT_PUBLIC_TOKEN_API,
         }
       }
     )
@@ -271,7 +271,7 @@ export const createJobItems = async (data: any, image: string[]) => {
   try {
     const token = getCookie('token')
     const res = await axiosInstance.post(
-      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/new',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/lunch-pal/datastores/reservations/items/new`,
       {
         item: {
           recruiter_id: '000000006',
@@ -292,7 +292,7 @@ export const createJobItems = async (data: any, image: string[]) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
+          Authorization: process.env.NEXT_PUBLIC_TOKEN_API
         }
       }
     )
@@ -313,7 +313,7 @@ export const getReservationsItems = async (recruiter_id: string) => {
   const token = getCookie('token')
   try {
     const res = await axiosInstance.post(
-      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/search',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/lunch-pal/datastores/reservations/items/search`,
       {
         conditions: [{
           id: 'recruiter_id',
@@ -328,7 +328,7 @@ export const getReservationsItems = async (recruiter_id: string) => {
       },
       {
         headers: {
-          Authorization: token ? `Bearer ${token}` : ''
+          Authorization: token ? `Bearer ${token}` : process.env.NEXT_PUBLIC_TOKEN_API
         }
       }
     )
@@ -345,13 +345,13 @@ export const getReservationsItems = async (recruiter_id: string) => {
 }
 
 export const getFile = async (file_id: string) => {
-  const token = getCookie('token')
+  //const token = getCookie('token')
   try {
     const res = await axiosInstance.get(
-      `https://api.hexabase.com/api/v0/files/${file_id}`,
+      `${process.env.NEXT_PUBLIC_LINKER_API}/files/${file_id}`,
       {
         headers: {
-          Authorization: token ? `Bearer ${token}` : ''
+          Authorization: process.env.NEXT_PUBLIC_TOKEN_API,
         },
         responseType: 'arraybuffer',
       }
@@ -372,10 +372,10 @@ export const getItemDetails = async (item_id?: string): Promise<ApiResponse<TLis
   const token = getCookie('token')
   try {
     const res = await axiosInstance.get(
-      `https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/details/${item_id}?include_linked_items=true&use_display_id=true`,
+      `${process.env.NEXT_PUBLIC_LINKER_API}/lunch-pal/datastores/reservations/items/details/${item_id}?include_linked_items=true&use_display_id=true`,
       {
         headers: {
-          Authorization: token ? `Bearer ${token}` : ''
+          Authorization: token ? `Bearer ${token}` : process.env.NEXT_PUBLIC_TOKEN_API
         }
       }
     )
@@ -403,7 +403,7 @@ export const searchReservation = async ({
 }: TReservationSearchLoad) => {
   try {
     const res = await axiosInstance.post(
-      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/reservations/items/search',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunch-pal/datastores/reservations/items/search`,
       {
         conditions,
         use_or_condition,
@@ -416,7 +416,7 @@ export const searchReservation = async ({
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
+          Authorization: process.env.NEXT_PUBLIC_TOKEN_API
         },
       }
     )
@@ -440,7 +440,7 @@ export const createSubscriber = async (
 ) => {
   try {
     const res = await axiosInstance.post(
-      'https://api.hexabase.com/api/v0/applications/lunch-pal/datastores/subscribers/items/new',
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunch-pal/datastores/subscribers/items/new`,
       {
         item: {
           reservation_id: reservation_id,
@@ -451,7 +451,7 @@ export const createSubscriber = async (
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN_API}`
+          Authorization: process.env.NEXT_PUBLIC_TOKEN_API
         }
       }
     )
