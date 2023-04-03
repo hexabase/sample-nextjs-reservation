@@ -4,7 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import { TJob, TReservationRespond } from 'components/types/common';
+import { TReservationRespond } from 'components/types/common';
 import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ChildModel from '../modal';
@@ -25,9 +25,9 @@ export default function MediaCard({ reservation }: ICardJob) {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [imageUrl, setImageUrl] = useState<string>();
 
-  const handleOpen = (reservation: TReservationRespond) => {
+  const handleOpen = () => {
     setOpen(true);
-    // setJobDetail(reservation);
+
     if (isMobile) {
       setShowDrawer(true);
     } else {
@@ -44,7 +44,6 @@ export default function MediaCard({ reservation }: ICardJob) {
     const getImage = async () => {
       try {
         const res = await getFile(reservation.image);
-        console.log(res.data);
         const imageBytes = new Uint8Array(res.data);
         const blob = new Blob([imageBytes.buffer], { type: 'image' });
         const imageUrl = URL.createObjectURL(blob);
@@ -70,8 +69,8 @@ export default function MediaCard({ reservation }: ICardJob) {
               <p>{getTimeJP(reservation.date)}</p>
             </div>
             <div className='absolute left-3 bottom-3 flex flex-col text-[#fff] text-base font-bold'>
-              <p>{reservation.lookup_items.recruiter.name}</p>
-              <p className='text-xs'>{reservation.lookup_items.recruiter.position}</p>
+              <p>{reservation.lookup_items?.recruiter.name}</p>
+              <p className='text-xs'>{reservation.lookup_items?.recruiter.position}</p>
             </div>
             {/* {job.isAvailable ? <div className='absolute top-3 right-8 sm:right-3'>
                     <Button sx={{ "&:hover": { backgroundColor: "#3DE7AE", }, fontFamily: 'Noto Sans JP, sans-serif' }} className='bg-[#3DE7AE] text-[#fff] rounded-[50px]'>

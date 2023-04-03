@@ -133,18 +133,20 @@ export type TInputLogin = {
 export type TUploadFileRespond = {
   file_id: string,
 }
-// export type TRecruitersItems = {
-//   name: string;
-//   created_at: string;
-//   created_by: string;
-//   d_id: string;
-//   i_id: string;
-//   id: string;
-//   p_id: string;
-//   rev_no: string;
-//   title: string;
-//   unread: string;
-// }
+
+export type TRecruitersItems = {
+  created_at: string;
+  created_by: string;
+  d_id: string;
+  i_id: string;
+  id: string;
+  p_id: string;
+  rev_no: string;
+  recruiter_id: string;
+  user_id: string;
+  name: string;
+  position: string;
+ }
 
 // export type TGetRecruitersItems = {
 //   items: TRecruitersItems[];

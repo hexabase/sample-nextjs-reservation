@@ -1,5 +1,5 @@
-import { TFieldValueConvert, TReservationRespond } from "components/types/common"
-import Image from "next/image"
+import { TFieldValueConvert } from "components/types/common";
+import Image from "next/image";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { DrawerReservation } from "../drawer";
 import { useEffect, useState } from "react";
@@ -7,10 +7,11 @@ import { getYearMonthDay } from "components/utils/getDay";
 import { getFile, getItemDetails } from "components/utils/api";
 export interface ICardMobile {
   reservation: any
-}
+};
+
 const CardMobile = ({ reservation }: ICardMobile) => {
-  const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>()
-  const [showDrawer, setShowDrawer] = useState(false)
+  const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>();
+  const [showDrawer, setShowDrawer] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
 
   const toggleDrawer = () => {
@@ -22,7 +23,7 @@ const CardMobile = ({ reservation }: ICardMobile) => {
     const times: { field_id: string, value: string }[] = [];
     if (res.data && res.data.field_values) {
       const dataConvert: TFieldValueConvert = {};
-      for (let item in res.data.field_values) {
+      for (const item in res.data.field_values) {
         if (item.startsWith('time')) {
           times?.push({
             field_id: res.data.field_values[item].field_id,
@@ -51,11 +52,11 @@ const CardMobile = ({ reservation }: ICardMobile) => {
       }
     }
     getImage()
-  }, [reservation])
+  }, [reservation]);
+
   return (
     <>
       <div
-        key={reservation?.i_id}
         onClick={() => handleCardClick(reservation?.i_id)}
         className="p-5 gap-[10px] rounded-[4px] flex flex-col bg-[#ffffff]">
         <div className="flex flex-col justify-center gap-5">
@@ -119,4 +120,4 @@ const CardMobile = ({ reservation }: ICardMobile) => {
   )
 }
 
-export default CardMobile
+export default CardMobile;

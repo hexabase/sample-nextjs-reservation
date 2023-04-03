@@ -1,6 +1,5 @@
-
 import Paper from '@mui/material/Paper';
-import { TFieldValueConvert, TJob, TReservationRespond } from 'components/types/common';
+import { TFieldValueConvert, TReservationRespond } from 'components/types/common';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, } from '@mui/material';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import { useState } from 'react';
@@ -10,13 +9,13 @@ import ReservationRow from '../reservationDetail/reservationRow';
 
 export interface ITableData {
   reservationList: TReservationRespond[]
-}
+};
 
 export default function TableData({ reservationList }: ITableData) {
   const [imageUrl, setImageUrl] = useState<string>();
   const [hoveredRowIndex, setHoveredRowIndex] = useState('');
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>()
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>();
 
   const handleRowOver = (rowIndex: string) => {
     setHoveredRowIndex(rowIndex);
@@ -33,7 +32,7 @@ export default function TableData({ reservationList }: ITableData) {
     const times: { field_id: string, value: string }[] = [];
     if (res.data && res.data.field_values) {
       const dataConvert: TFieldValueConvert = {};
-      for (let item in res.data.field_values) {
+      for (const item in res.data.field_values) {
         if (item.startsWith('time')) {
           times?.push({
             field_id: res.data.field_values[item].field_id,
@@ -46,8 +45,8 @@ export default function TableData({ reservationList }: ITableData) {
       }
       setReservationInfor(dataConvert)
     }
-    setShowDrawer(true)
-  }
+    setShowDrawer(true);
+  };
 
   return (
     <>
@@ -121,4 +120,4 @@ export default function TableData({ reservationList }: ITableData) {
       <DrawerReservation open={showDrawer} onClose={toggleDrawer} reservationInfo={reservationInfo} imageUrl={imageUrl} />
     </>
   );
-}
+};

@@ -1,11 +1,13 @@
-'use client'
+'use client';
+
 import { Box, Modal, } from "@mui/material";
 import { TFieldValueConvert, TReservationRespond } from "components/types/common";
 import { getItemDetails } from 'components/utils/api';
 import { useEffect, useState } from "react";
 import ReservationItem from '../reservationDetail/reservationItem';
+
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute' as const,
   top: '50%',
   left: '49.5%',
   transform: 'translate(-50%, -50%)',
@@ -22,7 +24,7 @@ export interface IChildModel {
   handleClose: () => void;
   reservationDetail?: TReservationRespond;
   imageUrl?: string
-}
+};
 
 const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildModel) => {
   const [bookingStep, setBookingStep] = useState(0);
@@ -34,7 +36,7 @@ const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildMo
 
       if (res.data && res.data.field_values) {
         const dataConvert: TFieldValueConvert = {};
-        for (let item in res.data.field_values) {
+        for (const item in res.data.field_values) {
           if (item.startsWith('time')) {
             times?.push({
               field_id: res.data.field_values[item].field_id,
@@ -46,11 +48,11 @@ const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildMo
           }
         }
 
-        setReservationInfor(dataConvert)
+        setReservationInfor(dataConvert);
       }
     }
     getItemData()
-  }, [reservationDetail?.i_id])
+  }, [reservationDetail?.i_id]);
 
   return (
     <Modal open={open} onClose={() => {
@@ -67,4 +69,4 @@ const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildMo
   )
 }
 
-export default ChildModel
+export default ChildModel;

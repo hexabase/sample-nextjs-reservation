@@ -10,7 +10,6 @@ import { Formik } from 'formik';
 import { ReservationRegistration } from "components/app/(public-user)/auth/Schema";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { converTime, getTimeJP } from "components/utils/getDay";
-import { createSubscriber } from "components/utils/api";
 
 export interface IReservationItem {
   reservationDetail?: any,
@@ -29,16 +28,19 @@ const ReservationItem = ({ reservationDetail, handleClose, imageUrl }: IReservat
   const createNewSubscriber = useCallback(
     async (name: any, email: any) => {
       try {
-        let str = selectedTime;
-        let strParts = str.split("_");
-        let result = strParts[1];
-        let num = parseInt(result);
-        const res = await createSubscriber(reservationDetail.reservation_id, num, name, email)
-        setBookingStep(2)
+        const str = selectedTime;
+        const strParts = str.split("_");
+        const result = strParts[1];
+        const num = parseInt(result);
+//        const res = await createSubscriber(reservationDetail.reservation_id, num, name, email)
+        setBookingStep(2);
       } catch (error) {
         throw error
       }
-    }, [selectedTime, reservationDetail.reservation_id])
+    },
+    [selectedTime, reservationDetail.reservation_id]
+  );
+
   return (
     <Grid container >
       <Grid item xs={12} md={7}

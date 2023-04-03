@@ -1,5 +1,5 @@
-'use client'
-import { makeStyles } from '@material-ui/core';
+'use client';
+
 import { Box, Button, Grid, Modal, TextField } from '@mui/material';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -10,11 +10,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { addUser, userInvite } from "components/utils/api";
-import { EMessageError, ETypeStatus, TJob, TNotification } from "components/types/common";
+import { EMessageError, ETypeStatus, TNotification } from "components/types/common";
 import { useRouter } from 'next/navigation';
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute' as const,
   top: '50%',
   left: '49.5%',
   transform: 'translate(-50%, -50%)',
@@ -36,14 +36,13 @@ const style = {
 
 export interface IRegistrationModal {
   handleClose: () => void,
-  handleOpen?: () => void,
   open: boolean
 }
 
 interface FormValues {
   email: string,
 }
-const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal) => {
+const RegistrationModal = ({ handleClose, open }: IRegistrationModal) => {
   const [bookingStep, setBookingStep] = useState(0);
 
   const theme = useTheme();

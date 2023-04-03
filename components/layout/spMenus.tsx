@@ -1,7 +1,8 @@
 import { Drawer } from '@material-ui/core';
+import Image from "next/image";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Link from 'next/link';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 
 export interface ISPMenus {
@@ -9,6 +10,7 @@ export interface ISPMenus {
   handleClose: () => void,
   setShowRegister: Dispatch<SetStateAction<boolean>>,
 }
+
 export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) => {
   const menuList = [
     {
@@ -45,7 +47,7 @@ export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) =>
 
         <div className=' bg-[#F5F5F5] sm:hidden'>
           <div className='flex justify-between items-center p-5 '>
-            <Link href="/"><img alt='logo' src='/logo.svg' width={120} height={24} /></Link>
+            <Link href="/"><Image alt='logo' src='/logo.svg' width={120} height={24} /></Link>
             <CloseIcon
               onClick={() => handleClose()}
               className='w-6 h-5' />

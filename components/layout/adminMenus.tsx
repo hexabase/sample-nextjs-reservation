@@ -1,9 +1,9 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import AddIcon from '@mui/icons-material/Add';
 export interface IAdminMenus {
   isListPage: boolean
 }
+
 const AdminMenus = ({ isListPage }: IAdminMenus) => {
   return (
     <>
