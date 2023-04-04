@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { getItemDetails } from 'components/utils/api';
 import { converTime, getTimeJP } from 'components/utils/getDay';
+import { createSubscriber } from 'components/utils/api';
 import { Formik } from 'formik';
 import { ReservationRegistration } from 'components/app/(public-user)/auth/Schema';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
@@ -41,7 +42,7 @@ const ReservationDrawer = ({ reservationDetail, handleClose, showDrawer, imageUr
         const strParts = str.split("_");
         const result = strParts[1];
         const num = parseInt(result);
-        const res = await createSubscriber(reservationDetail.reservation_id, num, name, email);
+        await createSubscriber(reservationDetail.reservation_id, num, name, email);
         setBookingStep(2);
       } catch (error) {
         throw error

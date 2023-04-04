@@ -58,7 +58,7 @@ export default function MediaCard({ reservation }: ICardReservation) {
   return (
     <>
       <Grid item xs={12} md={4} key={reservation.i_id}>
-        <Card onClick={() => handleOpen(reservation)} sx={{ maxWidth: 363, borderRadius: '20px', height: 394, cursor: 'pointer', boxShadow: '0 10px 15px rgba(0,0,0,0.04)' }}  >
+        <Card onClick={() => handleOpen()} sx={{ maxWidth: 363, borderRadius: '20px', height: 394, cursor: 'pointer', boxShadow: '0 10px 15px rgba(0,0,0,0.04)' }}  >
           <CardMedia
             sx={{ height: 226, width: 363, borderRadius: '20px' }}
             image={`${imageUrl ? imageUrl : '/work.svg'}`}

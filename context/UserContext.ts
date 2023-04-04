@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { TGetUserInfo } from '../types';
+import { TGetUserInfo } from '../types/common';
 
 interface IUserContext {
   user?: TGetUserInfo;

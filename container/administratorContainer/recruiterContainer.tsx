@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { deleteCookie } from 'cookies-next';
 
 import { RecruiterContext, useUserContext } from '../../context';
-import { IRecruiterContext } from '../../types';
+import { TRecruitersItems } from '../../types/common';
 import { getRecruitersItems } from '../../utils/api';
 
 export default function RecruiterContainer({
@@ -16,7 +16,7 @@ export default function RecruiterContainer({
 
   const { user } = useUserContext();
 
-  const [recruiter, setRecruiter] = useState<IRecruiterContext>();
+  const [recruiter, setRecruiter] = useState<TRecruitersItems>();
 
   const handleLogout = () => {
     deleteCookie('token');
@@ -32,7 +32,7 @@ export default function RecruiterContainer({
           res.data && res.data.items[0] && setRecruiter(res.data.items[0]);
         }
       } catch (error) {
-//        handleLogout();
+        handleLogout();
       }
     })();
   }, [user]);

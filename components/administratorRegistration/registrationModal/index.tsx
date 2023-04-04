@@ -36,13 +36,14 @@ const style = {
 
 export interface IRegistrationModal {
   handleClose: () => void,
+  handleOpen?: () => void,
   open: boolean
 }
 
 interface FormValues {
   email: string,
 }
-const RegistrationModal = ({ handleClose, open }: IRegistrationModal) => {
+const RegistrationModal = ({ handleClose, handleOpen, open }: IRegistrationModal) => {
   const [bookingStep, setBookingStep] = useState(0);
 
   const theme = useTheme();

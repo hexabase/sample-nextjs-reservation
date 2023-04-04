@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react';
 
-import { TRecruitersItems } from '../types';
+import { TRecruitersItems } from '../types/common';
 
-interface IRecruiteryContext {
+interface IRecruiterContext {
   recruiter?: TRecruitersItems;
 }
 

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 import { UserContext } from '../../context';
-import { TGetUserInfo } from '../../types';
+import { TGetUserInfo } from '../../types/common';
 import { getUserInfo } from '../../utils/api';
 
 export default function UserContainer({

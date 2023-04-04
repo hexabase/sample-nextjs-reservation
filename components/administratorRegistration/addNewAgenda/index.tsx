@@ -17,7 +17,7 @@ interface FormValues {
   date: undefined,
   title: string,
   reservation_detail: string,
-  recruiter: string,
+  recruiter?: string,
   time_10: boolean,
   time_11: boolean,
   time_12: boolean,
@@ -68,7 +68,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
     }
   };
 
-  const createDataJobItems = useCallback(
+  const createDataReservationItems = useCallback(
     async (data: FormValues) => {
       try {
         const image = filesId
@@ -105,7 +105,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
           date: undefined,
           title: '',
           reservation_detail: '',
-          recruiter: recruiter.i_id,
+          recruiter: recruiter?.i_id,
           time_10: false,
           time_11: false,
           time_12: false,
@@ -118,7 +118,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
         }
         validationSchema={SchemaRecuiterRegister}
         onSubmit={(data) =>
-          createDataJobItems(data)
+          createDataReservationItems(data)
         }
       >
         {
