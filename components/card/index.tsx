@@ -13,11 +13,11 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { getTimeJP } from 'components/utils/getDay';
 import { getFile } from 'components/utils/api';
-export interface ICardJob {
+export interface ICardReservation {
   reservation: TReservationRespond
 }
 
-export default function MediaCard({ reservation }: ICardJob) {
+export default function MediaCard({ reservation }: ICardReservation) {
   const [open, setOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);

@@ -35,19 +35,19 @@ const ReservationDrawer = ({ reservationDetail, handleClose, showDrawer, imageUr
   };
 
   const createNewSubscriber = useCallback(
-    async (name: any, email: any) => {
+    async (name: string, email: string) => {
       try {
         const str = selectedTime;
         const strParts = str.split("_");
         const result = strParts[1];
-//        const num = parseInt(result);
-//        const res = await createSubscriber(reservationDetail.reservation_id, num, name, email)
-        setBookingStep(2)
+        const num = parseInt(result);
+        const res = await createSubscriber(reservationDetail.reservation_id, num, name, email);
+        setBookingStep(2);
       } catch (error) {
         throw error
       }
     },
-    [selectedTime, reservationDetail.reservation_id]
+    [selectedTime, reservationDetail?.reservation_id]
   );
 
   useEffect(() => {
@@ -218,7 +218,7 @@ const ReservationDrawer = ({ reservationDetail, handleClose, showDrawer, imageUr
                             {touched.name && errors.name && (
                               <>
                                 <ReportProblemIcon className="absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]" />
-                                <p className="text-[#E5242A] text-xs mt-2">役職は必須です</p>
+                                <p className="text-[#E5242A] text-xs mt-2">お名前は必須です</p>
                               </>
                             )}
                           </div>

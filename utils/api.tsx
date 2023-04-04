@@ -10,8 +10,8 @@ export const addUser = async (email: string): Promise<ApiResponse<TAddUser>> => 
       `${process.env.NEXT_PUBLIC_LINKER_API}/users`,
       {
         email: email,
-        g_id: "64056d51a3ac0b5a0bc70137",
-        w_id: "6401a9b65e6cd8c92726522b"
+        g_id: "642bf4aee81f0dd09995df4a",
+        w_id: "642bc28651005517b9643ea0"
       },
       {
         headers: {
@@ -135,7 +135,7 @@ export const createItem = async ({ user_id, position, name }: TInputCreateItem):
   try {
     const token = getCookie('token');
     const res = await axiosInstance.post(
-      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunch-pal/datastores/recruiters/items/new`,
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/recruiters/items/new`,
       {
         item: {
           user_id,
@@ -235,7 +235,7 @@ export const getRecruitersItems = async (user_id: string) => {
   try {
     const token = getCookie('token')
     const res = await axiosInstance.post(
-      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunch-pal/datastores/recruiters/items/search`,
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/recruiters/items/search`,
       {
         conditions: [
           {
@@ -271,7 +271,7 @@ export const createJobItems = async (data: any, image: string[]) => {
   try {
     const token = getCookie('token')
     const res = await axiosInstance.post(
-      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunch-pal/datastores/reservations/items/new`,
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/reservations/items/new`,
       {
         item: {
           title: data.title,
@@ -313,7 +313,7 @@ export const getReservationsItems = async (recruiter_i_id: string) => {
   const token = getCookie('token')
   try {
     const res = await axiosInstance.post(
-      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunch-pal/datastores/reservations/items/search`,
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/reservations/items/search`,
       {
         conditions: [{
           id: 'recruiter',
@@ -321,7 +321,7 @@ export const getReservationsItems = async (recruiter_i_id: string) => {
           exact_match: true,
 
         }],
-        include_links: true,
+        include_lookups: true,
         page: 1,
         per_page: 10,
         use_display_id: true
@@ -372,7 +372,7 @@ export const getItemDetails = async (item_id?: string): Promise<ApiResponse<TLis
   const token = getCookie('token')
   try {
     const res = await axiosInstance.get(
-      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunch-pal/datastores/reservations/items/details/${item_id}?include_linked_items=true&use_display_id=true`,
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/reservations/items/details/${item_id}?include_linked_items=true&use_display_id=true`,
       {
         headers: {
           Authorization: token ? `Bearer ${token}` : process.env.NEXT_PUBLIC_TOKEN_API
@@ -403,7 +403,7 @@ export const searchReservation = async ({
 }: TReservationSearchLoad) => {
   try {
     const res = await axiosInstance.post(
-      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunch-pal/datastores/reservations/items/search`,
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/reservations/items/search`,
       {
         conditions,
         use_or_condition,
@@ -440,7 +440,7 @@ export const createSubscriber = async (
 ) => {
   try {
     const res = await axiosInstance.post(
-      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunch-pal/datastores/subscribers/items/new`,
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/subscribers/items/new`,
       {
         item: {
           reservation_id: reservation_id,

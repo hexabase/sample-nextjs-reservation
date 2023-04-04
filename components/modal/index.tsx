@@ -28,7 +28,8 @@ export interface IChildModel {
 
 const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildModel) => {
   const [bookingStep, setBookingStep] = useState(0);
-  const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>()
+  const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>();
+
   useEffect(() => {
     const getItemData = async () => {
       const res = await getItemDetails(reservationDetail?.i_id)
