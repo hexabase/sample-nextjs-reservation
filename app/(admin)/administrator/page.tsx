@@ -1,54 +1,46 @@
 'use client'
 
-import { Button, Grid, Pagination } from "@mui/material"
-import TableData from "components/components/table"
+import { Button, Grid, Pagination } from "@mui/material";
+import TableData from "components/components/table";
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import NoRegister from "components/components/reservationRegistration/noRegister";
 import AddNewForm from "components/components/administratorRegistration/addNewAgenda";
 import AddIcon from '@mui/icons-material/Add';
 import AdminMenus from "components/components/layout/adminMenus";
+import { useRecruiterContext } from '../../../context';
 import { useCallback, useEffect, useState } from "react";
 import CardMobile from "components/components/reservationDetail/cardMobile";
 import KeyboardTabIcon from '@mui/icons-material/KeyboardTab';
-import { getUserInfo, getRecruitersItems, getReservationsItems, } from "components/utils/api";
+import { getReservationsItems } from "components/utils/api";
 import { TReservationRespond } from "components/types/common";
 
 const Administrator = () => {
+  const { recruiter } = useRecruiterContext();
   const [isAddRegistration, setIsAddRegistration] = useState(false)
   const [isListPage, setIsListPage] = useState(true)
   const [reservationList, setReservationList] = useState<TReservationRespond[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
 
   const getDataReservationItems = useCallback(
-    async (id: string) => {
+    async (i_id: string) => {
       try {
-        const res = await getReservationsItems(id)
+        const res = await getReservationsItems(i_id)
         setReservationList(res.data.items)
       } catch (error) {
       }
-    }, []
+    }, [currentPage]
   )
-  const getDataRecruitersItems = useCallback(
-    async (id: string) => {
-      try {
-        const res = await getRecruitersItems(id)
-        getDataReservationItems(res.data?.items[0]?.recruiter_id)
-      } catch (error) {
-      }
-    }, [getDataReservationItems])
 
   useEffect(() => {
-    async function getDataUserInfo() {
-      const res = await getUserInfo()
-      getDataRecruitersItems(res.data.u_id)
+    if (recruiter && recruiter.i_id) {
+      getDataReservationItems(recruiter.i_id);
     }
-    getDataUserInfo()
-
-  }, [])
+  }, [recruiter, getDataReservationItems, currentPage]);
 
   return (
     <>
       <div className={`hidden sm:block md:pl-[127px] sm:py-[15px] lg:pl-[327px] ${isAddRegistration ? 'sm:hidden' : ''}`}>
-        <p className="font-bold text-lg ">ホスト一覧</p>
+        <p className="font-bold text-lg ">アジェンダ一覧</p>
       </div>
       <Grid container spacing={0} className='relative flex justify-center'>
         <Grid item xs={2}
@@ -65,10 +57,10 @@ const Administrator = () => {
               }}
               className="w-full bg-[#ba00ff] text-[#fff] rounded-[50px] 
               flex justify-start gap-2 items-center hover:bg-[#BA00FF]
-              py-[10px] pl-4 pr-[4px] h-[37px]">
+              pl-4 pr-[4px] h-[37px]">
               <PostAddIcon />
-              <p className="font-sans hidden lg:block h-full">
-                新規アジェンダ登録
+              <p className="font-sans hidden lg:block h-[8px] leading-[8px]">
+                新規登録
               </p>
             </Button>
           </div>
@@ -111,7 +103,7 @@ const Administrator = () => {
 
                     <div className="pt-10 pb-24 px-5 bg-[#F2F2F2] gap-4 flex flex-col items-center">
                       {reservationList.map((reservation) => (
-                        <CardMobile reservation={reservation} />
+                        <CardMobile key={reservation.i_id} reservation={reservation} />
                       ))}
                     </div>
 

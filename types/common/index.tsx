@@ -15,15 +15,14 @@ export type TJob = {
   isAvailable: boolean;
   day: string;
   time: TimeBooking[]
-
-}
+};
 
 export type TAddUser = {
   added: boolean;
   exists: boolean;
   u_id?: string;
   username?: string;
-}
+};
 
 export type TUserInviteStatus = {
   email: string;
@@ -95,7 +94,7 @@ export type TUserConfirm = {
 
 export type TConfirmRegistration = {
   user: TUserConfirm,
-}
+};
 
 export type TInputRegisterUser = {
   confirmation_id: string;
@@ -112,6 +111,7 @@ export type TGetUserInfo = {
   is_ws_admin: boolean;
   profile_pic: string;
 };
+
 export type TRegisterUser = {
   token: string;
 };
@@ -120,7 +120,8 @@ export type TInputCreateItem = {
   user_id: string;
   position: string;
   name: string;
-}
+};
+
 export type TLogin = {
   token: string;
 };
@@ -132,19 +133,21 @@ export type TInputLogin = {
 
 export type TUploadFileRespond = {
   file_id: string,
-}
-// export type TRecruitersItems = {
-//   name: string;
-//   created_at: string;
-//   created_by: string;
-//   d_id: string;
-//   i_id: string;
-//   id: string;
-//   p_id: string;
-//   rev_no: string;
-//   title: string;
-//   unread: string;
-// }
+};
+
+export type TRecruitersItems = {
+  created_at: string;
+  created_by: string;
+  d_id: string;
+  i_id: string;
+  id: string;
+  p_id: string;
+  rev_no: string;
+  recruiter_id: string;
+  user_id: string;
+  name: string;
+  position: string;
+};
 
 // export type TGetRecruitersItems = {
 //   items: TRecruitersItems[];
@@ -165,10 +168,12 @@ export type TReservationSearchPayloadOption = {
   sort_order?: string;
   use_or_condition?: boolean;
 };
+
 export type TReservationSearchCondition = {
   id?: string;
   search_value: string[];
-}
+};
+
 export type TReservationSearchLoad = {
   conditions: TReservationSearchCondition[];
   sort_field_id?: string;
@@ -178,7 +183,7 @@ export type TReservationSearchLoad = {
   per_page: number;
   use_display_id?: boolean;
   include_lookups: boolean
-}
+};
 
 export type TReservationRespond = {
   a_id: string,
@@ -206,12 +211,14 @@ export type TReservationRespond = {
   updated_at: string,
   updated_by: string,
   lookup_items: any
-}
+};
+
 export type TFieldValue = {
   field_id: string;
   dataType: string;
   value: any;
 };
+
 export type TListFieldValues = {
   field_values: TFieldValue[];
 };
@@ -222,11 +229,11 @@ export type TFieldValueConvert = {
 
 export type TReserSearchCondition = {
   conditions: TReservationSearchCondition[]
-}
+};
 
 export type TCreateSubscriber = {
   reservation_id: string,
   time: string,
   name: string,
   email: string,
-}
+};

@@ -6,8 +6,9 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
-import { createSubscriber, getItemDetails } from 'components/utils/api';
+import { getItemDetails } from 'components/utils/api';
 import { converTime, getTimeJP } from 'components/utils/getDay';
+import { createSubscriber } from 'components/utils/api';
 import { Formik } from 'formik';
 import { ReservationRegistration } from 'components/app/(public-user)/auth/Schema';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
@@ -35,18 +36,21 @@ const ReservationDrawer = ({ reservationDetail, handleClose, showDrawer, imageUr
   };
 
   const createNewSubscriber = useCallback(
-    async (name: any, email: any) => {
+    async (name: string, email: string) => {
       try {
-        let str = selectedTime;
-        let strParts = str.split("_");
-        let result = strParts[1];
-        let num = parseInt(result);
-        const res = await createSubscriber(reservationDetail.reservation_id, num, name, email)
-        setBookingStep(2)
+        const str = selectedTime;
+        const strParts = str.split("_");
+        const result = strParts[1];
+        const num = parseInt(result);
+        await createSubscriber(reservationDetail.reservation_id, num, name, email);
+        setBookingStep(2);
       } catch (error) {
         throw error
       }
-    }, [selectedTime, reservationDetail.reservation_id])
+    },
+    [selectedTime, reservationDetail?.reservation_id]
+  );
+
   useEffect(() => {
     const getItemData = async () => {
       const res = await getItemDetails(reservationDetail?.i_id)
@@ -54,7 +58,7 @@ const ReservationDrawer = ({ reservationDetail, handleClose, showDrawer, imageUr
 
       if (res.data && res.data.field_values) {
         const dataConvert: TFieldValueConvert = {};
-        for (let item in res.data.field_values) {
+        for (const item in res.data.field_values) {
           if (item.startsWith('time')) {
             times?.push({
               field_id: res.data.field_values[item].field_id,
@@ -215,7 +219,7 @@ const ReservationDrawer = ({ reservationDetail, handleClose, showDrawer, imageUr
                             {touched.name && errors.name && (
                               <>
                                 <ReportProblemIcon className="absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]" />
-                                <p className="text-[#E5242A] text-xs mt-2">役職は必須です</p>
+                                <p className="text-[#E5242A] text-xs mt-2">お名前は必須です</p>
                               </>
                             )}
                           </div>

@@ -1,9 +1,9 @@
-import { Button, TableCell, TableRow } from "@mui/material"
-import { TReservationRespond } from "components/types/common"
-import { getFile } from "components/utils/api"
-import { getYearMonthDay } from "components/utils/getDay"
-import Image from "next/image"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { Button, TableCell, TableRow } from "@mui/material";
+import { TReservationRespond } from "components/types/common";
+import { getFile } from "components/utils/api";
+import { getYearMonthDay } from "components/utils/getDay";
+import Image from "next/image";
+import { Dispatch, SetStateAction, useEffect } from "react";
 export interface IReservationRow {
   reservation: TReservationRespond,
   handleRowOver: (rowIndex: string) => void,
@@ -12,7 +12,7 @@ export interface IReservationRow {
   hoveredRowIndex: string,
   imageUrl?: string,
   setImageUrl: Dispatch<SetStateAction<string | undefined>>,
-}
+};
 
 const ReservationRow = ({ reservation, handleRowOver, handleRowLeave, handleRowClick, hoveredRowIndex, imageUrl, setImageUrl }: IReservationRow) => {
 
@@ -28,9 +28,10 @@ const ReservationRow = ({ reservation, handleRowOver, handleRowLeave, handleRowC
         throw error
       }
     }
-    getImage()
+    getImage();
 
-  }, [reservation])
+  }, [reservation]);
+
   return (
     <TableRow
       onMouseEnter={() => handleRowOver(reservation?.i_id)}

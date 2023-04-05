@@ -45,7 +45,7 @@ export default function RootLayout({
             {children}
           </main>
           <RegistrationModal open={showRegister} handleClose={handleCloseRegister} />
-          <footer className='hidden sm:bg-[#F2F2F2] sm:flex sm:flex-col sm:items-center sm:px-60 sm:py-8 sm:gap-y-[60px]'>
+          <footer className='hidden sm:bg-[#F2F2F2] sm:flex sm:flex-col sm:items-center sm:py-8 sm:gap-y-[60px]'>
             <div>
               <Image alt='logo' src='/logoFooter.svg' width={93} height={91} />
             </div>
@@ -55,7 +55,7 @@ export default function RootLayout({
               <a href="https://www.hexabase.com/privacy-policy/" target="_blank" rel="noreferrer"><p>プライバシーポリシー</p></a>
             </div>
             <div>
-              <p>©️2022 Hexabase</p>
+              <p>&copy; Hexabase</p>
             </div>
           </footer>
         </>

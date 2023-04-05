@@ -9,8 +9,8 @@ import { useCallback, useState } from "react";
 import { Formik } from 'formik';
 import { ReservationRegistration } from "components/app/(public-user)/auth/Schema";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import { createSubscriber } from 'components/utils/api';
 import { converTime, getTimeJP } from "components/utils/getDay";
-import { createSubscriber } from "components/utils/api";
 
 export interface IReservationItem {
   reservationDetail?: any,
@@ -26,19 +26,23 @@ const ReservationItem = ({ reservationDetail, handleClose, imageUrl }: IReservat
     setSelectedTime(time);
     setBookingStep(1);
   };
+
   const createNewSubscriber = useCallback(
-    async (name: any, email: any) => {
+    async (name: string, email: string) => {
       try {
-        let str = selectedTime;
-        let strParts = str.split("_");
-        let result = strParts[1];
-        let num = parseInt(result);
-        const res = await createSubscriber(reservationDetail.reservation_id, num, name, email)
-        setBookingStep(2)
+        const str = selectedTime;
+        const strParts = str.split("_");
+        const result = strParts[1];
+        const num = parseInt(result);
+        await createSubscriber(reservationDetail.reservation_id, num, name, email);
+        setBookingStep(2);
       } catch (error) {
         throw error
       }
-    }, [selectedTime, reservationDetail.reservation_id])
+    },
+    [selectedTime, reservationDetail?.reservation_id]
+  );
+
   return (
     <Grid container >
       <Grid item xs={12} md={7}
@@ -144,7 +148,7 @@ const ReservationItem = ({ reservationDetail, handleClose, imageUrl }: IReservat
                         {touched.name && errors.name && (
                           <>
                             <ReportProblemIcon className="absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]" />
-                            <p className="text-[#E5242A] text-xs mt-2">役職は必須です</p>
+                            <p className="text-[#E5242A] text-xs mt-2">お名前は必須です</p>
                           </>
                         )}
                       </div>
@@ -201,9 +205,9 @@ const ReservationItem = ({ reservationDetail, handleClose, imageUrl }: IReservat
 
       </Grid>
 
-      <Button onClick={handleClose} className="absolute top-0 right-0">
+      <button onClick={handleClose} className="absolute top-5 right-5">
         <CloseIcon className="text-[#000000]" />
-      </Button>
+      </button>
     </Grid>
   )
 }
