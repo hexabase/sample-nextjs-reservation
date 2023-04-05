@@ -160,7 +160,7 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
                           {touched.username && errors.username && (
                             <>
                               <ReportProblemIcon className="absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]" />
-                              <p className="text-[#E5242A] text-xs mt-2">役職は必須です</p>
+                              <p className="text-[#E5242A] text-xs mt-2">お名前は必須です</p>
                             </>
                           )}
                         </div>

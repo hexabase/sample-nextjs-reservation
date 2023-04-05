@@ -4,7 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import { TJob, TReservationRespond } from 'components/types/common';
+import { TReservationRespond } from 'components/types/common';
 import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ChildModel from '../modal';
@@ -13,22 +13,21 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { getTimeJP } from 'components/utils/getDay';
 import { getFile } from 'components/utils/api';
-export interface ICardJob {
+export interface ICardReservation {
   reservation: TReservationRespond
 }
 
-export default function MediaCard({ reservation }: ICardJob) {
+export default function MediaCard({ reservation }: ICardReservation) {
   const [open, setOpen] = useState(false);
-  const [jobDetail, setJobDetail] = useState<TJob>();
   const [showModal, setShowModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [imageUrl, setImageUrl] = useState<string>();
 
-  const handleOpen = (reservation: TReservationRespond) => {
+  const handleOpen = () => {
     setOpen(true);
-    // setJobDetail(reservation);
+
     if (isMobile) {
       setShowDrawer(true);
     } else {
@@ -44,7 +43,7 @@ export default function MediaCard({ reservation }: ICardJob) {
   useEffect(() => {
     const getImage = async () => {
       try {
-        const res = await getFile(reservation.image)
+        const res = await getFile(reservation.image);
         const imageBytes = new Uint8Array(res.data);
         const blob = new Blob([imageBytes.buffer], { type: 'image' });
         const imageUrl = URL.createObjectURL(blob);
@@ -54,14 +53,15 @@ export default function MediaCard({ reservation }: ICardJob) {
       }
     }
     getImage()
-  }, [reservation.i_id])
+  }, [reservation.i_id, reservation.image])
+
   return (
     <>
       <Grid item xs={12} md={4} key={reservation.i_id}>
-        <Card onClick={() => handleOpen(reservation)} sx={{ maxWidth: 363, borderRadius: '20px', height: 394, cursor: 'pointer', boxShadow: '0 10px 15px rgba(0,0,0,0.04)' }}  >
+        <Card onClick={() => handleOpen()} sx={{ maxWidth: 363, borderRadius: '20px', height: 394, cursor: 'pointer', boxShadow: '0 10px 15px rgba(0,0,0,0.04)' }}  >
           <CardMedia
             sx={{ height: 226, width: 363, borderRadius: '20px' }}
-            image={`${imageUrl ? { imageUrl } : '/work.svg'}`}
+            image={`${imageUrl ? imageUrl : '/work.svg'}`}
             className='relative rounded-[20px] bg-black-rgba bg-blend-darken'
           >
             <div className='absolute top-3 left-3 text-xs font-bold text-[#fff] flex items-center gap-x-1'>
@@ -69,8 +69,8 @@ export default function MediaCard({ reservation }: ICardJob) {
               <p>{getTimeJP(reservation.date)}</p>
             </div>
             <div className='absolute left-3 bottom-3 flex flex-col text-[#fff] text-base font-bold'>
-              <p>{reservation.lookup_items.recruiter.name}</p>
-              <p className='text-xs'>{reservation.lookup_items.recruiter.position}</p>
+              <p>{reservation.lookup_items?.recruiter.name}</p>
+              <p className='text-xs'>{reservation.lookup_items?.recruiter.position}</p>
             </div>
             {/* {job.isAvailable ? <div className='absolute top-3 right-8 sm:right-3'>
                     <Button sx={{ "&:hover": { backgroundColor: "#3DE7AE", }, fontFamily: 'Noto Sans JP, sans-serif' }} className='bg-[#3DE7AE] text-[#fff] rounded-[50px]'>
@@ -139,13 +139,13 @@ export default function MediaCard({ reservation }: ICardJob) {
 
         {showModal &&
           <>
-            <ChildModel handleClose={handleClose} open={showModal} jobDetail={jobDetail} />
+            <ChildModel handleClose={handleClose} open={showModal} reservationDetail={reservation} imageUrl={imageUrl} />
           </>
         }
 
         {showDrawer &&
           <div className='pt-16'>
-            <ReservationDrawer jobDetail={jobDetail} handleClose={handleClose} showDrawer={showDrawer} />
+            <ReservationDrawer reservationDetail={reservation} handleClose={handleClose} showDrawer={showDrawer} imageUrl={imageUrl} />
           </div>
         }
       </Grid>

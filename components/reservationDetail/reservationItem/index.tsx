@@ -5,23 +5,44 @@ import CloseIcon from '@mui/icons-material/Close';
 import AvTimerIcon from '@mui/icons-material/AvTimer';
 import DoneIcon from '@mui/icons-material/Done';
 import { Button, Grid, TextField } from "@mui/material";
-import { useState } from "react";
-import { TJob } from "components/types/common";
+import { useCallback, useState } from "react";
 import { Formik } from 'formik';
 import { ReservationRegistration } from "components/app/(public-user)/auth/Schema";
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import { createSubscriber } from 'components/utils/api';
+import { converTime, getTimeJP } from "components/utils/getDay";
 
 export interface IReservationItem {
-  jobDetail?: TJob,
-  handleClose: () => void
+  reservationDetail?: any,
+  handleClose: () => void,
+  imageUrl?: string
 }
-const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
+const ReservationItem = ({ reservationDetail, handleClose, imageUrl }: IReservationItem) => {
+
+  const [selectedTime, setSelectedTime] = useState<string>('');
+  const [bookingStep, setBookingStep] = useState(0);
+
   const handleTimeSelection = (time: string) => {
     setSelectedTime(time);
     setBookingStep(1);
   };
-  const [selectedTime, setSelectedTime] = useState<string>('');
-  const [bookingStep, setBookingStep] = useState(0);
+
+  const createNewSubscriber = useCallback(
+    async (name: string, email: string) => {
+      try {
+        const str = selectedTime;
+        const strParts = str.split("_");
+        const result = strParts[1];
+        const num = parseInt(result);
+        await createSubscriber(reservationDetail.reservation_id, num, name, email);
+        setBookingStep(2);
+      } catch (error) {
+        throw error
+      }
+    },
+    [selectedTime, reservationDetail?.reservation_id]
+  );
+
   return (
     <Grid container >
       <Grid item xs={12} md={7}
@@ -31,25 +52,17 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
             alt="image"
             width={609}
             height={0}
-            src='/work.png'
+            src={imageUrl ?? ''}
             className="rounded-[20px] h-[312px]"
           />
           <div className="font-bold px-8 pr-16">
-            <p className="text-2xl mb-4">{jobDetail?.title}</p>
-            <p className="text-2xl">{jobDetail?.name}</p>
-            <p className="text-lg py-3 ">{jobDetail?.position}</p>
+            <p className="text-2xl mb-4">{reservationDetail?.title}</p>
+            <p className="text-2xl">{reservationDetail?.recruiter?.title}</p>
+            <p className="text-lg py-3 ">{reservationDetail?.position}</p>
 
             <div>
               <p className="text-sm font-normal border-t border-[#D8D8D8] pt-4">
-                スタートアップのプロダクト開発に興味がある方、お話ししましょう！スタートアップのプロダクト開発に興味がある方、
-                お話ししましょう！スタートアップのプロダクト開発に興味がある方、
-                お話ししましょう！スタートアップのプロダクト開発に興味がある方、
-                お話ししましょう！スタートアップのプロダクト開発に興味がある方、
-                お話ししましょう！スタートアップのプロダクト開発に興味がある方、
-                お話ししましょう！スタートアップのプロダクト開発に興味がある方、
-                お話ししましょう！スタートアップのプロダクト開発に興味がある方、
-                お話ししましょう！スタートアップのプロダクト開発に興味がある方、
-                お話ししましょう！
+                {reservationDetail?.reservation_detail}
               </p>
             </div>
           </div>
@@ -57,25 +70,25 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
       </Grid>
 
       <Grid item xs={12} md={5}
-        className='pl-[66px] pr-[80px] pt-[60px]'>
+        className='pl-[66px] pr-[80px] pt-[60px] pb-[40px]'>
         {bookingStep === 0 && (
           <>
             <p className="font-bold text-lg my-4">Reverse</p>
             <div className="flex items-center font-bold py-8 border-t border-b border-[#D8D8D8]">
               <EventAvailableIcon />
-              <p>{jobDetail?.day}</p>
+              <p>{getTimeJP(reservationDetail?.date)}</p>
             </div>
 
             <div className="mt-[40px] ">
               <p className="font-bold text-sm">予約したい時間帯をクリックしてください。</p>
               <div className="flex flex-col gap-[15px] mt-5  items-center">
-                {jobDetail?.time.map((t, index) => (
-                  <Button key={index} onClick={() => handleTimeSelection(t.time)}
-                    disabled={!t.isFull}
-                    className={`h-10 w-96 rounded-[50px] text-[#fff] font-bold ${t.isFull ? 'bg-[#BA00FF] hover:bg-mainColor/[0.6]' : 'bg-[#F4D8FF]'}`}
+                {reservationDetail?.time.map((t: any, index: any) => (
+                  <Button key={index} onClick={() => handleTimeSelection(t.field_id)}
+                    disabled={t.value == '0'}
+                    className={`h-10 w-96 rounded-[50px] text-[#fff] font-bold ${t.value == '1' ? 'bg-[#BA00FF] hover:bg-mainColor/[0.6]' : 'bg-[#F4D8FF]'}`}
                   >
                     <p className="text-lg font-bold">
-                      {t.time}
+                      {converTime(t.field_id)}
                     </p>
                   </Button>
                 ))}
@@ -94,7 +107,7 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
           </div>
           <div className="flex items-center font-bold py-8 border-t border-b border-[#D8D8D8]">
             <EventAvailableIcon />
-            <p>{jobDetail?.day}</p>
+            <p>{getTimeJP(reservationDetail?.date)} <span className="ml-[10px]">{converTime(selectedTime)}</span></p>
           </div>
 
           <div className="mt-9">
@@ -108,7 +121,7 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
 
                 validationSchema={ReservationRegistration}
                 onSubmit={(data) => {
-                  alert('login success')
+                  createNewSubscriber(data.name, data.email)
                 }}
               >
                 {
@@ -119,8 +132,8 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
                     handleBlur,
                     handleChange,
                     handleSubmit, }) => (
-                    <>
-                      <div className="relative">
+                    <form onSubmit={handleSubmit}>
+                      <div className="relative mb-8">
                         <TextField
                           sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
                           id="name"
@@ -135,12 +148,12 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
                         {touched.name && errors.name && (
                           <>
                             <ReportProblemIcon className="absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]" />
-                            <p className="text-[#E5242A] text-xs mt-2">役職は必須です</p>
+                            <p className="text-[#E5242A] text-xs mt-2">お名前は必須です</p>
                           </>
                         )}
                       </div>
 
-                      <div className="relative">
+                      <div className="relative mb-8">
                         <TextField
                           sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
                           id="email"
@@ -159,13 +172,14 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
                       </div>
 
                       <Button
+                        type="submit"
                         sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
-                        className={` text-[#fff] rounded-[50px] 
+                        className={` text-[#fff] rounded-[50px] w-full
                         mt-5 py-3 ${!isValid ? 'bg-[#E1E1E1]' : 'bg-[#BA00ff] hover:bg-[#BA00ff]/[0.6]'}`}
-                        onClick={() => setBookingStep(2)}>
+                      >
                         <p className='font-bold text-2xl font-noto-sans-jp'>予約する</p>
                       </Button>
-                    </>
+                    </form>
                   )
                 }
               </Formik>
@@ -182,7 +196,7 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
               <p className="text-2xl font-bold">予約が完了しました</p>
             </div>
 
-            <div className="cursor-pointer text-[#ba00ff] hover:text-mainColor/[0.6] flex items-center gap-[6px] mt-14 text-sm" onClick={() => setBookingStep(0)}>
+            <div className="cursor-pointer text-[#ba00ff] hover:text-mainColor/[0.6] flex items-center gap-[6px] mt-14 text-sm" onClick={handleClose}>
               <AvTimerIcon />
               <p>他の時間を選ぶ</p>
             </div>
@@ -191,9 +205,9 @@ const ReservationItem = ({ jobDetail, handleClose }: IReservationItem) => {
 
       </Grid>
 
-      <Button onClick={handleClose} className="absolute top-0 right-0">
+      <button onClick={handleClose} className="absolute top-5 right-5">
         <CloseIcon className="text-[#000000]" />
-      </Button>
+      </button>
     </Grid>
   )
 }

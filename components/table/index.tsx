@@ -1,31 +1,21 @@
-
 import Paper from '@mui/material/Paper';
-import { TFieldValueConvert, TJob, TReservationRespond } from 'components/types/common';
+import { TFieldValueConvert, TReservationRespond } from 'components/types/common';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, } from '@mui/material';
 import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import { useState } from 'react';
 import { DrawerReservation } from '../reservationDetail/drawer';
-import { makeStyles } from '@material-ui/core/styles';
-import { getFile, getItemDetails } from 'components/utils/api';
+import { getItemDetails } from 'components/utils/api';
 import ReservationRow from '../reservationDetail/reservationRow';
 
 export interface ITableData {
   reservationList: TReservationRespond[]
-}
-
-const useStyles = makeStyles({
-  root: {
-    padding: 0,
-  },
-});
-
+};
 
 export default function TableData({ reservationList }: ITableData) {
-
+  const [imageUrl, setImageUrl] = useState<string>();
   const [hoveredRowIndex, setHoveredRowIndex] = useState('');
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>()
-  const classes = useStyles();
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [reservationInfo, setReservationInfor] = useState<TFieldValueConvert>();
 
   const handleRowOver = (rowIndex: string) => {
     setHoveredRowIndex(rowIndex);
@@ -39,15 +29,24 @@ export default function TableData({ reservationList }: ITableData) {
 
   const handleRowClick = async (id: string) => {
     const res = await getItemDetails(id)
+    const times: { field_id: string, value: string }[] = [];
     if (res.data && res.data.field_values) {
       const dataConvert: TFieldValueConvert = {};
-      for (let item in res.data.field_values) {
-        dataConvert[res.data.field_values[item].field_id] = res.data.field_values[item].value
+      for (const item in res.data.field_values) {
+        if (item.startsWith('time')) {
+          times?.push({
+            field_id: res.data.field_values[item].field_id,
+            value: res.data.field_values[item].value
+          });
+          dataConvert["time"] = times;
+        } else {
+          dataConvert[res.data.field_values[item].field_id] = res.data.field_values[item].value
+        }
       }
       setReservationInfor(dataConvert)
     }
-    setShowDrawer(true)
-  }
+    setShowDrawer(true);
+  };
 
   return (
     <>
@@ -109,6 +108,8 @@ export default function TableData({ reservationList }: ITableData) {
                   handleRowOver={handleRowOver}
                   handleRowClick={handleRowClick}
                   hoveredRowIndex={hoveredRowIndex}
+                  setImageUrl={setImageUrl}
+                  imageUrl={imageUrl}
                 />
               </>
             ))}
@@ -116,7 +117,7 @@ export default function TableData({ reservationList }: ITableData) {
         </Table>
       </TableContainer >
 
-      <DrawerReservation open={showDrawer} onClose={toggleDrawer} reservationInfo={reservationInfo} />
+      <DrawerReservation open={showDrawer} onClose={toggleDrawer} reservationInfo={reservationInfo} imageUrl={imageUrl} />
     </>
   );
-}
+};

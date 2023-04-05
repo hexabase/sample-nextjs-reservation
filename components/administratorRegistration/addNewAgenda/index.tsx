@@ -1,10 +1,11 @@
-'use client'
+'use client';
 
-import { Grid, TextField } from "@mui/material"
-import { Checkbox, FormGroup, FormControlLabel } from '@material-ui/core';
-import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Formik } from "formik";
+import { Grid, TextField } from "@mui/material";
+import { Checkbox, FormControlLabel } from '@material-ui/core';
+import { useCallback, useRef, useState } from "react";
+import { useRecruiterContext } from '../../../context';
 import { SchemaRecuiterRegister } from "components/app/(admin)/administrator/Schema";
 import { EMessageError, ETypeStatus, TNotification } from "components/types/common";
 import { createJobItems, uploadFile } from "components/utils/api";
@@ -16,6 +17,7 @@ interface FormValues {
   date: undefined,
   title: string,
   reservation_detail: string,
+  recruiter?: string,
   time_10: boolean,
   time_11: boolean,
   time_12: boolean,
@@ -26,6 +28,7 @@ interface FormValues {
   time_17: boolean,
 }
 const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
+  const { recruiter } = useRecruiterContext();
   const fileInput = useRef<HTMLInputElement>(null);
   const [filesId, setFilesId] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
@@ -36,20 +39,6 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
     event?.stopPropagation();
     fileInput.current?.click();
   }
-  const [checked, setChecked] = useState({
-    time_10: false,
-    time_11: false,
-    time_12: false,
-    time_13: false,
-    time_14: false,
-    time_15: false,
-    time_16: false,
-    time_17: false,
-  });
-  const handleChange = (event: any) => {
-    setChecked({ ...checked, [event.target.name]: event.target.checked });
-  };
-
 
   const uploadImage = async (data: File) => {
     try {
@@ -79,7 +68,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
     }
   };
 
-  const createDataJobItems = useCallback(
+  const createDataReservationItems = useCallback(
     async (data: FormValues) => {
       try {
         const image = filesId
@@ -96,7 +85,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
 
 
         }
-        setIsAddRegistration(false)
+        setIsAddRegistration(false);
       } catch (error) {
         setNotification({
           open: true,
@@ -116,6 +105,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
           date: undefined,
           title: '',
           reservation_detail: '',
+          recruiter: recruiter?.i_id,
           time_10: false,
           time_11: false,
           time_12: false,
@@ -128,15 +118,12 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
         }
         validationSchema={SchemaRecuiterRegister}
         onSubmit={(data) =>
-          createDataJobItems(data)
+          createDataReservationItems(data)
         }
       >
         {
           ({
             values,
-            errors,
-            touched,
-            isValid,
             handleBlur,
             handleChange,
             handleSubmit,
