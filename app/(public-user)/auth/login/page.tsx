@@ -15,7 +15,7 @@ interface FormValuesProps {
   password: string,
 }
 const LoginPage = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [notification, setNotification] = useState<TNotification>({
     open: false,
   });

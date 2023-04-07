@@ -1,4 +1,4 @@
-import { TAddUser, TConfirmRegistration, TCreateSubscriber, TGetUserInfo, TInputCreateItem, TInputLogin, TInputRegisterUser, TListFieldValues, TLogin, TRegisterUser, TReservationSearchLoad, TUploadFileRespond, TUserInvite } from 'components/types/common';
+import { TAddUser, TConfirmRegistration, TGetUserInfo, TInputCreateItem, TInputLogin, TInputRegisterUser, TListFieldValues, TLogin, TRegisterUser, TReservationSearchLoad, TUploadFileRespond, TUserInvite } from 'components/types/common';
 import { getCookie } from 'cookies-next';
 import { ApiError, ApiResponse, createAxiosInstance } from './axios';
 
@@ -109,7 +109,7 @@ export const registerUser = async ({
 }
 
 export const getUserInfo = async (): Promise<ApiResponse<TGetUserInfo>> => {
-  const token = getCookie('token')
+  const token = getCookie('token');
   try {
     const res = await axiosInstance.get(
       `${process.env.NEXT_PUBLIC_LINKER_API}/userinfo`,

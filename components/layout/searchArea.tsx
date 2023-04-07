@@ -1,10 +1,11 @@
-import { SearchOutlined } from "@mui/icons-material"
-import { Button, Drawer, TextField } from "@mui/material"
+import { SearchOutlined } from "@mui/icons-material";
+import { Button, Drawer, TextField } from "@mui/material";
 
 export interface ISearchArea {
   isSearchOpen: boolean,
   onClose: () => void,
-}
+};
+
 const SearchArea = ({ isSearchOpen, onClose }: ISearchArea) => {
   return (
     <div>
@@ -57,7 +58,9 @@ const SearchArea = ({ isSearchOpen, onClose }: ISearchArea) => {
             <SearchOutlined className='absolute text-[#fff] right-4' />
           </Button>
 
-          <div className="flex justify-center items-center p-[10px] gap-[10px]">
+          <div
+            className="flex justify-center items-center p-[10px] gap-[10px]"
+            onClick={onClose}>
             <p>キャンセル</p>
           </div>
         </div>
@@ -66,4 +69,4 @@ const SearchArea = ({ isSearchOpen, onClose }: ISearchArea) => {
   )
 }
 
-export default SearchArea
+export default SearchArea;

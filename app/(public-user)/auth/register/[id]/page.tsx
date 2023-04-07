@@ -24,9 +24,6 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
     open: false,
   });
   const router = useRouter();
-  const handleRouter = () => {
-
-  };
 
   const dataCreateItem = useCallback(async (formValues: FormValuesProps, user_id: string) => {
     try {
@@ -120,8 +117,7 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
                     password: '',
                   }}
                   onSubmit={(data: FormValuesProps) => {
-                    dataRegisterUser(data)
-                    handleRouter()
+                    dataRegisterUser(data);
                   }}
                   validationSchema={SchemaRegisterAdmin}
                   validateOnBlur={true}

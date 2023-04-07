@@ -1,22 +1,23 @@
 'use client'
 
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import { Button, Grid, TextField } from '@mui/material'
-import { SearchOutlined } from '@mui/icons-material'
-import MediaCard from 'components/components/card'
-import { FooterMobile } from 'components/components/footerMobile'
+import Image from 'next/image';
+import { Inter } from '@next/font/google';
+import { Button, Grid, TextField } from '@mui/material';
+import { SearchOutlined } from '@mui/icons-material';
+import MediaCard from 'components/components/card';
+import { FooterMobile } from 'components/components/footerMobile';
 import CloseIcon from '@mui/icons-material/Close';
-import { TReservationRespond, TReservationSearchCondition, TReservationSearchPayloadOption } from 'components/types/common'
-import { useEffect, useMemo, useState } from 'react'
-import { Formik } from 'formik'
-import { searchReservation } from 'components/utils/api'
-const inter = Inter({ subsets: ['latin'] })
+import { TReservationRespond, TReservationSearchCondition, TReservationSearchPayloadOption } from 'components/types/common';
+import { useEffect, useMemo, useState } from 'react';
+import { Formik } from 'formik';
+import { searchReservation } from 'components/utils/api';
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   const [searchRequest, setSearchRequest] = useState<string>();
   const [dateRequest, setDateRequest] = useState();
-  const [reservationList, setReservationList] = useState<TReservationRespond[]>([])
+  const [reservationList, setReservationList] = useState<TReservationRespond[]>([]);
+  const [totalItems, setTotalItems] = useState<number>(0);
   const payloadReservation: TReservationSearchPayloadOption = useMemo(() => {
     const conditions: TReservationSearchCondition[] | any = [];
     let sort_field_id: string | undefined;
@@ -79,7 +80,7 @@ export default function Home() {
       sort_order,
       use_or_condition,
     }
-  }, [searchRequest, dateRequest])
+  }, [searchRequest, dateRequest]);
 
 
   useEffect(() => {
@@ -92,13 +93,14 @@ export default function Home() {
           use_display_id: true,
           include_lookups: true,
         })
-        setReservationList(res.data.items)
+        setReservationList(res.data.items);
+        setTotalItems(res.data.totalItems);
       } catch (error) {
-        throw error
+        throw error;
       }
     }
-    getReservationData()
-  }, [payloadReservation, searchRequest, dateRequest])
+    getReservationData();
+  }, [payloadReservation, searchRequest, dateRequest]);
 
   return (
     <div className='container-responsive'>
@@ -172,7 +174,7 @@ export default function Home() {
 
         <div className='sm:mt-[18px] flex gap-x-4'>
           <p className='font-bold text-sm'>検索結果</p>
-          <p className='font-bold text-sm'>9件</p>
+          <p className='font-bold text-sm'>{totalItems}件</p>
         </div>
 
         <div className='mb-[52px]'>

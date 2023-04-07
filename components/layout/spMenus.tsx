@@ -1,7 +1,9 @@
-import { Drawer } from '@material-ui/core';
 import Image from "next/image";
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Link from 'next/link';
+import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
+import { Drawer } from '@material-ui/core';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Dispatch, SetStateAction } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -9,30 +11,14 @@ export interface ISPMenus {
   showMenu?: boolean,
   handleClose: () => void,
   setShowRegister: Dispatch<SetStateAction<boolean>>,
-}
+};
 
 export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) => {
-  const menuList = [
-    {
-      title: '予約者',
-      item: [
-        {
-          itemTitle: 'アジェンダ一覧ページ'
-        },
-      ]
-    },
-    {
-      title: '管理者',
-      item: [
-        {
-          itemTitle: 'ログイン'
-        },
-        {
-          itemTitle: '管理者登録'
-        }
-      ],
-    },
-  ]
+  const token = getCookie('token');
+
+  const router = useRouter();
+  const handleAgendaButton = () => { router.push('administrator') };
+  const handleLoginButton = () => { router.push('auth/login') };
 
   return (
     <>
@@ -44,8 +30,7 @@ export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) =>
         }}
         onClose={() => handleClose()}
       >
-
-        <div className=' bg-[#F5F5F5] sm:hidden'>
+        <div className='bg-[#F5F5F5] h-full sm:hidden'>
           <div className='flex justify-between items-center p-5 '>
             <Link href="/"><Image alt='logo' src='/logo.svg' width={120} height={24} /></Link>
             <CloseIcon
@@ -55,27 +40,44 @@ export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) =>
           <div className='pt-10'>
             <div className="grid grid-cols-1 ">
               <div className="pb-10">
-                {menuList.map((menu, index) => (
-                  <div key={index}>
-                    <div className="p-[10px] border-b border-b-[#E1E1E1]">
-                      <p className="text-[#808080] text-base font-medium">{menu.title}</p>
+                <div className="p-[10px] border-b border-b-[#E1E1E1]">
+                  <p className="text-[#808080] text-base font-medium">管理者</p>
+                </div>
+                { token ?
+                  <div
+                    className='p-[10px] flex justify-between items-center text-[#BA00FF]'
+                    onClick={() => { 
+                      handleClose();
+                      handleAgendaButton();
+                    }}>
+                    <p className="font-medium text-base">アジェンダ一覧</p>
+                    <KeyboardArrowRightIcon className='w-5 h-5' />
+                  </div>
+                  :
+                  <>
+                    <div
+                      className='p-[10px] flex justify-between items-center text-[#BA00FF]'
+                      onClick={() => { 
+                        handleClose();
+                        handleLoginButton();
+                      }}>
+                      <p className="font-medium text-base">ログイン</p>
+                      <KeyboardArrowRightIcon className='w-5 h-5' />
                     </div>
 
-                    {menu.item.map((item, index) => (
-                      <div key={index} className='p-[10px] flex justify-between items-center text-[#BA00FF]'>
-                        <p className="font-medium text-base">{item.itemTitle}</p>
-                        <KeyboardArrowRightIcon
-                          onClick={() => {
-                            handleClose()
-                            setShowRegister(true)
-                          }}
-                          className='w-5 h-5' />
-                      </div>
-                    ))}
-                  </div>
-
-                ))}
+                    <div
+                      className='p-[10px] flex justify-between items-center text-[#BA00FF]'
+                      onClick={() => {
+                        handleClose();
+                        setShowRegister(true);
+                      }}>
+                      <p className="font-medium text-base">管理者登録</p>
+                      <KeyboardArrowRightIcon className='w-5 h-5' />
+                    </div>
+                  </>
+                }
               </div>
+
               <div className="p-[10px] text-sm font-medium border-t border-t-[#E1E1E1] flex flex-col gap-4">
                 <a href="https://www.hexabase.com/" target="_blank" rel="noreferrer"><p>運営会社</p></a>
                 <a href="https://www.hexabase.com/privacy-policy/" target="_blank" rel="noreferrer"><p>プライバシーポリシー</p></a>
@@ -87,5 +89,4 @@ export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) =>
       </Drawer>
     </>
   )
-}
-
+};

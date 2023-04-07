@@ -1,7 +1,9 @@
-'use client'
+'use client';
+
 import { FooterMobile } from 'components/components/footerMobile';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+
 const RegisterCompleted = () => {
   const router = useRouter()
   const handleClickButton = () => {
@@ -27,4 +29,4 @@ const RegisterCompleted = () => {
   )
 }
 
-export default RegisterCompleted
+export default RegisterCompleted;
