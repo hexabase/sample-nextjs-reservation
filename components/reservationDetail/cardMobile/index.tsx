@@ -61,7 +61,7 @@ const CardMobile = ({ reservation }: ICardMobile) => {
         className='p-5 gap-[10px] rounded-[4px] flex flex-col bg-[#ffffff]'
       >
         <div className='flex flex-col justify-center gap-5'>
-          <Image alt='image' src={imageUrl ?? ''} width={313} height={180} />
+          <Image alt='image' src={imageUrl ?? '/img-default.png'} width={313} height={180} />
 
           <div className='flex flex-col justify-center gap-3 text-sm'>
             <p className='font-medium '>{reservation?.title}</p>
