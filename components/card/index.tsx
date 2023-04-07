@@ -9,12 +9,12 @@ import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ChildModel from '../modal';
 import ReservationDrawer from '../reservationDetail/reservationDrawer';
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import { getTimeJP } from 'components/utils/getDay';
 import { getFile } from 'components/utils/api';
 export interface ICardReservation {
-  reservation: TReservationRespond
+  reservation: TReservationRespond;
 }
 
 export default function MediaCard({ reservation }: ICardReservation) {
@@ -22,7 +22,7 @@ export default function MediaCard({ reservation }: ICardReservation) {
   const [showModal, setShowModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [imageUrl, setImageUrl] = useState<string>();
 
   const handleOpen = () => {
@@ -49,19 +49,28 @@ export default function MediaCard({ reservation }: ICardReservation) {
         const imageUrl = URL.createObjectURL(blob);
         setImageUrl(imageUrl);
       } catch (error) {
-        throw error
+        throw error;
       }
-    }
-    getImage()
-  }, [reservation.i_id, reservation.image])
+    };
+    getImage();
+  }, [reservation.i_id, reservation.image]);
 
   return (
     <>
       <Grid item xs={12} md={4} key={reservation.i_id}>
-        <Card onClick={() => handleOpen()} sx={{ maxWidth: 363, borderRadius: '20px', height: 394, cursor: 'pointer', boxShadow: '0 10px 15px rgba(0,0,0,0.04)' }}  >
+        <Card
+          onClick={() => handleOpen()}
+          sx={{
+            maxWidth: 363,
+            borderRadius: '20px',
+            height: 394,
+            cursor: 'pointer',
+            boxShadow: '0 10px 15px rgba(0,0,0,0.04)',
+          }}
+        >
           <CardMedia
             sx={{ height: 226, width: 363, borderRadius: '20px' }}
-            image={`${imageUrl ? imageUrl : '/work.svg'}`}
+            image={`${imageUrl ? imageUrl : '/img-default.png'}`}
             className='relative rounded-[20px] bg-black-rgba bg-blend-darken'
           >
             <div className='absolute top-3 left-3 text-xs font-bold text-[#fff] flex items-center gap-x-1'>
@@ -81,75 +90,131 @@ export default function MediaCard({ reservation }: ICardReservation) {
                       <p className='font-bold text-xl'>FULL</p>
                     </div>
                   } */}
-
-          </ CardMedia>
+          </CardMedia>
           <CardContent className='pl-5 pr-6'>
-            <Typography gutterBottom variant="h5" component="div" style={{ fontFamily: "'Noto Sans JP', sans-serif" }}>
-              <p className='font-bold text-sm text-overflow-multiline-ellipsis h-10 '>{reservation.title}</p>
+            <Typography
+              gutterBottom
+              variant='h5'
+              component='div'
+              style={{ fontFamily: "'Noto Sans JP', sans-serif" }}
+            >
+              <p className='font-bold text-sm text-overflow-multiline-ellipsis h-10 '>
+                {reservation.title}
+              </p>
             </Typography>
-            <div className='flex gap-[10px] flex-wrap mt-5 sm:mt-4'>
+            <div className='flex justify-center gap-[10px] flex-wrap mt-5 sm:mt-4'>
               <Button
                 sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
-                className={`h-6 rounded-[50px] text-[#fff] font-bold ${reservation.time_10 == '1' ? 'bg-[#BA00FF] hover:bg-[#BA00FF]' : 'bg-[#F4D8FF] text-[#fff]'}`}
-              >10.00
+                className={`h-6 rounded-[50px] text-[#fff] font-bold ${
+                  reservation.time_10 == '1'
+                    ? 'bg-[#BA00FF] hover:bg-[#BA00FF]'
+                    : 'bg-[#F4D8FF] text-[#fff]'
+                }`}
+              >
+                10.00
               </Button>
 
               <Button
                 sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
-                className={`h-6 rounded-[50px] text-[#fff] font-bold ${reservation.time_11 == '1' ? 'bg-[#BA00FF] hover:bg-[#BA00FF]' : 'bg-[#F4D8FF] text-[#fff]'}`}
-              >11.00
+                className={`h-6 rounded-[50px] text-[#fff] font-bold ${
+                  reservation.time_11 == '1'
+                    ? 'bg-[#BA00FF] hover:bg-[#BA00FF]'
+                    : 'bg-[#F4D8FF] text-[#fff]'
+                }`}
+              >
+                11.00
               </Button>
 
               <Button
                 sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
-                className={`h-6 rounded-[50px] text-[#fff] font-bold ${reservation.time_12 == '1' ? 'bg-[#BA00FF] hover:bg-[#BA00FF]' : 'bg-[#F4D8FF] text-[#fff]'}`}
-              >12.00
+                className={`h-6 rounded-[50px] text-[#fff] font-bold ${
+                  reservation.time_12 == '1'
+                    ? 'bg-[#BA00FF] hover:bg-[#BA00FF]'
+                    : 'bg-[#F4D8FF] text-[#fff]'
+                }`}
+              >
+                12.00
               </Button>
 
               <Button
                 sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
-                className={`h-6 rounded-[50px] text-[#fff] font-bold ${reservation.time_13 == '1' ? 'bg-[#BA00FF] hover:bg-[#BA00FF]' : 'bg-[#F4D8FF] text-[#fff]'}`}
-              >13.00
+                className={`h-6 rounded-[50px] text-[#fff] font-bold ${
+                  reservation.time_13 == '1'
+                    ? 'bg-[#BA00FF] hover:bg-[#BA00FF]'
+                    : 'bg-[#F4D8FF] text-[#fff]'
+                }`}
+              >
+                13.00
               </Button>
               <Button
                 sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
-                className={`h-6 rounded-[50px] text-[#fff] font-bold ${reservation.time_14 == '1' ? 'bg-[#BA00FF] hover:bg-[#BA00FF]' : 'bg-[#F4D8FF] text-[#fff]'}`}
-              >14.00
+                className={`h-6 rounded-[50px] text-[#fff] font-bold ${
+                  reservation.time_14 == '1'
+                    ? 'bg-[#BA00FF] hover:bg-[#BA00FF]'
+                    : 'bg-[#F4D8FF] text-[#fff]'
+                }`}
+              >
+                14.00
               </Button>
               <Button
                 sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
-                className={`h-6 rounded-[50px] text-[#fff] font-bold ${reservation.time_15 == '1' ? 'bg-[#BA00FF] hover:bg-[#BA00FF]' : 'bg-[#F4D8FF] text-[#fff]'}`}
-              >15.00
+                className={`h-6 rounded-[50px] text-[#fff] font-bold ${
+                  reservation.time_15 == '1'
+                    ? 'bg-[#BA00FF] hover:bg-[#BA00FF]'
+                    : 'bg-[#F4D8FF] text-[#fff]'
+                }`}
+              >
+                15.00
               </Button>
 
               <Button
                 sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
-                className={`h-6 rounded-[50px] text-[#fff] font-bold ${reservation.time_16 == '1' ? 'bg-[#BA00FF] hover:bg-[#BA00FF]' : 'bg-[#F4D8FF] text-[#fff]'}`}
-              >16.00
+                className={`h-6 rounded-[50px] text-[#fff] font-bold ${
+                  reservation.time_16 == '1'
+                    ? 'bg-[#BA00FF] hover:bg-[#BA00FF]'
+                    : 'bg-[#F4D8FF] text-[#fff]'
+                }`}
+              >
+                16.00
               </Button>
 
               <Button
                 sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
-                className={`h-6 rounded-[50px] text-[#fff] font-bold ${reservation.time_17 == '1' ? 'bg-[#BA00FF] hover:bg-[#BA00FF]' : 'bg-[#F4D8FF] text-[#fff]'}`}
-              >17.00
+                className={`h-6 rounded-[50px] text-[#fff] font-bold ${
+                  reservation.time_17 == '1'
+                    ? 'bg-[#BA00FF] hover:bg-[#BA00FF]'
+                    : 'bg-[#F4D8FF] text-[#fff]'
+                }`}
+              >
+                17.00
               </Button>
             </div>
           </CardContent>
         </Card>
 
-        {showModal &&
+        {showModal && (
           <>
-            <ChildModel handleClose={handleClose} open={showModal} reservationDetail={reservation} imageUrl={imageUrl} />
+            <ChildModel
+              handleClose={handleClose}
+              open={showModal}
+              reservationDetail={reservation}
+              imageUrl={imageUrl}
+            />
           </>
-        }
+        )}
 
-        {showDrawer &&
+        {showDrawer && (
           <div className='pt-16'>
-            <ReservationDrawer reservationDetail={reservation} handleClose={handleClose} showDrawer={showDrawer} imageUrl={imageUrl} />
+            <ReservationDrawer
+              reservationDetail={reservation}
+              handleClose={handleClose}
+              showDrawer={showDrawer}
+              itemId={reservation.i_id}
+              imageUrl={imageUrl}
+            />
           </div>
-        }
+        )}
       </Grid>
-
     </>
   );
 }
