@@ -6,7 +6,7 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
-import { getItemDetails } from 'components/utils/api';
+import { getItemDetails, updateReservationItems } from 'components/utils/api';
 import { converTime, getTimeJP } from 'components/utils/getDay';
 import { createSubscriber } from 'components/utils/api';
 import { Formik } from 'formik';
@@ -47,13 +47,11 @@ const ReservationDrawer = ({
       try {
         const str = selectedTime;
         const strParts = str.split('_');
-        const result = strParts[1];
-        const time = parseInt(result);
-        const res = await createSubscriber(reservationDetail.reservation_id, time, name, email);
-        console.log('res');
-        console.log(res);
+        const time = strParts[1];
+        const timeNum = parseInt(strParts[1]);
+        const res = await createSubscriber(reservationDetail.reservation_id, timeNum, name, email);
         if (res.data) {
-          const res = await updateReservationItems(time, itemId);
+          await updateReservationItems(time, itemId);
         }
         console.log(res);
         setBookingStep(2);

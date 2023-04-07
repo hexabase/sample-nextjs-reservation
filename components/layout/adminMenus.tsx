@@ -1,16 +1,16 @@
 import LogoutIcon from '@mui/icons-material/Logout';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 export interface IAdminMenus {
-  isListPage: boolean;
+  listPage: boolean;
 }
 
-const AdminMenus = ({ isListPage }: IAdminMenus) => {
+const AdminMenus = ({ listPage }: IAdminMenus) => {
   return (
     <>
       <div className='h-[94px] px-[60px] pb-[25px] bg-[#808080] sm:hidden flex justify-between items-center'>
         <div
           className={`${
-            isListPage ? 'text-[#fff]' : 'text-[#fff]/[0.5]'
+            listPage ? 'text-[#fff]' : 'text-[#fff]/[0.5]'
           } flex flex-col items-center gap-1`}
         >
           <CalendarMonthIcon />
