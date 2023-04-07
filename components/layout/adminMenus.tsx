@@ -23,12 +23,12 @@ const AdminMenus = ({ listPage }: IAdminMenus) => {
           className={`${
             listPage ? 'text-[#fff]' : 'text-[#fff]/[0.5]'
           } flex flex-col items-center gap-1`}
-          onClick={handleAgenda}>
+          onClick={handleAgenda}
+        >
           <CalendarMonthIcon />
           <p className='text-xs'>アジェンダ一覧</p>
         </div>
-        <div className='text-[#fff]/[0.5] flex flex-col items-center gap-1'
-          onClick={handleLogout}>
+        <div className='text-[#fff]/[0.5] flex flex-col items-center gap-1' onClick={handleLogout}>
           <LogoutIcon />
           <p className='text-xs'>ログアウト</p>
         </div>
