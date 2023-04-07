@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export interface ApiResponse<T> {
   data: T;
@@ -14,9 +14,7 @@ export class ApiError extends Error {
   }
 }
 
-export const createAxiosInstance = (
-  config?: AxiosRequestConfig
-): AxiosInstance => {
+export const createAxiosInstance = (config?: AxiosRequestConfig): AxiosInstance => {
   const axiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_LINKER_API,
     ...config,
@@ -29,7 +27,7 @@ export const createAxiosInstance = (
         throw new ApiError(error.response);
       }
       throw error;
-    }
+    },
   );
 
   return axiosInstance;
