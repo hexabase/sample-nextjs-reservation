@@ -1,6 +1,8 @@
 'use client';
 
+import { useMemo } from 'react';
 import { Button, Grid, Pagination } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TableData from 'components/components/table';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import NoRegister from 'components/components/reservationRegistration/noRegister';
@@ -16,16 +18,35 @@ import { TReservationRespond } from 'components/types/common';
 
 const Administrator = () => {
   const { recruiter } = useRecruiterContext();
-  const [isAddRegistration, setIsAddRegistration] = useState(false);
-  const [isListPage, setIsListPage] = useState(true);
+  const [registerable, setRegisterable] = useState(false);
+  const [listPage, setListPage] = useState(true);
   const [reservationList, setReservationList] = useState<TReservationRespond[]>([]);
+  const perPage = 10;
+  const [totalItems, setTotalItems] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = useMemo(() => {
+    if (totalItems % perPage === 0) {
+      return totalItems / perPage;
+    }
+    return Math.round(totalItems / perPage + 0.5);
+  }, [totalItems]);
+  const handlePageChange = (event: unknown, newPage: number) => {
+    setCurrentPage(newPage);
+  };
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#BA00FF',
+      },
+    },
+  });
 
   const getDataReservationItems = useCallback(
     async (i_id: string) => {
       try {
-        const res = await getReservationsItems(i_id);
+        const res = await getReservationsItems(i_id, currentPage);
         setReservationList(res.data.items);
+        setTotalItems(res.data.totalItems);
       } catch (error) {}
     },
     [currentPage],
@@ -41,7 +62,7 @@ const Administrator = () => {
     <>
       <div
         className={`hidden sm:block md:pl-[127px] sm:py-[15px] lg:pl-[327px] ${
-          isAddRegistration ? 'sm:hidden' : ''
+          registerable ? 'sm:hidden' : ''
         }`}
       >
         <p className='font-bold text-lg '>アジェンダ一覧</p>
@@ -54,12 +75,18 @@ const Administrator = () => {
         >
           <div className='flex flex-col items-center gap-[28px] px-4 w-full'>
             <div className='flex py-[13px] gap-[13px] w-full justify-end'>
-              <KeyboardTabIcon />
+              <KeyboardTabIcon
+                className='transform rotate-180 cursor-pointer'
+                onClick={() => {
+                  setRegisterable(false);
+                  setListPage(true);
+                }}
+              />
             </div>
             <Button
               onClick={() => {
-                setIsAddRegistration(true);
-                setIsListPage(false);
+                setRegisterable(true);
+                setListPage(false);
               }}
               className='w-full bg-[#ba00ff] text-[#fff] rounded-[50px] 
               flex justify-start gap-2 items-center hover:bg-[#BA00FF]
@@ -76,25 +103,36 @@ const Administrator = () => {
           md={10}
           className='w-10/12 pt-6 border-t border-b border-[#E1E1E1] border-solid md:px-10'
         >
-          {isAddRegistration ? (
+          {registerable ? (
             <>
-              <AddNewForm setIsAddRegistration={setIsAddRegistration} />
+              <AddNewForm setRegisterable={setRegisterable} />
             </>
           ) : (
             <>
-              {reservationList ? (
+              {totalItems > 0 ? (
                 <>
                   <div className='hidden md:block'>
                     <div className='flex items-center justify-between '>
-                      <p className='text-sm'>1件〜10件 / 全120件</p>
-                      <div>
-                        <Pagination count={10} />
-                      </div>
+                      <p className='text-sm'>
+                        {perPage * (currentPage - 1) + 1}件〜{perPage * currentPage}件 / 全
+                        {totalItems}件
+                      </p>
+                      <ThemeProvider theme={theme}>
+                        <Pagination
+                          page={currentPage}
+                          count={totalPages}
+                          color='primary'
+                          onChange={handlePageChange}
+                        />
+                      </ThemeProvider>
                     </div>
+
                     <TableData reservationList={reservationList} />
 
                     <div className='flex justify-end mt-[18px] mb-[210px]'>
-                      <Pagination count={10} />
+                      <ThemeProvider theme={theme}>
+                        <Pagination page={currentPage} count={totalPages} color='primary' />
+                      </ThemeProvider>
                     </div>
                   </div>
 
@@ -104,7 +142,7 @@ const Administrator = () => {
                     </div>
 
                     <div className='px-5 py-[10px] gap-[7px] border-b-[#E1E1E1] flex justify-end'>
-                      <p> 全120件</p>
+                      <p>全{totalItems}件</p>
                     </div>
 
                     <div className='pt-10 pb-24 px-5 bg-[#F2F2F2] gap-4 flex flex-col items-center'>
@@ -115,21 +153,21 @@ const Administrator = () => {
                   </div>
                 </>
               ) : (
-                <NoRegister />
+                <NoRegister setRegisterable={setRegisterable} />
               )}
             </>
           )}
         </Grid>
         <div
-          onClick={() => setIsAddRegistration(true)}
+          onClick={() => setRegisterable(true)}
           className={`absolute bg-[#ba00ff] rounded-full text-[#fff] p-5 right-[15px] bottom-[15px] sm:hidden ${
-            isAddRegistration ? 'hidden' : 'block'
+            registerable ? 'hidden' : 'block'
           }`}
         >
           <AddIcon />
         </div>
       </Grid>
-      <AdminMenus isListPage={isListPage} />
+      <AdminMenus listPage={listPage} />
     </>
   );
 };

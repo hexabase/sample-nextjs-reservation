@@ -62,7 +62,7 @@ const ReservationRow = ({
           {!imageUrl ? (
             <>
               <Image
-                src='/work.svg'
+                src='/img-default.png'
                 alt='image'
                 width={100}
                 height={62}

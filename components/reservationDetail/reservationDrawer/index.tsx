@@ -16,12 +16,14 @@ export interface IReservationDrawer {
   reservationDetail?: any;
   handleClose: () => void;
   showDrawer: boolean;
+  itemId: string;
   imageUrl?: string;
 }
 const ReservationDrawer = ({
   reservationDetail,
   handleClose,
   showDrawer,
+  itemId,
   imageUrl,
 }: IReservationDrawer) => {
   const [tab, setTab] = useState(false);
@@ -46,8 +48,14 @@ const ReservationDrawer = ({
         const str = selectedTime;
         const strParts = str.split('_');
         const result = strParts[1];
-        const num = parseInt(result);
-        await createSubscriber(reservationDetail.reservation_id, num, name, email);
+        const time = parseInt(result);
+        const res = await createSubscriber(reservationDetail.reservation_id, time, name, email);
+        console.log('res');
+        console.log(res);
+        if (res.data) {
+          const res = await updateReservationItems(time, itemId);
+        }
+        console.log(res);
         setBookingStep(2);
       } catch (error) {
         throw error;

@@ -70,7 +70,7 @@ export default function MediaCard({ reservation }: ICardReservation) {
         >
           <CardMedia
             sx={{ height: 226, width: 363, borderRadius: '20px' }}
-            image={`${imageUrl ? imageUrl : '/work.svg'}`}
+            image={`${imageUrl ? imageUrl : '/img-default.png'}`}
             className='relative rounded-[20px] bg-black-rgba bg-blend-darken'
           >
             <div className='absolute top-3 left-3 text-xs font-bold text-[#fff] flex items-center gap-x-1'>
@@ -102,7 +102,7 @@ export default function MediaCard({ reservation }: ICardReservation) {
                 {reservation.title}
               </p>
             </Typography>
-            <div className='flex gap-[10px] flex-wrap mt-5 sm:mt-4'>
+            <div className='flex justify-center gap-[10px] flex-wrap mt-5 sm:mt-4'>
               <Button
                 sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
                 className={`h-6 rounded-[50px] text-[#fff] font-bold ${
@@ -209,6 +209,7 @@ export default function MediaCard({ reservation }: ICardReservation) {
               reservationDetail={reservation}
               handleClose={handleClose}
               showDrawer={showDrawer}
+              itemId={reservation.i_id}
               imageUrl={imageUrl}
             />
           </div>

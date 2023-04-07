@@ -275,7 +275,7 @@ export const getRecruitersItems = async (user_id: string) => {
   }
 };
 
-export const createJobItems = async (data: any, image: string[]) => {
+export const createReservationItems = async (data: any, image: string[]) => {
   try {
     const token = getCookie('token');
     const res = await axiosInstance.post(
@@ -317,7 +317,36 @@ export const createJobItems = async (data: any, image: string[]) => {
   }
 };
 
-export const getReservationsItems = async (recruiter_i_id: string) => {
+export const updateReservationItems = async (time: string, item_id: string) => {
+  try {
+    const res = await axiosInstance.post(
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/reservations/items/edit/${item_id}`,
+      {
+        item: {
+          [`time_${time}`]: 0,
+        },
+        is_force_update: true,
+      },
+      {
+        headers: {
+          Authorization: process.env.NEXT_PUBLIC_TOKEN_API,
+        },
+      },
+    );
+
+    return {
+      data: res.data,
+      status: res.status,
+    };
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+    throw new Error('Unknown error');
+  }
+};
+
+export const getReservationsItems = async (recruiter_i_id: string, page: number) => {
   const token = getCookie('token');
   try {
     const res = await axiosInstance.post(
@@ -331,7 +360,7 @@ export const getReservationsItems = async (recruiter_i_id: string) => {
           },
         ],
         include_lookups: true,
-        page: 1,
+        page: page,
         per_page: 10,
         use_display_id: true,
       },

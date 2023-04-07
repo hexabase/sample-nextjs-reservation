@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className='container-responsive'>
             <div className='flex items-center justify-between py-5'>
               <Link href='/'>
-                <img src='/logo.svg' width={159} height={43.06} alt='logo' />
+                <Image alt='logo' src='/logo.svg' width={159} height={43.06} />
               </Link>
               <RegistrationButton />
               <div onClick={() => setShowMenu(!showMenu)} className='sm:hidden'>

@@ -18,10 +18,10 @@ export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) =>
 
   const router = useRouter();
   const handleAgendaButton = () => {
-    router.push('administrator');
+    router.push('/administrator');
   };
   const handleLoginButton = () => {
-    router.push('auth/login');
+    router.push('/auth/login');
   };
 
   return (

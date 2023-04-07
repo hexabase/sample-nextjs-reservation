@@ -69,6 +69,7 @@ const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildMo
             <ReservationItem
               reservationDetail={reservationInfo}
               handleClose={handleClose}
+              itemId={reservationDetail?.i_id}
               imageUrl={imageUrl}
             />
           </Box>

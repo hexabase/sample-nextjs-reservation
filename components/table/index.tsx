@@ -104,6 +104,7 @@ export default function TableData({ reservationList }: ITableData) {
               reservationList.map((reservation) => (
                 <>
                   <ReservationRow
+                    key={reservation.i_id}
                     reservation={reservation}
                     handleRowLeave={handleRowLeave}
                     handleRowOver={handleRowOver}

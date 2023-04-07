@@ -215,7 +215,7 @@ export default function Home() {
         <div className='mb-[52px]'>
           <Grid container spacing={10}>
             {reservationList.map((reservation) => (
-              <MediaCard reservation={reservation} />
+              <MediaCard key={reservation.i_id} reservation={reservation} />
             ))}
           </Grid>
         </div>

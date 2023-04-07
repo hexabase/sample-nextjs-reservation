@@ -8,10 +8,10 @@ import { useCallback, useRef, useState } from 'react';
 import { useRecruiterContext } from '../../../context';
 import { SchemaRecuiterRegister } from 'components/app/(admin)/administrator/Schema';
 import { EMessageError, ETypeStatus, TNotification } from 'components/types/common';
-import { createJobItems, uploadFile } from 'components/utils/api';
+import { createReservationItems, uploadFile } from 'components/utils/api';
 
-export interface IAddNewForm {
-  setIsAddRegistration: any;
+interface AddNewForm {
+  setRegisterable: any;
 }
 interface FormValues {
   date: undefined;
@@ -27,7 +27,7 @@ interface FormValues {
   time_16: boolean;
   time_17: boolean;
 }
-const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
+const AddNewForm = ({ setRegisterable }: AddNewForm) => {
   const { recruiter } = useRecruiterContext();
   const fileInput = useRef<HTMLInputElement>(null);
   const [filesId, setFilesId] = useState<string[]>([]);
@@ -72,7 +72,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
     async (data: FormValues) => {
       try {
         const image = filesId;
-        const res = await createJobItems(data, image);
+        const res = await createReservationItems(data, image);
         if (res.data) {
           setNotification({
             open: true,
@@ -80,7 +80,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
             message: 'Success',
           });
         }
-        setIsAddRegistration(false);
+        setRegisterable(false);
       } catch (error) {
         setNotification({
           open: true,
@@ -186,7 +186,7 @@ const AddNewForm = ({ setIsAddRegistration }: IAddNewForm) => {
                     <p>画像をアップロード</p>
                   </button>
                   {files[0] && (
-                    <div className='flex'>{files.map((file) => file.name).join(', ')}</div>
+                    <div className='flex p-5'>{files.map((file) => file.name).join(', ')}</div>
                   )}
                 </div>
 

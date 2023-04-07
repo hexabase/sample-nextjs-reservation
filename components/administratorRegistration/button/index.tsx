@@ -6,7 +6,7 @@ const RegistrationButton = () => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const handleClick = () => {
-    router.push('auth/login');
+    router.push('/auth/login');
   };
   const handleOpen = () => {
     setOpen(true);

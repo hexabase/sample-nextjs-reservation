@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
@@ -17,6 +18,10 @@ export const FooterMobile = () => {
     setIsSearchOpen(false);
   };
   const token = getCookie('token');
+  const router = useRouter();
+  const handleAccountButton = () => {
+    router.push('/administrator');
+  };
 
   return (
     <>
@@ -36,7 +41,10 @@ export const FooterMobile = () => {
             <p>検索</p>
           </div>
           {token && (
-            <div className='flex flex-col items-center text-[#fff] text-xs gap-y-2'>
+            <div
+              className='flex flex-col items-center text-[#fff] text-xs gap-y-2'
+              onClick={() => handleAccountButton()}
+            >
               <PersonIcon />
               <p>アカウント</p>
             </div>

@@ -8,15 +8,21 @@ import { useCallback, useState } from 'react';
 import { Formik } from 'formik';
 import { ReservationRegistration } from 'components/app/(public-user)/auth/Schema';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import { createSubscriber } from 'components/utils/api';
+import { createSubscriber, updateReservationItems } from 'components/utils/api';
 import { converTime, getTimeJP } from 'components/utils/getDay';
 
 export interface IReservationItem {
   reservationDetail?: any;
   handleClose: () => void;
+  itemId: string;
   imageUrl?: string;
 }
-const ReservationItem = ({ reservationDetail, handleClose, imageUrl }: IReservationItem) => {
+const ReservationItem = ({
+  reservationDetail,
+  handleClose,
+  itemId,
+  imageUrl,
+}: IReservationItem) => {
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [bookingStep, setBookingStep] = useState(0);
 
@@ -30,15 +36,18 @@ const ReservationItem = ({ reservationDetail, handleClose, imageUrl }: IReservat
       try {
         const str = selectedTime;
         const strParts = str.split('_');
-        const result = strParts[1];
-        const num = parseInt(result);
-        await createSubscriber(reservationDetail.reservation_id, num, name, email);
+        const time = strParts[1];
+        const timeNum = parseInt(time);
+        const res = await createSubscriber(reservationDetail.reservation_id, timeNum, name, email);
+        if (!res.data.error) {
+          await updateReservationItems(time, itemId);
+        }
         setBookingStep(2);
       } catch (error) {
         throw error;
       }
     },
-    [selectedTime, reservationDetail?.reservation_id],
+    [selectedTime, reservationDetail?.reservation_id, itemId],
   );
 
   return (
@@ -50,7 +59,7 @@ const ReservationItem = ({ reservationDetail, handleClose, imageUrl }: IReservat
             width={609}
             height={0}
             src={imageUrl ?? ''}
-            className='rounded-[20px] h-[312px]'
+            className='rounded-[20px]'
           />
           <div className='font-bold px-8 pr-16'>
             <p className='text-2xl mb-4'>{reservationDetail?.title}</p>
