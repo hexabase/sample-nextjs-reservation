@@ -14,7 +14,7 @@ import { converTime, getTimeJP } from 'components/utils/getDay';
 export interface IReservationItem {
   reservationDetail?: any;
   handleClose: () => void;
-  itemId: string;
+  itemId?: any;
   imageUrl?: string;
 }
 const ReservationItem = ({
