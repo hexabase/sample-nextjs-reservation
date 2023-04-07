@@ -6,7 +6,7 @@ export type PageProps = {
 export type TimeBooking = {
   time: string;
   isFull: boolean;
-}
+};
 export type TJob = {
   id: string;
   title: string;
@@ -14,7 +14,7 @@ export type TJob = {
   position: string;
   isAvailable: boolean;
   day: string;
-  time: TimeBooking[]
+  time: TimeBooking[];
 };
 
 export type TAddUser = {
@@ -29,7 +29,7 @@ export type TUserInviteStatus = {
   status: number;
 };
 
-export type TUserInvite = TUserInviteStatus[] | null
+export type TUserInvite = TUserInviteStatus[] | null;
 
 export enum ETypeStatus {
   SUCCESS = 'success',
@@ -93,7 +93,7 @@ export type TUserConfirm = {
 };
 
 export type TConfirmRegistration = {
-  user: TUserConfirm,
+  user: TUserConfirm;
 };
 
 export type TInputRegisterUser = {
@@ -132,7 +132,7 @@ export type TInputLogin = {
 };
 
 export type TUploadFileRespond = {
-  file_id: string,
+  file_id: string;
 };
 
 export type TRecruitersItems = {
@@ -182,35 +182,35 @@ export type TReservationSearchLoad = {
   page: number;
   per_page: number;
   use_display_id?: boolean;
-  include_lookups: boolean
+  include_lookups: boolean;
 };
 
 export type TReservationRespond = {
-  a_id: string,
-  created_at: string,
-  created_by: string,
-  d_id: string,
-  date: string,
-  i_id: string,
-  image: string,
-  p_id: string,
-  recruiter_id: string,
-  reservation_detail: string,
-  reservation_id: string,
-  rev_no: string,
-  status_id: string,
-  time_10: string,
-  time_11: string,
-  time_12: string,
-  time_13: string,
-  time_14: string,
-  time_15: string,
-  time_16: string,
-  time_17: string,
-  title: string,
-  updated_at: string,
-  updated_by: string,
-  lookup_items: any
+  a_id: string;
+  created_at: string;
+  created_by: string;
+  d_id: string;
+  date: string;
+  i_id: string;
+  image: string;
+  p_id: string;
+  recruiter_id: string;
+  reservation_detail: string;
+  reservation_id: string;
+  rev_no: string;
+  status_id: string;
+  time_10: string;
+  time_11: string;
+  time_12: string;
+  time_13: string;
+  time_14: string;
+  time_15: string;
+  time_16: string;
+  time_17: string;
+  title: string;
+  updated_at: string;
+  updated_by: string;
+  lookup_items: any;
 };
 
 export type TFieldValue = {
@@ -228,12 +228,12 @@ export type TFieldValueConvert = {
 };
 
 export type TReserSearchCondition = {
-  conditions: TReservationSearchCondition[]
+  conditions: TReservationSearchCondition[];
 };
 
 export type TCreateSubscriber = {
-  reservation_id: string,
-  time: string,
-  name: string,
-  email: string,
+  reservation_id: string;
+  time: string;
+  name: string;
+  email: string;
 };

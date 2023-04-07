@@ -12,17 +12,17 @@ export const FooterMobile = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const handleSearchArea = () => {
     setIsSearchOpen(!isSearchOpen);
-  }
+  };
   const handleCloseSearch = () => {
     setIsSearchOpen(false);
-  }
+  };
   const token = getCookie('token');
 
   return (
     <>
-      <div className="container-responsive fixed bottom-0 left-0 z-[9999] h-24 bg-[#ba00ff] sm:hidden">
-        <div className="flex items-center justify-around gap-3 px-3 pt-6 pb-14">
-          <Link href="/">
+      <div className='container-responsive fixed bottom-0 left-0 z-[9999] h-24 bg-[#ba00ff] sm:hidden'>
+        <div className='flex items-center justify-around gap-3 px-3 pt-6 pb-14'>
+          <Link href='/'>
             <div className='flex flex-col items-center text-[#fff] text-xs gap-y-2'>
               <HomeIcon />
               <p>ホーム</p>
@@ -30,20 +30,20 @@ export const FooterMobile = () => {
           </Link>
           <div
             onClick={() => handleSearchArea()}
-            className='flex flex-col items-center text-[#fff] text-xs gap-y-2'>
+            className='flex flex-col items-center text-[#fff] text-xs gap-y-2'
+          >
             <SearchIcon />
             <p>検索</p>
           </div>
-          {token &&
+          {token && (
             <div className='flex flex-col items-center text-[#fff] text-xs gap-y-2'>
               <PersonIcon />
               <p>アカウント</p>
             </div>
-          }
+          )}
         </div>
       </div>
       <SearchArea isSearchOpen={isSearchOpen} onClose={handleCloseSearch} />
     </>
-
-  )
-}
+  );
+};

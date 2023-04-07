@@ -1,9 +1,9 @@
 'use client';
 
-import { Box, Modal, } from "@mui/material";
-import { TFieldValueConvert, TReservationRespond } from "components/types/common";
+import { Box, Modal } from '@mui/material';
+import { TFieldValueConvert, TReservationRespond } from 'components/types/common';
 import { getItemDetails } from 'components/utils/api';
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import ReservationItem from '../reservationDetail/reservationItem';
 
 const style = {
@@ -23,8 +23,8 @@ export interface IChildModel {
   open: boolean;
   handleClose: () => void;
   reservationDetail?: TReservationRespond;
-  imageUrl?: string
-};
+  imageUrl?: string;
+}
 
 const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildModel) => {
   const [bookingStep, setBookingStep] = useState(0);
@@ -32,8 +32,8 @@ const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildMo
 
   useEffect(() => {
     const getItemData = async () => {
-      const res = await getItemDetails(reservationDetail?.i_id)
-      const times: { field_id: string, value: string }[] = [];
+      const res = await getItemDetails(reservationDetail?.i_id);
+      const times: { field_id: string; value: string }[] = [];
 
       if (res.data && res.data.field_values) {
         const dataConvert: TFieldValueConvert = {};
@@ -41,33 +41,41 @@ const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildMo
           if (item.startsWith('time')) {
             times?.push({
               field_id: res.data.field_values[item].field_id,
-              value: res.data.field_values[item].value
+              value: res.data.field_values[item].value,
             });
-            dataConvert["time"] = times;
+            dataConvert['time'] = times;
           } else {
-            dataConvert[res.data.field_values[item].field_id] = res.data.field_values[item].value
+            dataConvert[res.data.field_values[item].field_id] = res.data.field_values[item].value;
           }
         }
 
         setReservationInfor(dataConvert);
       }
-    }
-    getItemData()
+    };
+    getItemData();
   }, [reservationDetail?.i_id]);
 
   return (
-    <Modal open={open} onClose={() => {
-      handleClose();
-      setBookingStep(0)
-    }}>
+    <Modal
+      open={open}
+      onClose={() => {
+        handleClose();
+        setBookingStep(0);
+      }}
+    >
       <>
-        <div className="modal-body">
-          <Box sx={{ ...style, width: 1248, borderRadius: '20px', }}>
-            <ReservationItem reservationDetail={reservationInfo} handleClose={handleClose} imageUrl={imageUrl} />
+        <div className='modal-body'>
+          <Box sx={{ ...style, width: 1248, borderRadius: '20px' }}>
+            <ReservationItem
+              reservationDetail={reservationInfo}
+              handleClose={handleClose}
+              imageUrl={imageUrl}
+            />
           </Box>
-        </div></>
+        </div>
+      </>
     </Modal>
-  )
-}
+  );
+};
 
 export default ChildModel;

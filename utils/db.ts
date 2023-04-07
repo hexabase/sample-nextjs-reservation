@@ -1,4 +1,4 @@
-import { TJob } from "components/types/common";
+import { TJob } from 'components/types/common';
 
 export const jobs: TJob[] = [
   {
@@ -8,41 +8,41 @@ export const jobs: TJob[] = [
     position: 'CEO',
     day: '1月10日(火)',
     isAvailable: true,
-    time: [{
-      time: '9:00',
-      isFull: true
-    },
+    time: [
+      {
+        time: '9:00',
+        isFull: true,
+      },
 
-    {
-      time: '10:00',
-      isFull: false
-    },
-    {
-      time: '11:00',
-      isFull: true
-    },
-    {
-      time: '12:00',
-      isFull: false
-    },
-    {
-      time: '13:00',
-      isFull: true
-    },
-    {
-      time: '14:00',
-      isFull: true
-    },
-    {
-      time: '15:00',
-      isFull: false
-    },
-    {
-      time: '16:00',
-      isFull: true
-    },
-
-    ]
+      {
+        time: '10:00',
+        isFull: false,
+      },
+      {
+        time: '11:00',
+        isFull: true,
+      },
+      {
+        time: '12:00',
+        isFull: false,
+      },
+      {
+        time: '13:00',
+        isFull: true,
+      },
+      {
+        time: '14:00',
+        isFull: true,
+      },
+      {
+        time: '15:00',
+        isFull: false,
+      },
+      {
+        time: '16:00',
+        isFull: true,
+      },
+    ],
   },
 
   {
@@ -53,20 +53,19 @@ export const jobs: TJob[] = [
     day: '1月10日(火)',
     isAvailable: false,
     time: [
-
       {
         time: '10:00',
-        isFull: false
+        isFull: false,
       },
       {
         time: '11:00',
-        isFull: false
+        isFull: false,
       },
       {
         time: '12:00',
-        isFull: false
-      }
-    ]
+        isFull: false,
+      },
+    ],
   },
 
   {
@@ -76,41 +75,41 @@ export const jobs: TJob[] = [
     position: 'CRO',
     day: '1月10日(火)',
     isAvailable: true,
-    time: [{
-      time: '9:00',
-      isFull: true
-    },
+    time: [
+      {
+        time: '9:00',
+        isFull: true,
+      },
 
-    {
-      time: '10:00',
-      isFull: false
-    },
-    {
-      time: '11:00',
-      isFull: true
-    },
-    {
-      time: '12:00',
-      isFull: false
-    },
-    {
-      time: '13:00',
-      isFull: true
-    },
-    {
-      time: '14:00',
-      isFull: true
-    },
-    {
-      time: '15:00',
-      isFull: false
-    },
-    {
-      time: '16:00',
-      isFull: true
-    },
-
-    ]
+      {
+        time: '10:00',
+        isFull: false,
+      },
+      {
+        time: '11:00',
+        isFull: true,
+      },
+      {
+        time: '12:00',
+        isFull: false,
+      },
+      {
+        time: '13:00',
+        isFull: true,
+      },
+      {
+        time: '14:00',
+        isFull: true,
+      },
+      {
+        time: '15:00',
+        isFull: false,
+      },
+      {
+        time: '16:00',
+        isFull: true,
+      },
+    ],
   },
 
   {
@@ -123,18 +122,17 @@ export const jobs: TJob[] = [
     time: [
       {
         time: '11:00',
-        isFull: true
+        isFull: true,
       },
       {
         time: '12:00',
-        isFull: true
+        isFull: true,
       },
       {
         time: '13:00',
-        isFull: false
+        isFull: false,
       },
-
-    ]
+    ],
   },
 
   {
@@ -145,97 +143,97 @@ export const jobs: TJob[] = [
     day: '1月10日(火)',
     isAvailable: true,
     time: [
-
       {
         time: '10:00',
-        isFull: false
+        isFull: false,
       },
       {
         time: '11:00',
-        isFull: true
+        isFull: true,
       },
       {
         time: '12:00',
-        isFull: true
+        isFull: true,
       },
-
-    ]
+    ],
   },
 
   {
     id: '6',
-    title: 'BaaSの基本を整理整頓してメリット・デメリットを網羅的に理解することが、セールスにおいての一番大切なことです。',
+    title:
+      'BaaSの基本を整理整頓してメリット・デメリットを網羅的に理解することが、セールスにおいての一番大切なことです。',
     name: '前川 将輝',
     position: 'テクニカルセールス部　部長',
     day: '1月10日(火)',
     isAvailable: true,
-    time: [{
-      time: '9:00',
-      isFull: true
-    },
+    time: [
+      {
+        time: '9:00',
+        isFull: true,
+      },
 
-    {
-      time: '10:00',
-      isFull: false
-    },
-    {
-      time: '11:00',
-      isFull: true
-    },
-    {
-      time: '12:00',
-      isFull: false
-    },
-    {
-      time: '13:00',
-      isFull: true
-    }
-
-    ]
+      {
+        time: '10:00',
+        isFull: false,
+      },
+      {
+        time: '11:00',
+        isFull: true,
+      },
+      {
+        time: '12:00',
+        isFull: false,
+      },
+      {
+        time: '13:00',
+        isFull: true,
+      },
+    ],
   },
 
   {
     id: '7',
-    title: 'マーケティングで市場を読み解くコツやポイントを教えちゃいます！英語の勉強にもなりますよ！',
+    title:
+      'マーケティングで市場を読み解くコツやポイントを教えちゃいます！英語の勉強にもなりますよ！',
     name: 'ジェシカ・スコット',
     position: 'マーケティング部　部長',
     day: '1月10日(火)',
     isAvailable: true,
-    time: [{
-      time: '9:00',
-      isFull: true
-    },
+    time: [
+      {
+        time: '9:00',
+        isFull: true,
+      },
 
-    {
-      time: '10:00',
-      isFull: false
-    },
-    {
-      time: '11:00',
-      isFull: true
-    },
-    {
-      time: '12:00',
-      isFull: false
-    },
-    {
-      time: '13:00',
-      isFull: true
-    },
-    {
-      time: '14:00',
-      isFull: true
-    },
-    {
-      time: '15:00',
-      isFull: false
-    },
-    {
-      time: '16:00',
-      isFull: true
-    },
-
-    ]
+      {
+        time: '10:00',
+        isFull: false,
+      },
+      {
+        time: '11:00',
+        isFull: true,
+      },
+      {
+        time: '12:00',
+        isFull: false,
+      },
+      {
+        time: '13:00',
+        isFull: true,
+      },
+      {
+        time: '14:00',
+        isFull: true,
+      },
+      {
+        time: '15:00',
+        isFull: false,
+      },
+      {
+        time: '16:00',
+        isFull: true,
+      },
+    ],
   },
 
   {
@@ -245,23 +243,22 @@ export const jobs: TJob[] = [
     position: '人事部　部長',
     day: '1月10日(火)',
     isAvailable: false,
-    time: [{
-      time: '9:00',
-      isFull: true
-    },
+    time: [
+      {
+        time: '9:00',
+        isFull: true,
+      },
 
-    {
-      time: '10:00',
-      isFull: false
-    },
+      {
+        time: '10:00',
+        isFull: false,
+      },
 
-    {
-      time: '12:00',
-      isFull: false
-    },
-
-
-    ]
+      {
+        time: '12:00',
+        isFull: false,
+      },
+    ],
   },
 
   {
@@ -271,40 +268,40 @@ export const jobs: TJob[] = [
     position: 'CEO',
     day: '1月10日(火)',
     isAvailable: true,
-    time: [{
-      time: '9:00',
-      isFull: true
-    },
+    time: [
+      {
+        time: '9:00',
+        isFull: true,
+      },
 
-    {
-      time: '10:00',
-      isFull: false
-    },
-    {
-      time: '11:00',
-      isFull: true
-    },
-    {
-      time: '12:00',
-      isFull: false
-    },
-    {
-      time: '13:00',
-      isFull: true
-    },
-    {
-      time: '14:00',
-      isFull: true
-    },
-    {
-      time: '15:00',
-      isFull: false
-    },
-    {
-      time: '16:00',
-      isFull: true
-    },
-
-    ]
+      {
+        time: '10:00',
+        isFull: false,
+      },
+      {
+        time: '11:00',
+        isFull: true,
+      },
+      {
+        time: '12:00',
+        isFull: false,
+      },
+      {
+        time: '13:00',
+        isFull: true,
+      },
+      {
+        time: '14:00',
+        isFull: true,
+      },
+      {
+        time: '15:00',
+        isFull: false,
+      },
+      {
+        time: '16:00',
+        isFull: true,
+      },
+    ],
   },
-]
+];

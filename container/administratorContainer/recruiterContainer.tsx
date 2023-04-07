@@ -7,11 +7,7 @@ import { RecruiterContext, useUserContext } from '../../context';
 import { TRecruitersItems } from '../../types/common';
 import { getRecruitersItems } from '../../utils/api';
 
-export default function RecruiterContainer({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RecruiterContainer({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const { user } = useUserContext();
@@ -37,9 +33,5 @@ export default function RecruiterContainer({
     })();
   }, [user]);
 
-  return (
-    <RecruiterContext.Provider value={{ recruiter }}>
-      {children}
-    </RecruiterContext.Provider>
-  );
+  return <RecruiterContext.Provider value={{ recruiter }}>{children}</RecruiterContext.Provider>;
 }

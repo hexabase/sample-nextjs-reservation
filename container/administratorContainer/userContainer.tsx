@@ -8,11 +8,7 @@ import { UserContext } from '../../context';
 import { TGetUserInfo } from '../../types/common';
 import { getUserInfo } from '../../utils/api';
 
-export default function UserContainer({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function UserContainer({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   const [user, setUser] = useState<TGetUserInfo>();
@@ -34,7 +30,5 @@ export default function UserContainer({
     })();
   }, []);
 
-  return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
-  );
+  return <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>;
 }

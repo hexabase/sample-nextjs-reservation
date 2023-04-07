@@ -3,11 +3,7 @@ import React from 'react';
 import UserContainer from './userContainer';
 import RecruiterContainer from './recruiterContainer';
 
-export default function AdministratorContainer({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AdministratorContainer({ children }: { children: React.ReactNode }) {
   return (
     <>
       <UserContainer>
