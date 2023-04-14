@@ -167,7 +167,7 @@ const Administrator = () => {
           <AddIcon />
         </div>
       </Grid>
-      <AdminMenus listPage={listPage} />
+      <AdminMenus listPage={listPage} setRegisterable={setRegisterable} />
     </>
   );
 };

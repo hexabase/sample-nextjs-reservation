@@ -4,9 +4,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 export interface IAdminMenus {
   listPage: boolean;
+  setRegisterable: any;
 }
 
-const AdminMenus = ({ listPage }: IAdminMenus) => {
+const AdminMenus = ({ listPage, setRegisterable }: IAdminMenus) => {
   const router = useRouter();
   const handleAgenda = () => {
     router.push('/administrator');
@@ -23,7 +24,10 @@ const AdminMenus = ({ listPage }: IAdminMenus) => {
           className={`${
             listPage ? 'text-[#fff]' : 'text-[#fff]/[0.5]'
           } flex flex-col items-center gap-1`}
-          onClick={handleAgenda}
+          onClick={() => {
+            setRegisterable(false);
+            handleAgenda();
+          }}
         >
           <CalendarMonthIcon />
           <p className='text-xs'>アジェンダ一覧</p>

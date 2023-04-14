@@ -82,10 +82,10 @@ const ReservationRow = ({
         </div>
       </TableCell>
       <TableCell align='left' className='px-3'>
-        <p className='font-sans font-bold'>山田　太郎</p>
+        <p className='font-sans font-bold'>{reservation.lookup_items?.recruiter.name}</p>
       </TableCell>
       <TableCell align='left' className='px-3'>
-        <p className='font-sans font-bold'>CEO</p>
+        <p className='font-sans font-bold'>{reservation.lookup_items?.recruiter.position}</p>
       </TableCell>
       <TableCell align='left' className='px-3'>
         <p className='font-sans font-bold'>{getYearMonthDay(reservation?.date)}</p>

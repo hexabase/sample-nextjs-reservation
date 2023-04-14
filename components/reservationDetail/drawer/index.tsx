@@ -49,8 +49,8 @@ export const DrawerReservation = ({
           <KeyboardTabIcon onClick={() => onClose()} className='cursor-pointer hover:opacity-40' />
         </div>
 
-        <div className='text-2xl font-bold leading-[34px] py-6 border-b border-[#E1E1E1] px-10'>
-          <EventAvailableIcon />
+        <div className='text-xl font-bold h-[70px] leading-[70px] border-b border-[#E1E1E1] px-10'>
+          <EventAvailableIcon className='mr-3' />
           {getYearMonthDayJP(reservationInfo?.date)}
         </div>
 
