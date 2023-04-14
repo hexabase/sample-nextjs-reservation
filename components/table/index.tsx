@@ -1,7 +1,6 @@
 import Paper from '@mui/material/Paper';
 import { TFieldValueConvert, TReservationRespond } from 'components/types/common';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import UnfoldLessIcon from '@mui/icons-material/UnfoldLess';
 import { useState } from 'react';
 import { DrawerReservation } from '../reservationDetail/drawer';
 import { getItemDetails } from 'components/utils/api';
@@ -68,36 +67,31 @@ export default function TableData({ reservationList }: ITableData) {
               >
                 <div className='flex items-center gap-1'>
                   <p>タイトル</p>
-                  <UnfoldLessIcon fontSize='small' />
                 </div>
               </TableCell>
 
               <TableCell
-                style={{ width: '12%' }}
+                style={{ width: '15%' }}
                 className='text-[#000000] font-sans'
                 align='center'
               >
                 <div className='flex items-center gap-1'>
                   <p>名前</p>
-                  <UnfoldLessIcon fontSize='small' />
                 </div>
               </TableCell>
-              <TableCell style={{ width: '12%' }} className='text-[#000000] font-sans' align='left'>
+              <TableCell style={{ width: '15%' }} className='text-[#000000] font-sans' align='left'>
                 <div className='flex items-center gap-1'>
                   <p>肩書き</p>
-                  <UnfoldLessIcon fontSize='small' />
                 </div>
               </TableCell>
-              <TableCell style={{ width: '8%' }} className='text-[#000000] font-sans' align='left'>
+              <TableCell style={{ width: '15%' }} className='text-[#000000] font-sans' align='left'>
                 <div className='flex items-center gap-1'>
                   <p>日程</p>
-                  <UnfoldLessIcon fontSize='small' />
                 </div>
               </TableCell>
-              <TableCell style={{ width: '22%' }} className='text-[#000000] font-sans' align='left'>
+              <TableCell style={{ width: '30%' }} className='text-[#000000] font-sans' align='left'>
                 <div className='flex items-center gap-1'>
                   <p>時間</p>
-                  <UnfoldLessIcon fontSize='small' />
                 </div>
               </TableCell>
             </TableRow>
