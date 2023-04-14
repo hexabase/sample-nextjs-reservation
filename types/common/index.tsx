@@ -3,20 +3,6 @@ export type PageProps = {
   children?: React.ReactNode;
 };
 
-export type TimeBooking = {
-  time: string;
-  isFull: boolean;
-};
-export type TJob = {
-  id: string;
-  title: string;
-  name: string;
-  position: string;
-  isAvailable: boolean;
-  day: string;
-  time: TimeBooking[];
-};
-
 export type TAddUser = {
   added: boolean;
   exists: boolean;
@@ -36,9 +22,11 @@ export enum ETypeStatus {
   WARNING = 'warning',
   ERROR = 'error',
 }
+
 export enum EMessageError {
   ERR_01 = '予期せぬエラーが発生しました',
 }
+
 const notificationTypes = [ETypeStatus.SUCCESS, ETypeStatus.ERROR, ETypeStatus.WARNING] as const;
 export type TNotificationTypes = (typeof notificationTypes)[number];
 
@@ -149,19 +137,6 @@ export type TRecruitersItems = {
   position: string;
 };
 
-// export type TGetRecruitersItems = {
-//   items: TRecruitersItems[];
-//   totalItems: number;
-// }
-
-// export type TInputCreateJobItem = {
-//   recruiter_id:string,
-//   title:string,
-//   reservation_detail:string,
-//   image:string[],
-//   date:string,
-
-// }
 export type TReservationSearchPayloadOption = {
   conditions: TReservationSearchCondition[];
   sort_field_id?: string;
