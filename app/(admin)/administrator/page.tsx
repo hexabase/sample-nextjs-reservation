@@ -127,7 +127,7 @@ const Administrator = () => {
                       </ThemeProvider>
                     </div>
 
-                    <TableData reservationList={reservationList} />
+                    <TableData key="0" reservationList={reservationList} />
 
                     <div className='flex justify-end mt-[18px] mb-[210px]'>
                       <ThemeProvider theme={theme}>
