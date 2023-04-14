@@ -42,7 +42,7 @@ const ReservationRow = ({
     <TableRow
       onMouseEnter={() => handleRowOver(reservation?.i_id)}
       onMouseLeave={() => handleRowLeave()}
-      className='bg-gray-100 mb-4'
+      className='group bg-gray-100 mb-4'
       onClick={async () => await handleRowClick(reservation?.i_id)}
       key={reservation?.i_id}
       sx={{
@@ -93,7 +93,7 @@ const ReservationRow = ({
       <TableCell align='left' sx={{ borderRight: '1px solid #ccc' }} className='px-3'>
         <div className='flex flex-wrap gap-4'>
           <Button
-            className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${
+            className={`rounded-[12.5px] py-[2px] px-[15px] font-bold group-hover:border group-hover:border-solid group-hover:border-[#000000] ${
               reservation.time_10 == '1'
                 ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]'
                 : ' !text-[#fff] bg-gray hover:bg-gray '
@@ -102,7 +102,7 @@ const ReservationRow = ({
             <p className=' font-bold font-sans text-sm'>10:00</p>
           </Button>
           <Button
-            className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${
+            className={`rounded-[12.5px] py-[2px] px-[15px] font-bold group-hover:border group-hover:border-solid group-hover:border-[#000000] ${
               reservation.time_11 == '1'
                 ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]'
                 : ' !text-[#fff] bg-gray hover:bg-gray '
@@ -111,7 +111,7 @@ const ReservationRow = ({
             <p className=' font-bold font-sans text-sm'>11:00</p>
           </Button>
           <Button
-            className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${
+            className={`rounded-[12.5px] py-[2px] px-[15px] font-bold group-hover:border group-hover:border-solid group-hover:border-[#000000] ${
               reservation.time_12 == '1'
                 ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]'
                 : ' !text-[#fff] bg-gray hover:bg-gray '
@@ -120,7 +120,7 @@ const ReservationRow = ({
             <p className=' font-bold font-sans text-sm'>12:00</p>
           </Button>
           <Button
-            className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${
+            className={`rounded-[12.5px] py-[2px] px-[15px] font-bold group-hover:border group-hover:border-solid group-hover:border-[#000000] ${
               reservation.time_13 == '1'
                 ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]'
                 : ' !text-[#fff] bg-gray hover:bg-gray '
@@ -129,7 +129,7 @@ const ReservationRow = ({
             <p className=' font-bold font-sans text-sm'>13:00</p>
           </Button>
           <Button
-            className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${
+            className={`rounded-[12.5px] py-[2px] px-[15px] font-bold group-hover:border group-hover:border-solid group-hover:border-[#000000] ${
               reservation.time_14 == '1'
                 ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]'
                 : ' !text-[#fff] bg-gray hover:bg-gray '
@@ -138,7 +138,7 @@ const ReservationRow = ({
             <p className=' font-bold font-sans text-sm'>14:00</p>
           </Button>
           <Button
-            className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${
+            className={`rounded-[12.5px] py-[2px] px-[15px] font-bold group-hover:border group-hover:border-solid group-hover:border-[#000000] ${
               reservation.time_15 == '1'
                 ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]'
                 : ' !text-[#fff] bg-gray hover:bg-gray '
@@ -147,7 +147,7 @@ const ReservationRow = ({
             <p className=' font-bold font-sans text-sm'>15:00</p>
           </Button>
           <Button
-            className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${
+            className={`rounded-[12.5px] py-[2px] px-[15px] font-bold group-hover:border group-hover:border-solid group-hover:border-[#000000] ${
               reservation.time_16 == '1'
                 ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]'
                 : ' !text-[#fff] bg-gray hover:bg-gray '
@@ -156,7 +156,7 @@ const ReservationRow = ({
             <p className=' font-bold font-sans text-sm'>16:00</p>
           </Button>
           <Button
-            className={`rounded-[12.5px] py-[2px] px-[15px] border border-solid border-[#000000] font-bold ${
+            className={`rounded-[12.5px] py-[2px] px-[15px] font-bold group-hover:border group-hover:border-solid group-hover:border-[#000000] ${
               reservation.time_17 == '1'
                 ? 'bg-secondMainColor hover:bg-secondMainColor text-[#000000]'
                 : ' !text-[#fff] bg-gray hover:bg-gray '
