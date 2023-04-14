@@ -103,9 +103,7 @@ export const DrawerReservation = ({
               {reservationInfo &&
                 reservationInfo?.time?.map((t: any, index: string) => {
                   const subscriber = reservationInfo.subscribers.find((subscriber: any) => {
-                    console.log(subscriber.time);
-                    console.log(t.field_id.replace('time_', ''));
-                    return subscriber.time == t.field_id.replace('time_', '')
+                    return subscriber.time == t.field_id.replace('time_', '');
                   });
                   console.log(subscriber);
                   return (
