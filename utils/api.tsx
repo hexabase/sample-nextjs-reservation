@@ -317,7 +317,7 @@ export const createReservationItems = async (data: any, image: string[]) => {
   }
 };
 
-export const updateReservationItems = async (time: string, item_id: string) => {
+export const updateReservationItems = async (item_id: string, time: string) => {
   try {
     const res = await axiosInstance.post(
       `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/reservations/items/edit/${item_id}`,
@@ -477,6 +477,7 @@ export const createSubscriber = async (reservation_id: any, time: any, name: any
           time: time,
           name: name,
           email: email,
+          access_key_updates: { groups_to_publish: ['administrator'] },
         },
       },
       {
@@ -487,6 +488,34 @@ export const createSubscriber = async (reservation_id: any, time: any, name: any
     );
     return {
       data: res.data,
+      status: res.status,
+    };
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error;
+    }
+    throw new Error();
+  }
+};
+
+export const createLinkToSubscriber = async (item_id: string, link_item_id: string) => {
+  try {
+    const res = await axiosInstance.post(
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/reservations/items/addlink/${item_id}`,
+      {
+        item: {
+          link_datastore_id: 'subscribers',
+          link_item_id: link_item_id,
+        },
+      },
+      {
+        headers: {
+          Authorization: process.env.NEXT_PUBLIC_TOKEN_API,
+        },
+      },
+    );
+    return {
+      data: true,
       status: res.status,
     };
   } catch (error) {

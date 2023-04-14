@@ -101,46 +101,54 @@ export const DrawerReservation = ({
           ) : (
             <div>
               {reservationInfo &&
-                reservationInfo?.time?.map((t: any, index: string) => (
-                  <div
-                    key={index}
-                    className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${
-                      t.value == '1' ? 'bg-secondMainColor' : 'bg-[#E1E1E1] text-[#000000]'
-                    } `}
-                  >
-                    <div className='w-full flex justify-between'>
-                      <div className='flex w-[80px] justify-between'>
-                        <div className='w-[20px]'>
-                          {' '}
-                          <PersonIcon className={`${t.value == '1' ? 'block' : 'hidden'}`} />
+                reservationInfo?.time?.map((t: any, index: string) => {
+                  const subscriber = reservationInfo.subscribers.find((subscriber: any) => {
+                    console.log(subscriber.time);
+                    console.log(t.field_id.replace('time_', ''));
+                    return subscriber.time == t.field_id.replace('time_', '')
+                  });
+                  console.log(subscriber);
+                  return (
+                    <div
+                      key={index}
+                      className={`w-full px-5 py-[10px] text-[#000000] mb-4 ${
+                        subscriber ? 'bg-secondMainColor' : 'bg-[#E1E1E1] text-[#000000]'
+                      } `}
+                    >
+                      <div className='w-full flex justify-between'>
+                        <div className='flex w-[80px] justify-between'>
+                          <div className='w-[20px]'>
+                            {' '}
+                            <PersonIcon className={`${subscriber ? 'block' : 'hidden'}`} />
+                          </div>
+                          <div>
+                            <p className='font-bold text-lg'>{converTime(t.field_id)}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className='font-bold text-lg'>{converTime(t.field_id)}</p>
-                        </div>
+                        {subscriber ? (
+                          <KeyboardArrowDownIcon
+                            className='cursor-pointer'
+                            onClick={() => handleExpandedInfo(index)}
+                          />
+                        ) : (
+                          ''
+                        )}
                       </div>
-                      {t.value == '1' ? (
-                        <KeyboardArrowDownIcon
-                          className='cursor-pointer'
-                          onClick={() => handleExpandedInfo(index)}
-                        />
-                      ) : (
-                        ''
+                      {expandedIndex === index && (
+                        <div className='mt-[30px] bg-[#fff] p-4 mb-2 '>
+                          <p>
+                            予約者 <span className='font-bold text-base'>{subscriber.name}</span>
+                          </p>
+
+                          <div className='flex'>
+                            <EmailIcon />
+                            <p>{subscriber.email}</p>
+                          </div>
+                        </div>
                       )}
                     </div>
-                    {expandedIndex === index && (
-                      <div className='mt-[30px] bg-[#fff] p-4 mb-2 '>
-                        <p>
-                          予約者 <span className='font-bold text-base'>藤岡 修一</span>
-                        </p>
-
-                        <div className='flex'>
-                          <EmailIcon />
-                          <p>sample@gmail.com</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  );
+                })}
             </div>
           )}
         </div>

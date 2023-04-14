@@ -221,6 +221,7 @@ export type TFieldValue = {
 
 export type TListFieldValues = {
   field_values: TFieldValue[];
+  linked_items: any;
 };
 
 export type TFieldValueConvert = {

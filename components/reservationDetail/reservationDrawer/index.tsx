@@ -6,7 +6,7 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
-import { getItemDetails, updateReservationItems } from 'components/utils/api';
+import { getItemDetails, updateReservationItems, createLinkToSubscriber } from 'components/utils/api';
 import { converTime, getTimeJP } from 'components/utils/getDay';
 import { createSubscriber } from 'components/utils/api';
 import { Formik } from 'formik';
@@ -51,15 +51,15 @@ const ReservationDrawer = ({
         const timeNum = parseInt(strParts[1]);
         const res = await createSubscriber(reservationDetail.reservation_id, timeNum, name, email);
         if (res.data) {
-          await updateReservationItems(time, itemId);
+          await updateReservationItems(itemId, time);
+          await createLinkToSubscriber(itemId, res.data.item_id);
         }
-        console.log(res);
         setBookingStep(2);
       } catch (error) {
         throw error;
       }
     },
-    [selectedTime, reservationDetail?.reservation_id],
+    [selectedTime, reservationDetail?.reservation_id, itemId],
   );
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { useCallback, useState } from 'react';
 import { Formik } from 'formik';
 import { ReservationRegistration } from 'components/app/(public-user)/auth/Schema';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import { createSubscriber, updateReservationItems } from 'components/utils/api';
+import { createSubscriber, updateReservationItems, createLinkToSubscriber } from 'components/utils/api';
 import { converTime, getTimeJP } from 'components/utils/getDay';
 
 export interface IReservationItem {
@@ -39,8 +39,11 @@ const ReservationItem = ({
         const time = strParts[1];
         const timeNum = parseInt(time);
         const res = await createSubscriber(reservationDetail.reservation_id, timeNum, name, email);
+        console.log("res.data");
+        console.log(res.data);
         if (!res.data.error) {
-          await updateReservationItems(time, itemId);
+          await updateReservationItems(itemId, time);
+          await createLinkToSubscriber(itemId, res.data.item_id);
         }
         setBookingStep(2);
       } catch (error) {

@@ -43,6 +43,9 @@ export default function TableData({ reservationList }: ITableData) {
           dataConvert[res.data.field_values[item].field_id] = res.data.field_values[item].value;
         }
       }
+      if (res.data.linked_items.subscribers) {
+        dataConvert['subscribers'] = res.data.linked_items.subscribers.items;
+      }
       setReservationInfor(dataConvert);
     }
     setShowDrawer(true);
