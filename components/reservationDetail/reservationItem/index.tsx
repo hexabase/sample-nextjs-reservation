@@ -87,7 +87,7 @@ const ReservationItem = ({
           <>
             <p className='font-bold text-lg my-4'>Reverse</p>
             <div className='flex items-center font-bold py-8 border-t border-b border-[#D8D8D8]'>
-              <EventAvailableIcon className='inline-block' />
+              <EventAvailableIcon className='inline-block mr-3' />
               <p>{getTimeJP(reservationDetail?.date)}</p>
             </div>
 

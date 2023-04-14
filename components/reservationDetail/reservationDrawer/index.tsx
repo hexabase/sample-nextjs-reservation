@@ -91,7 +91,7 @@ const ReservationDrawer = ({
   }, [reservationDetail?.i_id]);
 
   return (
-    <div>
+    <>
       <Drawer
         anchor='right'
         open={showDrawer}
@@ -142,7 +142,7 @@ const ReservationDrawer = ({
               className={`flex w-1/2 justify-center items-end px-[5px] py-[10px] 
             border-solid  gap-[10px] ${tab ? 'border-b border-b-mainColor text-mainColor ' : ''}`}
             >
-              <p className='text-base font-bold '>予約概要</p>
+              <p className='text-base font-bold'>予約概要</p>
             </div>
           </div>
 
@@ -310,7 +310,7 @@ const ReservationDrawer = ({
           </div>
         </div>
       </Drawer>
-    </div>
+    </>
   );
 };
 
