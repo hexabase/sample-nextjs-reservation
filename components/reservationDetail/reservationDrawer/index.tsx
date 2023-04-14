@@ -119,9 +119,9 @@ const ReservationDrawer = ({
             <p>{reservationInfo?.title}</p>
           </div>
 
-          <p className='font-bold text-2xl'>{reservationInfo?.recruiter?.title}</p>
+          <p className='font-bold text-2xl'>{reservationInfo?.recruiter.lookup_item.name}</p>
 
-          {/* <p className='text-lg'>{jobDetail?.position}</p> */}
+          <p className='text-lg'>{reservationInfo?.recruiter.lookup_item.position}</p>
 
           <div className='flex py-6 px-[10px] gap-[10px] border border-solid border-[#E1E1E1]'>
             <EventAvailableIcon />

@@ -407,7 +407,7 @@ export const getItemDetails = async (item_id?: string): Promise<ApiResponse<TLis
   const token = getCookie('token');
   try {
     const res = await axiosInstance.get(
-      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/reservations/items/details/${item_id}?include_linked_items=true&use_display_id=true`,
+      `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/reservations/items/details/${item_id}?include_linked_items=true&include_lookups=true&use_display_id=true`,
       {
         headers: {
           Authorization: token ? `Bearer ${token}` : process.env.NEXT_PUBLIC_TOKEN_API,
