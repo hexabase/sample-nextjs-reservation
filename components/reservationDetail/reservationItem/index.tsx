@@ -68,7 +68,9 @@ const ReservationItem = ({
           />
           <div className='px-8 pr-16'>
             <p className='font-bold text-2xl mb-6'>{reservationDetail?.title}</p>
-            <p className='font-bold text-2xl mb-4'>{reservationDetail?.recruiter.lookup_item.name}</p>
+            <p className='font-bold text-2xl mb-4'>
+              {reservationDetail?.recruiter.lookup_item.name}
+            </p>
             <p className='text-lg mb-2'>{reservationDetail?.recruiter.lookup_item.position}</p>
 
             <div>
