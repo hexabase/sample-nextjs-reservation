@@ -65,7 +65,7 @@ const Administrator = () => {
         <Grid
           item
           xs={2}
-          className='hidden sm:block w-2/12 bg-[#F8F9FA] border border-solid border-[#E1E1E1] h-screen'
+          className='hidden lg:block lg:w-2/12 bg-[#F8F9FA] border border-solid border-[#E1E1E1]'
         >
           <div className='flex flex-col items-center gap-[28px] px-4 w-full'>
             <div className='flex py-[13px] gap-[13px] w-full justify-end'>
@@ -105,7 +105,7 @@ const Administrator = () => {
             <>
               {totalItems > 0 ? (
                 <>
-                  <div className='hidden md:block'>
+                  <div className='hidden sm:block'>
                     <div className='flex items-center justify-between '>
                       <p className='text-sm'>
                         {perPage * (currentPage - 1) + 1}件〜{perPage * currentPage}件 / 全
