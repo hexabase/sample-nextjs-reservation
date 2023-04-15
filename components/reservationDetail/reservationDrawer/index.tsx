@@ -54,9 +54,9 @@ const ReservationDrawer = ({
         const time = strParts[1];
         const timeNum = parseInt(strParts[1]);
         const res = await createSubscriber(reservationDetail.reservation_id, timeNum, name, email);
-        if (res.data) {
-          await updateReservationItems(itemId, time);
+        if (!res.data.error) {
           await createLinkToSubscriber(itemId, res.data.item_id);
+          await updateReservationItems(itemId, time);
         }
         setBookingStep(2);
       } catch (error) {

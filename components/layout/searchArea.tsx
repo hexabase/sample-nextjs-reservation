@@ -8,7 +8,7 @@ export interface ISearchArea {
 
 const SearchArea = ({ isSearchOpen, onClose }: ISearchArea) => {
   return (
-    <div>
+    <>
       <Drawer
         open={isSearchOpen}
         onClose={onClose}
@@ -80,7 +80,7 @@ const SearchArea = ({ isSearchOpen, onClose }: ISearchArea) => {
           </div>
         </div>
       </Drawer>
-    </div>
+    </>
   );
 };
 

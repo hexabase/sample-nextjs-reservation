@@ -58,7 +58,7 @@ const CardMobile = ({ reservation }: ICardMobile) => {
   }, [reservation]);
 
   return (
-    <>
+    <div>
       <div
         onClick={() => handleCardClick(reservation?.i_id)}
         className='p-5 gap-[10px] rounded-[4px] flex flex-col bg-[#ffffff]'
@@ -68,8 +68,8 @@ const CardMobile = ({ reservation }: ICardMobile) => {
 
           <div className='flex flex-col justify-center gap-3 text-sm'>
             <p className='font-medium'>{reservation?.title}</p>
-            <p className='font-bold '>{reservation?.recruiter.lookup_item.name}</p>
-            <p className='font-medium'>{reservation?.recruiter.lookup_item.position}</p>
+            <p className='font-bold '>{reservation?.lookup_item?.recruiter.name}</p>
+            <p className='font-medium'>{reservation?.lookup_item?.recruiter.position}</p>
             <div className='flex gap-[6px] items-center'>
               <AccessTimeIcon />
               <p>{getYearMonthDay(reservation?.date)}</p>
@@ -165,7 +165,7 @@ const CardMobile = ({ reservation }: ICardMobile) => {
         reservationInfo={reservationInfo}
         imageUrl={imageUrl}
       />
-    </>
+    </div>
   );
 };
 

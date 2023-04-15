@@ -33,13 +33,7 @@ const Administrator = () => {
   const handlePageChange = (event: unknown, newPage: number) => {
     setCurrentPage(newPage);
   };
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#BA00FF',
-      },
-    },
-  });
+  const theme = createTheme();
 
   const getDataReservationItems = useCallback(
     async (i_id: string) => {
@@ -93,7 +87,7 @@ const Administrator = () => {
               pl-4 pr-[4px] h-[37px]'
             >
               <PostAddIcon />
-              <p className='font-sans hidden lg:block h-[8px] leading-[8px]'>新規登録</p>
+              <p className='font-sans hidden lg:block h-[8px] leading-[8px]'>新規アジェンダ登録</p>
             </Button>
           </div>
         </Grid>
@@ -117,22 +111,19 @@ const Administrator = () => {
                         {perPage * (currentPage - 1) + 1}件〜{perPage * currentPage}件 / 全
                         {totalItems}件
                       </p>
-                      <ThemeProvider theme={theme}>
-                        <Pagination
-                          page={currentPage}
-                          count={totalPages}
-                          color='primary'
-                          onChange={handlePageChange}
-                        />
-                      </ThemeProvider>
+
+                      <Pagination
+                        page={currentPage}
+                        count={totalPages}
+                        color='primary'
+                        onChange={handlePageChange}
+                      />
                     </div>
 
                     <TableData key='0' reservationList={reservationList} />
 
                     <div className='flex justify-end mt-[18px] mb-[210px]'>
-                      <ThemeProvider theme={theme}>
-                        <Pagination page={currentPage} count={totalPages} color='primary' />
-                      </ThemeProvider>
+                      <Pagination page={currentPage} count={totalPages} color='primary' />
                     </div>
                   </div>
 
