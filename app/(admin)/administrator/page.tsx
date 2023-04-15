@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { Button, Grid, Pagination } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import TableData from 'components/components/table';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import NoRegister from 'components/components/reservationRegistration/noRegister';

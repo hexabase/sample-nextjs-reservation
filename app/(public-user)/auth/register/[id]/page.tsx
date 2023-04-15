@@ -23,6 +23,7 @@ interface FormValuesProps {
   position: string;
   password: string;
 }
+
 const RegisterPage = ({ params: { id } }: PageProps) => {
   const [dataConfirm, setDataConfirm] = useState<TUserConfirm>();
   const [formIsTouched, setFormIsTouched] = useState(false);
@@ -30,7 +31,6 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
     open: false,
   });
   const router = useRouter();
-
   const dataCreateItem = useCallback(async (formValues: FormValuesProps, user_id: string) => {
     try {
       const { position } = formValues;
@@ -45,6 +45,7 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
       console.log('error', error);
     }
   }, []);
+
   const dataGetUserInfo = useCallback(async (formValues: FormValuesProps) => {
     try {
       const res = await getUserInfo();
@@ -57,6 +58,7 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
       });
     }
   }, []);
+
   const dataRegisterUser = useCallback(
     async (formValues: FormValuesProps) => {
       const { password, username } = formValues;
@@ -96,6 +98,7 @@ const RegisterPage = ({ params: { id } }: PageProps) => {
       }
     })();
   }, [id]);
+
   return (
     <div className='container-responsive'>
       <div className='py-[30px] md:py-[150px]'>
