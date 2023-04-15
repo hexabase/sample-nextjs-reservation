@@ -68,7 +68,6 @@ export default function MediaCard({ reservation }: ICardReservation) {
         <Card
           onClick={() => handleOpen()}
           sx={{
-            maxWidth: 363,
             borderRadius: '20px',
             height: 394,
             cursor: 'pointer',
@@ -76,7 +75,7 @@ export default function MediaCard({ reservation }: ICardReservation) {
           }}
         >
           <CardMedia
-            sx={{ height: 226, width: 363, borderRadius: '20px' }}
+            sx={{ height: 226, borderRadius: '20px' }}
             image={`${imageUrl ? imageUrl : '/img-default.png'}`}
             className='relative rounded-[20px] bg-black-rgba bg-blend-darken'
           >
