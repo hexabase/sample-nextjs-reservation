@@ -6,7 +6,11 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
-import { getItemDetails, updateReservationItems } from 'components/utils/api';
+import {
+  getItemDetails,
+  updateReservationItems,
+  createLinkToSubscriber,
+} from 'components/utils/api';
 import { converTime, getTimeJP } from 'components/utils/getDay';
 import { createSubscriber } from 'components/utils/api';
 import { Formik } from 'formik';
@@ -50,16 +54,16 @@ const ReservationDrawer = ({
         const time = strParts[1];
         const timeNum = parseInt(strParts[1]);
         const res = await createSubscriber(reservationDetail.reservation_id, timeNum, name, email);
-        if (res.data) {
-          await updateReservationItems(time, itemId);
+        if (!res.data.error) {
+          await createLinkToSubscriber(itemId, res.data.item_id);
+          await updateReservationItems(itemId, time);
         }
-        console.log(res);
         setBookingStep(2);
       } catch (error) {
         throw error;
       }
     },
-    [selectedTime, reservationDetail?.reservation_id],
+    [selectedTime, reservationDetail?.reservation_id, itemId],
   );
 
   useEffect(() => {
@@ -87,7 +91,7 @@ const ReservationDrawer = ({
   }, [reservationDetail?.i_id]);
 
   return (
-    <div>
+    <>
       <Drawer
         anchor='right'
         open={showDrawer}
@@ -115,9 +119,9 @@ const ReservationDrawer = ({
             <p>{reservationInfo?.title}</p>
           </div>
 
-          <p className='font-bold text-2xl'>{reservationInfo?.recruiter?.title}</p>
+          <p className='font-bold text-2xl'>{reservationInfo?.recruiter.lookup_item.name}</p>
 
-          {/* <p className='text-lg'>{jobDetail?.position}</p> */}
+          <p className='text-lg'>{reservationInfo?.recruiter.lookup_item.position}</p>
 
           <div className='flex py-6 px-[10px] gap-[10px] border border-solid border-[#E1E1E1]'>
             <EventAvailableIcon />
@@ -138,7 +142,7 @@ const ReservationDrawer = ({
               className={`flex w-1/2 justify-center items-end px-[5px] py-[10px] 
             border-solid  gap-[10px] ${tab ? 'border-b border-b-mainColor text-mainColor ' : ''}`}
             >
-              <p className='text-base font-bold '>予約概要</p>
+              <p className='text-base font-bold'>予約概要</p>
             </div>
           </div>
 
@@ -306,7 +310,7 @@ const ReservationDrawer = ({
           </div>
         </div>
       </Drawer>
-    </div>
+    </>
   );
 };
 

@@ -8,7 +8,11 @@ import { useCallback, useState } from 'react';
 import { Formik } from 'formik';
 import { ReservationRegistration } from 'components/app/(public-user)/auth/Schema';
 import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import { createSubscriber, updateReservationItems } from 'components/utils/api';
+import {
+  createSubscriber,
+  updateReservationItems,
+  createLinkToSubscriber,
+} from 'components/utils/api';
 import { converTime, getTimeJP } from 'components/utils/getDay';
 
 export interface IReservationItem {
@@ -40,7 +44,8 @@ const ReservationItem = ({
         const timeNum = parseInt(time);
         const res = await createSubscriber(reservationDetail.reservation_id, timeNum, name, email);
         if (!res.data.error) {
-          await updateReservationItems(time, itemId);
+          await updateReservationItems(itemId, time);
+          await createLinkToSubscriber(itemId, res.data.item_id);
         }
         setBookingStep(2);
       } catch (error) {
@@ -61,10 +66,12 @@ const ReservationItem = ({
             src={imageUrl ?? ''}
             className='rounded-[20px]'
           />
-          <div className='font-bold px-8 pr-16'>
-            <p className='text-2xl mb-4'>{reservationDetail?.title}</p>
-            <p className='text-2xl'>{reservationDetail?.recruiter?.title}</p>
-            <p className='text-lg py-3 '>{reservationDetail?.position}</p>
+          <div className='px-8 pr-16'>
+            <p className='font-bold text-2xl mb-6'>{reservationDetail?.title}</p>
+            <p className='font-bold text-2xl mb-4'>
+              {reservationDetail?.recruiter.lookup_item.name}
+            </p>
+            <p className='text-lg mb-2'>{reservationDetail?.recruiter.lookup_item.position}</p>
 
             <div>
               <p className='text-sm font-normal border-t border-[#D8D8D8] pt-4'>
@@ -80,7 +87,7 @@ const ReservationItem = ({
           <>
             <p className='font-bold text-lg my-4'>Reverse</p>
             <div className='flex items-center font-bold py-8 border-t border-b border-[#D8D8D8]'>
-              <EventAvailableIcon />
+              <EventAvailableIcon className='inline-block mr-3' />
               <p>{getTimeJP(reservationDetail?.date)}</p>
             </div>
 
@@ -117,7 +124,7 @@ const ReservationItem = ({
               </div>
             </div>
             <div className='flex items-center font-bold py-8 border-t border-b border-[#D8D8D8]'>
-              <EventAvailableIcon />
+              <EventAvailableIcon className='inline-block mr-3' />
               <p>
                 {getTimeJP(reservationDetail?.date)}{' '}
                 <span className='ml-[10px]'>{converTime(selectedTime)}</span>

@@ -1,13 +1,15 @@
 'use client';
 
+import '../globals.css';
 import Link from 'next/link';
 import Image from 'next/image';
-import '../globals.css';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import RegistrationButton from 'components/components/administratorRegistration/button';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { SPMenus } from 'components/components/layout/spMenus';
 import RegistrationModal from 'components/components/administratorRegistration/registrationModal';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [showRegister, setShowRegister] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -17,8 +19,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const handleCloseDrawer = () => {
     setShowMenu(false);
   };
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#BA00FF',
+      },
+    },
+  });
+
   return (
-    <html lang='en'>
+    <html lang='ja'>
       <head />
       <body id='__next'>
         <header>
@@ -41,8 +51,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
 
         <>
-          <main>{children}</main>
+          <ThemeProvider theme={theme}>
+            <main>{children}</main>
+          </ThemeProvider>
+          
           <RegistrationModal open={showRegister} handleClose={handleCloseRegister} />
+          
           <footer className='hidden sm:bg-[#F2F2F2] sm:flex sm:flex-col sm:items-center sm:py-8 sm:gap-y-[60px]'>
             <div>
               <Image alt='logo' src='/logoFooter.svg' width={93} height={91} />

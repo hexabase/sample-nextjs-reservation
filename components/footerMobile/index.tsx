@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import SearchIcon from '@mui/icons-material/Search';
-
 import SearchArea from '../layout/searchArea';
+
 export const FooterMobile = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const handleSearchArea = () => {
@@ -20,7 +20,11 @@ export const FooterMobile = () => {
   const token = getCookie('token');
   const router = useRouter();
   const handleAccountButton = () => {
-    router.push('/administrator');
+    if (token) {
+      router.push('/administrator');
+    } else {
+      router.push('/auth/login');
+    }
   };
 
   return (
@@ -40,15 +44,14 @@ export const FooterMobile = () => {
             <SearchIcon />
             <p>検索</p>
           </div>
-          {token && (
-            <div
-              className='flex flex-col items-center text-[#fff] text-xs gap-y-2'
-              onClick={() => handleAccountButton()}
-            >
-              <PersonIcon />
-              <p>アカウント</p>
-            </div>
-          )}
+
+          <div
+            className='flex flex-col items-center text-[#fff] text-xs gap-y-2'
+            onClick={() => handleAccountButton()}
+          >
+            <PersonIcon />
+            <p>アカウント</p>
+          </div>
         </div>
       </div>
       <SearchArea isSearchOpen={isSearchOpen} onClose={handleCloseSearch} />

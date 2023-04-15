@@ -40,6 +40,13 @@ export default function MediaCard({ reservation }: ICardReservation) {
     setShowDrawer(false);
   };
 
+  const reservable = (reservation: any) => {
+    for (const i of [10, 11, 12, 13, 14, 15, 16, 17]) {
+      if (reservation[`time_${i}`] == '1') return true;
+    }
+    return false;
+  };
+
   useEffect(() => {
     const getImage = async () => {
       try {
@@ -61,15 +68,14 @@ export default function MediaCard({ reservation }: ICardReservation) {
         <Card
           onClick={() => handleOpen()}
           sx={{
-            maxWidth: 363,
             borderRadius: '20px',
             height: 394,
             cursor: 'pointer',
-            boxShadow: '0 10px 15px rgba(0,0,0,0.04)',
+            boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
           }}
         >
           <CardMedia
-            sx={{ height: 226, width: 363, borderRadius: '20px' }}
+            sx={{ height: 226, borderRadius: '20px' }}
             image={`${imageUrl ? imageUrl : '/img-default.png'}`}
             className='relative rounded-[20px] bg-black-rgba bg-blend-darken'
           >
@@ -81,15 +87,23 @@ export default function MediaCard({ reservation }: ICardReservation) {
               <p>{reservation.lookup_items?.recruiter.name}</p>
               <p className='text-xs'>{reservation.lookup_items?.recruiter.position}</p>
             </div>
-            {/* {job.isAvailable ? <div className='absolute top-3 right-8 sm:right-3'>
-                    <Button sx={{ "&:hover": { backgroundColor: "#3DE7AE", }, fontFamily: 'Noto Sans JP, sans-serif' }} className='bg-[#3DE7AE] text-[#fff] rounded-[50px]'>
-                      <p className='font-bold text-xs'>予約可</p>
-                    </Button>
-                  </div> :
-                    <div className='absolute top-1/2 -translate-y-2/4 left-1/2 -translate-x-1/2 text-[#fff] '>
-                      <p className='font-bold text-xl'>FULL</p>
-                    </div>
-                  } */}
+            {reservable(reservation) ? (
+              <div className='absolute top-3 right-8 sm:right-3'>
+                <Button
+                  sx={{
+                    '&:hover': { backgroundColor: '#3DE7AE' },
+                    fontFamily: 'Noto Sans JP, sans-serif',
+                  }}
+                  className='bg-[#3DE7AE] text-[#fff] rounded-[50px]'
+                >
+                  <p className='font-bold text-xs'>予約可</p>
+                </Button>
+              </div>
+            ) : (
+              <div className='absolute top-1/2 -translate-y-2/4 left-1/2 -translate-x-1/2 text-[#fff] '>
+                <p className='font-bold text-xl'>FULL</p>
+              </div>
+            )}
           </CardMedia>
           <CardContent className='pl-5 pr-6'>
             <Typography
