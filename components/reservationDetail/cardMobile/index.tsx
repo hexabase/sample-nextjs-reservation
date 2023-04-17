@@ -34,6 +34,9 @@ const CardMobile = ({ reservation }: ICardMobile) => {
           dataConvert[res.data.field_values[item].field_id] = res.data.field_values[item].value;
         }
       }
+      if (res.data.linked_items.subscribers) {
+        dataConvert['subscribers'] = res.data.linked_items.subscribers.items;
+      }
       setReservationInfor(dataConvert);
     }
     setShowDrawer(true);
@@ -55,7 +58,7 @@ const CardMobile = ({ reservation }: ICardMobile) => {
   }, [reservation]);
 
   return (
-    <>
+    <div>
       <div
         onClick={() => handleCardClick(reservation?.i_id)}
         className='p-5 gap-[10px] rounded-[4px] flex flex-col bg-[#ffffff]'
@@ -64,9 +67,9 @@ const CardMobile = ({ reservation }: ICardMobile) => {
           <Image alt='image' src={imageUrl ?? '/img-default.png'} width={313} height={180} />
 
           <div className='flex flex-col justify-center gap-3 text-sm'>
-            <p className='font-medium '>{reservation?.title}</p>
-            <p className='font-bold '>{reservation?.recruiter}</p>
-            {/* <p>{reservation?.position}</p> */}
+            <p className='font-medium'>{reservation?.title}</p>
+            <p className='font-bold '>{reservation?.lookup_item?.recruiter.name}</p>
+            <p className='font-medium'>{reservation?.lookup_item?.recruiter.position}</p>
             <div className='flex gap-[6px] items-center'>
               <AccessTimeIcon />
               <p>{getYearMonthDay(reservation?.date)}</p>
@@ -162,7 +165,7 @@ const CardMobile = ({ reservation }: ICardMobile) => {
         reservationInfo={reservationInfo}
         imageUrl={imageUrl}
       />
-    </>
+    </div>
   );
 };
 

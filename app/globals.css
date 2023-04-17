@@ -53,10 +53,11 @@
   transition: border-color 0.2s;
   border-radius: 5px;
 }
+
 .form__field::placeholder {
-  color: transparent;
-  
+  color: transparent; 
 }
+
 .label__type,
 .form__field:focus ~ .form__label {
   position: absolute;
@@ -73,8 +74,9 @@
 }
 
 .form__field:focus {
-  border: 1px solid #2196f3;
+  border: 2px solid #BA00FF;
 }
+
 input[type=date]:required:invalid::-webkit-datetime-edit {
   color: white;
 }

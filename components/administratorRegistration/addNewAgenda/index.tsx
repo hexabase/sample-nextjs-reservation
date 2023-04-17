@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import { Formik } from 'formik';
+import ReportProblemIcon from '@mui/icons-material/ReportProblem';
 import { Grid, TextField } from '@mui/material';
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 import { useCallback, useRef, useState } from 'react';
 import { useRecruiterContext } from '../../../context';
-import { SchemaRecuiterRegister } from 'components/app/(admin)/administrator/Schema';
+import { SchemaReservationRegister } from 'components/app/(admin)/administrator/Schema';
 import { EMessageError, ETypeStatus, TNotification } from 'components/types/common';
 import { createReservationItems, uploadFile } from 'components/utils/api';
 
@@ -101,6 +102,7 @@ const AddNewForm = ({ setRegisterable }: AddNewForm) => {
           title: '',
           reservation_detail: '',
           recruiter: recruiter?.i_id,
+          file: null,
           time_10: false,
           time_11: false,
           time_12: false,
@@ -110,10 +112,10 @@ const AddNewForm = ({ setRegisterable }: AddNewForm) => {
           time_16: false,
           time_17: false,
         }}
-        validationSchema={SchemaRecuiterRegister}
+        validationSchema={SchemaReservationRegister}
         onSubmit={(data) => createDataReservationItems(data)}
       >
-        {({ values, handleBlur, handleChange, handleSubmit }) => (
+        {({ values, errors, touched, handleBlur, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <Grid container className='flex-wrap md:flex-nowrap gap-10'>
               <Grid item xs={12} md={7}>
@@ -134,30 +136,54 @@ const AddNewForm = ({ setRegisterable }: AddNewForm) => {
                     <label htmlFor='message' className='form__label label__type'>
                       日程*
                     </label>
+                    {errors.date && (
+                      <>
+                        <p className='text-[#E5242A] text-xs mt-2'>{errors.date}</p>
+                      </>
+                    )}
                   </div>
 
-                  <TextField
-                    id='title'
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.title}
-                    placeholder='スタートアップのプロダクト開発に興味がある方、お話ししましょう！'
-                    label='タイトル*'
-                    InputLabelProps={{ shrink: true }}
-                    style={{ width: '100%' }}
-                  />
-                  <TextField
-                    id='reservation_detail'
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.reservation_detail}
-                    placeholder='このアジェンダの概要を記載してください。'
-                    label='予約概要*'
-                    InputLabelProps={{ shrink: true }}
-                    style={{ width: '100%' }}
-                    multiline
-                    rows={13}
-                  />
+                  <div className='relative'>
+                    <TextField
+                      id='title'
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.title}
+                      placeholder='スタートアップのプロダクト開発に興味がある方、お話ししましょう！'
+                      label='タイトル*'
+                      InputLabelProps={{ shrink: true }}
+                      style={{ width: '100%' }}
+                      color='primary'
+                      error={touched.title && Boolean(errors.title)}
+                    />
+                    {touched.title && errors.title && (
+                      <>
+                        <ReportProblemIcon className='absolute right-3 h-6 w-6 translate-y-2/3 text-[#E5242A]' />
+                        <p className='text-[#E5242A] text-xs mt-2'>{errors.title}</p>
+                      </>
+                    )}
+                  </div>
+                  <div className='relative'>
+                    <TextField
+                      id='reservation_detail'
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.reservation_detail}
+                      placeholder='このアジェンダの概要を記載してください。'
+                      label='予約概要*'
+                      InputLabelProps={{ shrink: true }}
+                      style={{ width: '100%' }}
+                      color='primary'
+                      multiline
+                      rows={13}
+                    />
+                    {touched.reservation_detail && errors.reservation_detail && (
+                      <>
+                        <ReportProblemIcon className='absolute right-3 h-6 w-6 translate-y-2/3 text-[#E5242A]' />
+                        <p className='text-[#E5242A] text-xs mt-2'>{errors.reservation_detail}</p>
+                      </>
+                    )}
+                  </div>
                 </div>
               </Grid>
 
@@ -171,8 +197,8 @@ const AddNewForm = ({ setRegisterable }: AddNewForm) => {
                   </label>
                   <input
                     id='file-input'
+                    name='file'
                     type='file'
-                    required
                     ref={fileInput}
                     style={{ display: 'none' }}
                     onChange={(event) => {

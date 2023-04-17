@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { Drawer } from '@material-ui/core';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Dispatch, SetStateAction } from 'react';
+import { deleteCookie } from 'cookies-next';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import CloseIcon from '@mui/icons-material/Close';
 
 export interface ISPMenus {
@@ -23,7 +24,10 @@ export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) =>
   const handleLoginButton = () => {
     router.push('/auth/login');
   };
-
+  const handleLogout = () => {
+    deleteCookie('token');
+    router.push('/auth/login');
+  };
   return (
     <>
       <Drawer
@@ -48,16 +52,28 @@ export const SPMenus = ({ showMenu, handleClose, setShowRegister }: ISPMenus) =>
                   <p className='text-[#808080] text-base font-medium'>管理者</p>
                 </div>
                 {token ? (
-                  <div
-                    className='p-[10px] flex justify-between items-center text-[#BA00FF]'
-                    onClick={() => {
-                      handleClose();
-                      handleAgendaButton();
-                    }}
-                  >
-                    <p className='font-medium text-base'>アジェンダ一覧</p>
-                    <KeyboardArrowRightIcon className='w-5 h-5' />
-                  </div>
+                  <>
+                    <div
+                      className='p-[10px] flex justify-between items-center text-[#BA00FF]'
+                      onClick={() => {
+                        handleClose();
+                        handleAgendaButton();
+                      }}
+                    >
+                      <p className='font-medium text-base'>アジェンダ一覧</p>
+                      <KeyboardArrowRightIcon className='w-5 h-5' />
+                    </div>
+                    <div
+                      className='p-[10px] flex justify-between items-center text-[#BA00FF]'
+                      onClick={() => {
+                        handleClose();
+                        handleLogout();
+                      }}
+                    >
+                      <p className='font-medium text-base'>ログアウト</p>
+                      <KeyboardArrowRightIcon className='w-5 h-5' />
+                    </div>
+                  </>
                 ) : (
                   <>
                     <div

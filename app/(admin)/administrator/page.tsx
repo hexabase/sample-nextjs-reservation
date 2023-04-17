@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { Button, Grid, Pagination } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import TableData from 'components/components/table';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import NoRegister from 'components/components/reservationRegistration/noRegister';
@@ -33,13 +33,7 @@ const Administrator = () => {
   const handlePageChange = (event: unknown, newPage: number) => {
     setCurrentPage(newPage);
   };
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: '#BA00FF',
-      },
-    },
-  });
+  const theme = createTheme();
 
   const getDataReservationItems = useCallback(
     async (i_id: string) => {
@@ -71,7 +65,7 @@ const Administrator = () => {
         <Grid
           item
           xs={2}
-          className='hidden sm:block w-2/12 bg-[#F8F9FA] border border-solid border-[#E1E1E1] h-screen'
+          className='hidden lg:block lg:w-2/12 bg-[#F8F9FA] border border-solid border-[#E1E1E1]'
         >
           <div className='flex flex-col items-center gap-[28px] px-4 w-full'>
             <div className='flex py-[13px] gap-[13px] w-full justify-end'>
@@ -93,7 +87,7 @@ const Administrator = () => {
               pl-4 pr-[4px] h-[37px]'
             >
               <PostAddIcon />
-              <p className='font-sans hidden lg:block h-[8px] leading-[8px]'>新規登録</p>
+              <p className='font-sans hidden lg:block h-[8px] leading-[8px]'>新規アジェンダ登録</p>
             </Button>
           </div>
         </Grid>
@@ -111,28 +105,25 @@ const Administrator = () => {
             <>
               {totalItems > 0 ? (
                 <>
-                  <div className='hidden md:block'>
+                  <div className='hidden sm:block'>
                     <div className='flex items-center justify-between '>
                       <p className='text-sm'>
                         {perPage * (currentPage - 1) + 1}件〜{perPage * currentPage}件 / 全
                         {totalItems}件
                       </p>
-                      <ThemeProvider theme={theme}>
-                        <Pagination
-                          page={currentPage}
-                          count={totalPages}
-                          color='primary'
-                          onChange={handlePageChange}
-                        />
-                      </ThemeProvider>
+
+                      <Pagination
+                        page={currentPage}
+                        count={totalPages}
+                        color='primary'
+                        onChange={handlePageChange}
+                      />
                     </div>
 
-                    <TableData reservationList={reservationList} />
+                    <TableData key='0' reservationList={reservationList} />
 
                     <div className='flex justify-end mt-[18px] mb-[210px]'>
-                      <ThemeProvider theme={theme}>
-                        <Pagination page={currentPage} count={totalPages} color='primary' />
-                      </ThemeProvider>
+                      <Pagination page={currentPage} count={totalPages} color='primary' />
                     </div>
                   </div>
 
@@ -167,7 +158,7 @@ const Administrator = () => {
           <AddIcon />
         </div>
       </Grid>
-      <AdminMenus listPage={listPage} />
+      <AdminMenus listPage={listPage} setRegisterable={setRegisterable} />
     </>
   );
 };

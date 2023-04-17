@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { Inter } from '@next/font/google';
 import { Button, Grid, TextField } from '@mui/material';
 import { SearchOutlined } from '@mui/icons-material';
 import MediaCard from 'components/components/card';
@@ -15,7 +14,6 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 import { Formik } from 'formik';
 import { searchReservation } from 'components/utils/api';
-const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
   const [searchRequest, setSearchRequest] = useState<string>();
