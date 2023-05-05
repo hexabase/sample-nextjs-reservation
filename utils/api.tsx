@@ -160,7 +160,7 @@ export const createItem = async ({
       },
       {
         headers: {
-          Authorization: token ? `Bearer ${token}` : '',
+          Authorization: `Bearer ${token}`
         },
       },
     );
@@ -503,10 +503,8 @@ export const createLinkToSubscriber = async (item_id: string, link_item_id: stri
     const res = await axiosInstance.post(
       `${process.env.NEXT_PUBLIC_LINKER_API}/applications/lunchpal/datastores/reservations/items/addlink/${item_id}`,
       {
-        item: {
-          link_datastore_id: 'subscribers',
-          link_item_id: link_item_id,
-        },
+        link_datastore_id: 'subscribers',
+        link_item_id: link_item_id,
       },
       {
         headers: {

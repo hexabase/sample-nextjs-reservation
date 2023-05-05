@@ -44,8 +44,8 @@ const ReservationItem = ({
         const timeNum = parseInt(time);
         const res = await createSubscriber(reservationDetail.reservation_id, timeNum, name, email);
         if (!res.data.error) {
-          await updateReservationItems(itemId, time);
           await createLinkToSubscriber(itemId, res.data.item_id);
+          await updateReservationItems(itemId, time);
         }
         setBookingStep(2);
       } catch (error) {

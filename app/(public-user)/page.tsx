@@ -29,15 +29,19 @@ export default function Home() {
     if (searchRequest && !dateRequest) {
       conditions.push(
         {
-          id: 'title',
-          search_value: [searchRequest],
-        },
-        {
-          id: 'reservation_detail',
-          search_value: [searchRequest],
+          conditions: [
+            {
+              id: 'title',
+              search_value: [searchRequest],
+            },
+            {
+              id: 'reservation_detail',
+              search_value: [searchRequest],
+            },
+          ],
+          use_or_condition: true,
         },
       );
-      use_or_condition = true;
     }
     if (dateRequest && !searchRequest) {
       const dateObj = new Date(dateRequest);
@@ -46,7 +50,6 @@ export default function Home() {
         id: 'date',
         search_value: [outputDateString],
       });
-      use_or_condition = true;
     }
 
     if (searchRequest && dateRequest) {
@@ -140,60 +143,55 @@ export default function Home() {
             {({ values, handleBlur, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <div className='border border-[#BA00FF] absolute top-1/2 -translate-y-2/4 left-1/2 -translate-x-1/2 bg-white flex h-[60px] pl-[18px] items-center rounded bg-[#fff]'>
-                  <div>
-                    <TextField
-                      id='title'
-                      label='キーワードで探す'
-                      value={values.title}
-                      variant='standard'
-                      margin='normal'
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      placeholder='人物・キーワード'
-                      InputProps={{
-                        disableUnderline: true,
-                        style: {
-                          fontFamily: 'Noto Sans JP, sans-serif',
-                        },
-                      }}
-                      InputLabelProps={{
-                        shrink: true,
-                        style: {
-                          fontWeight: 'bold',
-                          fontSize: '12px',
-                          color: '#000000',
-                          fontFamily: 'Noto Sans JP, sans-serif',
-                        },
-                      }}
-                    />
-                    <TextField
-                      id='date'
-                      value={values.date}
-                      label='日付を選択'
-                      variant='standard'
-                      margin='normal'
-                      type='datetime-local'
-                      required
-                      defaultValue=''
-                      placeholder='カレンダーから選ぶ'
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      InputProps={{
-                        disableUnderline: true,
-                        style: {
-                          fontFamily: 'Noto Sans JP, sans-serif',
-                        },
-                      }}
-                      InputLabelProps={{
-                        shrink: true,
-                        style: {
-                          fontWeight: 'bold',
-                          fontSize: '12px',
-                          color: '#000000',
-                          fontFamily: 'Noto Sans JP, sans-serif',
-                        },
-                      }}
-                    />
+                  <div className='flex flex-row w-[490px]'>
+                    <div className='w-1/2'>
+                      <TextField
+                        id='title'
+                        label='キーワードで探す'
+                        value={values.title}
+                        variant='standard'
+                        margin='normal'
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        placeholder='人物・キーワード'
+                        InputProps={{
+                          disableUnderline: true,
+                        }}
+                        InputLabelProps={{
+                          shrink: true,
+                          style: {
+                            fontWeight: 'bold',
+                            fontSize: '12px',
+                            color: '#000000',
+                          },
+                        }}
+                      />
+                      </div>
+                      <div className='w-1/2'>
+                      <TextField
+                        id='date'
+                        value={values.date}
+                        label='日付を選択'
+                        variant='standard'
+                        margin='normal'
+                        type='date'
+                        defaultValue=''
+                        placeholder='カレンダーから選ぶ'
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        InputProps={{
+                          disableUnderline: true,
+                        }}
+                        InputLabelProps={{
+                          shrink: true,
+                          style: {
+                            fontWeight: 'bold',
+                            fontSize: '12px',
+                            color: '#000000',
+                          },
+                        }}
+                      />
+                      </div>
                   </div>
 
                   <Button type='submit' className='bg-[#ba00ff] h-[60px] '>
