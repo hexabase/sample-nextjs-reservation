@@ -24,7 +24,6 @@ export default function Home() {
     const conditions: TReservationSearchCondition[] | any = [];
     let sort_field_id: string | undefined;
     let sort_order: 'asc' | 'desc' | undefined;
-    let use_or_condition = false;
 
     if (searchRequest && !dateRequest) {
       conditions.push(
@@ -86,7 +85,6 @@ export default function Home() {
       conditions,
       sort_field_id,
       sort_order,
-      use_or_condition,
     };
   }, [searchRequest, dateRequest]);
 
