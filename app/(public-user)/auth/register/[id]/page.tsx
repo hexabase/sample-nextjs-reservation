@@ -12,7 +12,6 @@ import { confirmRegistration, createItem, getUserInfo, registerUser } from 'comp
 import {
   EMessageError,
   ETypeStatus,
-  PageProps,
   TNotification,
   TUserConfirm,
 } from '../../../../../types/common';
@@ -22,6 +21,12 @@ interface FormValuesProps {
   username: string;
   position: string;
   password: string;
+}
+
+type PageProps = {
+  params: {
+    id: string;
+  };
 }
 
 const RegisterPage = ({ params: { id } }: PageProps) => {

@@ -1,8 +1,3 @@
-export type PageProps = {
-  params?: any;
-  children?: React.ReactNode;
-};
-
 export type TAddUser = {
   added: boolean;
   exists: boolean;
