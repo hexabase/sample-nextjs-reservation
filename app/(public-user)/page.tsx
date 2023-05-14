@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { Button, Grid, TextField } from '@mui/material';
 import { SearchOutlined } from '@mui/icons-material';
 import MediaCard from 'components/components/card';
@@ -17,30 +18,38 @@ import { searchReservation } from 'components/utils/api';
 
 export default function Home() {
   const [searchRequest, setSearchRequest] = useState<string>();
-  const [dateRequest, setDateRequest] = useState();
+  const [dateRequest, setDateRequest] = useState<string>();
   const [reservationList, setReservationList] = useState<TReservationRespond[]>([]);
   const [totalItems, setTotalItems] = useState<number>(0);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const title = searchParams.get('title');
+    const date = searchParams.get('date');
+    title && setSearchRequest(title);
+    date && setDateRequest(date);
+  }, [searchParams]);
+
   const payloadReservation: TReservationSearchPayloadOption = useMemo(() => {
     const conditions: TReservationSearchCondition[] | any = [];
     let sort_field_id: string | undefined;
     let sort_order: 'asc' | 'desc' | undefined;
 
     if (searchRequest && !dateRequest) {
-      conditions.push(
-        {
-          conditions: [
-            {
-              id: 'title',
-              search_value: [searchRequest],
-            },
-            {
-              id: 'reservation_detail',
-              search_value: [searchRequest],
-            },
-          ],
-          use_or_condition: true,
-        },
-      );
+      conditions.push({
+        conditions: [
+          {
+            id: 'title',
+            search_value: [searchRequest],
+          },
+          {
+            id: 'reservation_detail',
+            search_value: [searchRequest],
+          },
+        ],
+        use_or_condition: true,
+      });
     }
     if (dateRequest && !searchRequest) {
       const dateObj = new Date(dateRequest);
@@ -131,7 +140,7 @@ export default function Home() {
           <Formik
             initialValues={{
               title: '',
-              date: undefined,
+              date: '',
             }}
             onSubmit={(data) => {
               setSearchRequest(data.title);
@@ -164,8 +173,8 @@ export default function Home() {
                           },
                         }}
                       />
-                      </div>
-                      <div className='w-1/2'>
+                    </div>
+                    <div className='w-1/2'>
                       <TextField
                         id='date'
                         value={values.date}
@@ -189,7 +198,7 @@ export default function Home() {
                           },
                         }}
                       />
-                      </div>
+                    </div>
                   </div>
 
                   <Button type='submit' className='bg-[#ba00ff] h-[60px] '>
