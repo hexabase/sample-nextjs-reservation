@@ -27,7 +27,7 @@ type PageProps = {
   params: {
     id: string;
   };
-}
+};
 
 const RegisterPage = ({ params: { id } }: PageProps) => {
   const [dataConfirm, setDataConfirm] = useState<TUserConfirm>();
