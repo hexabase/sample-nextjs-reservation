@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Button, Grid, TextField } from '@mui/material';
 import { SearchOutlined } from '@mui/icons-material';
 import MediaCard from 'components/components/card';
@@ -15,6 +15,7 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 import { Formik } from 'formik';
 import { searchReservation } from 'components/utils/api';
+import { getTimeJP } from 'components/utils/getDay';
 
 export default function Home() {
   const [searchRequest, setSearchRequest] = useState<string>();
@@ -30,6 +31,12 @@ export default function Home() {
     title && setSearchRequest(title);
     date && setDateRequest(date);
   }, [searchParams]);
+
+  const router = useRouter();
+  const handleClearSearch = () => {
+    setDateRequest('');
+    router.push(`/?title=${searchRequest||''}&date=`);
+  };
 
   const payloadReservation: TReservationSearchPayloadOption = useMemo(() => {
     const conditions: TReservationSearchCondition[] | any = [];
@@ -119,14 +126,16 @@ export default function Home() {
   return (
     <div className='container-responsive'>
       <div className='flex flex-col gap-y-2 sm:gap-y-8'>
-        <div className='sm:hidden'>
-          <Button className='bg-[#f2f2f2] text-[#808080] rounded-[50px]  mb-2 mt-2'>
-            <div className='flex items-center justify-between gap-x-4'>
-              <p className='text-xs'>1月10日(火)</p>
-              <CloseIcon className='h-4 w-4' />
-            </div>
-          </Button>
-        </div>
+        {dateRequest && 
+          <div className='sm:hidden'>
+            <Button onClick={handleClearSearch} className='bg-[#f2f2f2] text-[#808080] rounded-[50px]  mb-2 mt-2'>
+              <div className='flex items-center justify-between gap-x-4'>
+                <p className='text-xs'>{getTimeJP(dateRequest)}</p>
+                <CloseIcon className='h-4 w-4' />
+              </div>
+            </Button>
+          </div>
+        }
 
         <div className='hidden sm:block sm:mt-8 sm:relative'>
           <Image
