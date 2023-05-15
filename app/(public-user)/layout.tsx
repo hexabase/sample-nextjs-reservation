@@ -54,9 +54,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider theme={theme}>
             <main>{children}</main>
           </ThemeProvider>
-          
+
           <RegistrationModal open={showRegister} handleClose={handleCloseRegister} />
-          
+
           <footer className='hidden sm:bg-[#F2F2F2] sm:flex sm:flex-col sm:items-center sm:py-8 sm:gap-y-[60px]'>
             <div>
               <Image alt='logo' src='/logoFooter.svg' width={93} height={91} />
