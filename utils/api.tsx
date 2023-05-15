@@ -160,7 +160,7 @@ export const createItem = async ({
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
       },
     );
