@@ -14,6 +14,8 @@ import {
 } from 'components/types/common';
 import { useEffect, useMemo, useState } from 'react';
 import { Formik } from 'formik';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Loader from 'components/components/loader';
 import { searchReservation } from 'components/utils/api';
 import { getTimeJP } from 'components/utils/getDay';
 
@@ -21,6 +23,8 @@ export default function Home() {
   const [searchRequest, setSearchRequest] = useState<string>();
   const [dateRequest, setDateRequest] = useState<string>();
   const [reservationList, setReservationList] = useState<TReservationRespond[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState(true);
   const [totalItems, setTotalItems] = useState<number>(0);
 
   const searchParams = useSearchParams();
@@ -116,12 +120,37 @@ export default function Home() {
         });
         setReservationList(res.data.items);
         setTotalItems(res.data.totalItems);
+        if (res.data.items.length == 0) {
+          setHasMore(false);
+        }
       } catch (error) {
         throw error;
       }
     };
     getReservationData();
-  }, [payloadReservation, searchRequest, dateRequest]);
+  }, [searchRequest, dateRequest]);
+
+  useEffect(() => {
+    const getReservationData = async () => {
+      try {
+        const res = await searchReservation({
+          ...payloadReservation,
+          page: page,
+          per_page: 9,
+          use_display_id: true,
+          include_lookups: true,
+        });
+        setReservationList([...reservationList, ...res.data.items]);
+        setTotalItems(res.data.totalItems);
+        if (res.data.items.length == 0) {
+          setHasMore(false);
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
+    getReservationData();
+  }, [page]);
 
   return (
     <div className='container-responsive'>
@@ -224,13 +253,22 @@ export default function Home() {
           <p className='font-bold text-sm'>{totalItems}件</p>
         </div>
 
-        <div className='mb-[52px]'>
-          <Grid container spacing={10}>
-            {reservationList.map((reservation) => (
-              <MediaCard key={reservation.i_id} reservation={reservation} />
-            ))}
-          </Grid>
-        </div>
+        
+          <InfiniteScroll
+              dataLength={reservationList.length || 0}
+              next={() => setPage(page + 1)}
+              hasMore={hasMore}
+              loader={<Loader />}
+            >
+            <div className='mb-[52px]'>
+              <Grid container spacing={10}>
+                {reservationList[0] && reservationList.map((reservation) => (
+                  <MediaCard key={reservation.i_id} reservation={reservation} />
+                ))}
+              </Grid>
+            </div>
+          </InfiniteScroll>
+
       </div>
       <div className='sm:hidden'>
         <FooterMobile />
