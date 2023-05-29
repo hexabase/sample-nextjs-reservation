@@ -39,7 +39,7 @@ export default function Home() {
   const router = useRouter();
   const handleClearSearch = () => {
     setDateRequest('');
-    router.push(`/?title=${searchRequest||''}&date=`);
+    router.push(`/?title=${searchRequest || ''}&date=`);
   };
 
   const payloadReservation: TReservationSearchPayloadOption = useMemo(() => {
@@ -155,16 +155,19 @@ export default function Home() {
   return (
     <div className='container-responsive'>
       <div className='flex flex-col gap-y-2 sm:gap-y-8'>
-        {dateRequest && 
+        {dateRequest && (
           <div className='sm:hidden'>
-            <Button onClick={handleClearSearch} className='bg-[#f2f2f2] text-[#808080] rounded-[50px]  mb-2 mt-2'>
+            <Button
+              onClick={handleClearSearch}
+              className='bg-[#f2f2f2] text-[#808080] rounded-[50px]  mb-2 mt-2'
+            >
               <div className='flex items-center justify-between gap-x-4'>
                 <p className='text-xs'>{getTimeJP(dateRequest)}</p>
                 <CloseIcon className='h-4 w-4' />
               </div>
             </Button>
           </div>
-        }
+        )}
 
         <div className='hidden sm:block sm:mt-8 sm:relative'>
           <Image
@@ -253,22 +256,21 @@ export default function Home() {
           <p className='font-bold text-sm'>{totalItems}件</p>
         </div>
 
-        
-          <InfiniteScroll
-              dataLength={reservationList.length || 0}
-              next={() => setPage(page + 1)}
-              hasMore={hasMore}
-              loader={<Loader />}
-            >
-            <div className='mb-[52px]'>
-              <Grid container spacing={10}>
-                {reservationList[0] && reservationList.map((reservation) => (
+        <InfiniteScroll
+          dataLength={reservationList.length || 0}
+          next={() => setPage(page + 1)}
+          hasMore={hasMore}
+          loader={<Loader />}
+        >
+          <div className='mb-[52px]'>
+            <Grid container spacing={10}>
+              {reservationList[0] &&
+                reservationList.map((reservation) => (
                   <MediaCard key={reservation.i_id} reservation={reservation} />
                 ))}
-              </Grid>
-            </div>
-          </InfiniteScroll>
-
+            </Grid>
+          </div>
+        </InfiniteScroll>
       </div>
       <div className='sm:hidden'>
         <FooterMobile />

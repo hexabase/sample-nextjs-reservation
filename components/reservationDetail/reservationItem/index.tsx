@@ -93,7 +93,7 @@ const ReservationItem = ({
 
             <div className='mt-[40px] '>
               <p className='font-bold text-sm'>予約したい時間帯をクリックしてください。</p>
-              <div className='flex flex-col gap-[15px] mt-5  items-center'>
+              <div className='flex flex-col gap-[15px] mt-5 items-center'>
                 {reservationDetail?.time.map((t: any, index: any) => (
                   <Button
                     key={index}
