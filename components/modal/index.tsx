@@ -9,10 +9,12 @@ import ReservationItem from '../reservationDetail/reservationItem';
 const style = {
   position: 'absolute' as const,
   top: '50%',
-  left: '49.5%',
+  left: '50%',
   transform: 'translate(-50%, -50%)',
+  height: '90%',
   width: 1248,
   bgcolor: '#FFFFFF',
+  overflow: 'scroll',
   boxShadow: 24,
   notchedOutline: {
     borderColor: 'red',
@@ -64,16 +66,14 @@ const ChildModel = ({ open, handleClose, reservationDetail, imageUrl }: IChildMo
       }}
     >
       <>
-        <div className='modal-body'>
-          <Box sx={{ ...style, width: 1248, borderRadius: '20px' }}>
-            <ReservationItem
-              reservationDetail={reservationInfo}
-              handleClose={handleClose}
-              itemId={reservationDetail?.i_id}
-              imageUrl={imageUrl}
-            />
-          </Box>
-        </div>
+        <Box sx={{ ...style, width: 1248, borderRadius: '20px' }}>
+          <ReservationItem
+            reservationDetail={reservationInfo}
+            handleClose={handleClose}
+            itemId={reservationDetail?.i_id}
+            imageUrl={imageUrl}
+          />
+        </Box>
       </>
     </Modal>
   );
