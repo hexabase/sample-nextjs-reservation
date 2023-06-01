@@ -158,7 +158,7 @@ const ReservationItem = ({
                         <TextField
                           sx={{ fontFamily: 'Noto Sans JP, sans-serif' }}
                           id='name'
-                          label='お名前'
+                          label='お名前*'
                           value={values.name}
                           style={{ width: '100%' }}
                           onChange={handleChange}
@@ -170,7 +170,7 @@ const ReservationItem = ({
                         {touched.name && errors.name && (
                           <>
                             <ReportProblemIcon className='absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]' />
-                            <p className='text-[#E5242A] text-xs mt-2'>お名前は必須です</p>
+                            <p className='text-[#E5242A] text-xs mt-2'>お名前を入力してください</p>
                           </>
                         )}
                       </div>
@@ -183,7 +183,7 @@ const ReservationItem = ({
                           value={values.email}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          label='メールアドレス'
+                          label='メールアドレス*'
                           InputLabelProps={{ shrink: true }}
                         />
                         {touched.email && errors.email && (
