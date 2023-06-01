@@ -232,7 +232,7 @@ const ReservationDrawer = ({
                                 value={values.name}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                label='お名前'
+                                label='お名前*'
                                 InputLabelProps={{
                                   shrink: true,
                                   style: { fontWeight: '400', fontSize: '12px', color: '#ba00ff' },
@@ -241,7 +241,7 @@ const ReservationDrawer = ({
                               {touched.name && errors.name && (
                                 <>
                                   <ReportProblemIcon className='absolute right-3 h-6 w-6 translate-y-1/2 text-[#E5242A]' />
-                                  <p className='text-[#E5242A] text-xs mt-2'>お名前は必須です</p>
+                                  <p className='text-[#E5242A] text-xs mt-2'>お名前を入力してください</p>
                                 </>
                               )}
                             </div>
@@ -253,7 +253,7 @@ const ReservationDrawer = ({
                                 value={values.email}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                label='メールアドレス'
+                                label='メールアドレス*'
                                 InputLabelProps={{
                                   shrink: true,
                                   style: {

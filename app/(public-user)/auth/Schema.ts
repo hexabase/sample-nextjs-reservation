@@ -8,8 +8,8 @@ export const SchemaLogin = Yup.object().shape({
 });
 
 export const SchemaRegisterAdmin = Yup.object().shape({
-  username: Yup.string().required('お名前は必須です'),
-  position: Yup.string().required('役職は必須です'),
+  username: Yup.string().required('お名前を入力してください'),
+  position: Yup.string().required('役職を入力してください'),
   password: Yup.string().min(8, 'パスワードが短すぎます').required('パスワードを入力してください'),
 });
 
@@ -20,7 +20,7 @@ export const EmailRegistration = Yup.object().shape({
 });
 
 export const ReservationRegistration = Yup.object().shape({
-  name: Yup.string().required('お名前は必須です'),
+  name: Yup.string().required('お名前を入力してください'),
   email: Yup.string()
     .email('メールアドレスの形式が正しくありません')
     .required('メールアドレスを入力してください'),
